@@ -1,9 +1,9 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "G:\\Assignment\\SecondYearSecondSem\\DiagcareMaintenanceSystem\\",
+  "WorkspaceRootPath": "G:\\Assignment\\SecondYearSecondSem\\CCS5\\DiagcareMaintenanceSystem\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{720D29AD-B1EC-414C-B3CB-21D2B5C69682}|DiagcareMaintenanceSystem.vbproj|g:\\assignment\\secondyearsecondsem\\diagcaremaintenancesystem\\form1.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form",
+      "AbsoluteMoniker": "D:0:0:{720D29AD-B1EC-414C-B3CB-21D2B5C69682}|DiagcareMaintenanceSystem.vbproj|g:\\assignment\\secondyearsecondsem\\ccs5\\diagcaremaintenancesystem\\form1.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form",
       "RelativeMoniker": "D:0:0:{720D29AD-B1EC-414C-B3CB-21D2B5C69682}|DiagcareMaintenanceSystem.vbproj|solutionrelative:form1.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}|Form"
     }
   ],
@@ -20,9 +20,9 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Form1.vb [Design]",
-              "DocumentMoniker": "G:\\Assignment\\SecondYearSecondSem\\DiagcareMaintenanceSystem\\Form1.vb",
+              "DocumentMoniker": "G:\\Assignment\\SecondYearSecondSem\\CCS5\\DiagcareMaintenanceSystem\\Form1.vb",
               "RelativeDocumentMoniker": "Form1.vb",
-              "ToolTip": "G:\\Assignment\\SecondYearSecondSem\\DiagcareMaintenanceSystem\\Form1.vb [Design]",
+              "ToolTip": "G:\\Assignment\\SecondYearSecondSem\\CCS5\\DiagcareMaintenanceSystem\\Form1.vb [Design]",
               "RelativeToolTip": "Form1.vb [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
               "WhenOpened": "2026-03-12T13:14:36.141Z",

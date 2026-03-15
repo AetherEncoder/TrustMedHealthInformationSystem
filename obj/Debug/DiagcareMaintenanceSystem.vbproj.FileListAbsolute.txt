@@ -1,0 +1,11 @@
+G:\Assignment\SecondYearSecondSem\CCS5\DiagcareMaintenanceSystem\bin\Debug\DiagcareMaintenanceSystem.exe.config
+G:\Assignment\SecondYearSecondSem\CCS5\DiagcareMaintenanceSystem\bin\Debug\DiagcareMaintenanceSystem.exe
+G:\Assignment\SecondYearSecondSem\CCS5\DiagcareMaintenanceSystem\bin\Debug\DiagcareMaintenanceSystem.pdb
+G:\Assignment\SecondYearSecondSem\CCS5\DiagcareMaintenanceSystem\bin\Debug\DiagcareMaintenanceSystem.xml
+G:\Assignment\SecondYearSecondSem\CCS5\DiagcareMaintenanceSystem\obj\Debug\DiagcareMaintenanceSystem.vbproj.AssemblyReference.cache
+G:\Assignment\SecondYearSecondSem\CCS5\DiagcareMaintenanceSystem\obj\Debug\DiagcareMaintenanceSystem.Resources.resources
+G:\Assignment\SecondYearSecondSem\CCS5\DiagcareMaintenanceSystem\obj\Debug\DiagcareMaintenanceSystem.vbproj.GenerateResource.cache
+G:\Assignment\SecondYearSecondSem\CCS5\DiagcareMaintenanceSystem\obj\Debug\DiagcareMaintenanceSystem.vbproj.CoreCompileInputs.cache
+G:\Assignment\SecondYearSecondSem\CCS5\DiagcareMaintenanceSystem\obj\Debug\DiagcareMaintenanceSystem.exe
+G:\Assignment\SecondYearSecondSem\CCS5\DiagcareMaintenanceSystem\obj\Debug\DiagcareMaintenanceSystem.xml
+G:\Assignment\SecondYearSecondSem\CCS5\DiagcareMaintenanceSystem\obj\Debug\DiagcareMaintenanceSystem.pdb
