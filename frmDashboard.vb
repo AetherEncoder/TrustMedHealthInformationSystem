@@ -25,6 +25,15 @@ Public Class frmDashboard
     Private currentSectionName As String = "Patients"
     Private currentSectionSingular As String = "Patient"
 
+    Private patientsSectionInitialized As Boolean = False
+    Private pnlPatientsSection As Panel
+    Private grpPatientOptions As GroupBox
+    Private grpPatientList As GroupBox
+    Private dgvPatients As DataGridView
+    Private btnAddPatient As Button
+    Private btnDeletePatient As Button
+    Private btnUpdatePatient As Button
+
     Private Sub frmLogin_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         MyConnectionString = "datasource=localhost;username=root;password=;database=trustmed"
 
@@ -45,7 +54,9 @@ Public Class frmDashboard
             pbTrustMedLogo.Image = Me.Icon.ToBitmap()
         End If
 
+        InitializePatientsSectionUi()
         ClearErrorMessages()
+        ApplyGridWrapping(Me)
     End Sub
 
     Private Sub btnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
@@ -268,129 +279,9 @@ Public Class frmDashboard
     Private Sub ShowDashboardHome()
         pnlSummaryCards.Visible = True
         grpQuickActions.Visible = True
-        pnlPatientsSection.Visible = False
-    End Sub
-
-    Private Sub ShowPatientsSection()
-        ShowEntitySection("patients")
-    End Sub
-
-    Private Sub ShowEntitySection(sectionKey As String)
-        Dim sectionTitle As String = ""
-        Dim sectionSingular As String = ""
-        Dim sectionQuery As String = ""
-
-        GetSectionConfig(sectionKey, sectionTitle, sectionSingular, sectionQuery)
-
-        currentSectionName = sectionTitle
-        currentSectionSingular = sectionSingular
-
-        pnlSummaryCards.Visible = False
-        grpQuickActions.Visible = False
-        pnlPatientsSection.Visible = True
-
-        grpPatientList.Text = sectionTitle
-        grpPatientOptions.Text = sectionTitle & " Options"
-        btnAddPatient.Text = "Add New " & sectionSingular
-        btnDeletePatient.Text = "Delete " & sectionSingular
-        btnUpdatePatient.Text = "Update " & sectionSingular
-
-        LoadSectionList(sectionKey, sectionQuery)
-    End Sub
-
-    Private Sub GetSectionConfig(sectionKey As String, ByRef sectionTitle As String, ByRef sectionSingular As String, ByRef sectionQuery As String)
-        Select Case sectionKey.ToLowerInvariant()
-            Case "patients"
-                sectionTitle = "Patients"
-                sectionSingular = "Patient"
-                sectionQuery = "SELECT PatientID, FirstName, LastName, Sex, DateOfBirth, PhoneNumber, Province, City, Street, HouseNumber, " &
-                               "CONCAT(HouseNumber, ', ', Street, ', ', City, ', ', Province) AS Address " &
-                               "FROM patient ORDER BY PatientID DESC"
-            Case "consultations"
-                sectionTitle = "Consultations"
-                sectionSingular = "Consultation"
-                sectionQuery = "SELECT ConsultationID, PatientID, PhysicianID, Complaint, Notes, ConsultationDate FROM consultation ORDER BY ConsultationID DESC"
-            Case "diagnoses"
-                sectionTitle = "Diagnoses"
-                sectionSingular = "Diagnosis"
-                sectionQuery = "SELECT DiagnosisID, PatientID, PhysicianID, DiagnosisName, DiagnosisDescription, DiagnosisDate FROM diagnosis ORDER BY DiagnosisID DESC"
-            Case "lab orders"
-                sectionTitle = "Lab Orders"
-                sectionSingular = "Lab Order"
-                sectionQuery = "SELECT OrderID, PatientID, PhysicianID, OrderDate FROM lab_order ORDER BY OrderID DESC"
-            Case "examinations"
-                sectionTitle = "Examinations"
-                sectionSingular = "Examination"
-                sectionQuery = "SELECT ExaminationID, PatientID, Result, DatePerformed FROM examination ORDER BY ExaminationID DESC"
-            Case "medical tests"
-                sectionTitle = "Medical Tests"
-                sectionSingular = "Medical Test"
-                sectionQuery = "SELECT TestID, TestName, TestDescription, Cost FROM medical_test ORDER BY TestID DESC"
-            Case "medicines"
-                sectionTitle = "Medicines"
-                sectionSingular = "Medicine"
-                sectionQuery = "SELECT MedicineID, MedicineName, Price, MedicineDescription FROM medicine ORDER BY MedicineID DESC"
-            Case "prescriptions"
-                sectionTitle = "Prescriptions"
-                sectionSingular = "Prescription"
-                sectionQuery = "SELECT PrescriptionID, PatientID, PhysicianID, Instruction, PrescriptionDate FROM prescription ORDER BY PrescriptionID DESC"
-            Case "physicians"
-                sectionTitle = "Physicians"
-                sectionSingular = "Physician"
-                sectionQuery = "SELECT PhysicianID, FirstName, LastName, Specialty, LicenseNo, PhoneNumber FROM physician ORDER BY PhysicianID DESC"
-            Case "medtechs"
-                sectionTitle = "MedTechs"
-                sectionSingular = "MedTech"
-                sectionQuery = "SELECT MedtechID, FirstName, LastName, LicenseNo, PhoneNumber FROM medtech ORDER BY MedtechID DESC"
-            Case Else
-                sectionTitle = "Patients"
-                sectionSingular = "Patient"
-                sectionQuery = "SELECT PatientID, FirstName, LastName, Sex, DateOfBirth, PhoneNumber, Province, City, Street, HouseNumber, " &
-                               "CONCAT(HouseNumber, ', ', Street, ', ', City, ', ', Province) AS Address " &
-                               "FROM patient ORDER BY PatientID DESC"
-        End Select
-    End Sub
-
-    Private Sub LoadSectionList(sectionKey As String, sectionQuery As String)
-        Dim dt As New DataTable()
-
-        Try
-            userSQLQuery = sectionQuery
-            MyConnection = New MySqlConnection(MyConnectionString)
-            MyConnection.Open()
-
-            userDA = New MySqlDataAdapter(userSQLQuery, CType(MyConnection, MySqlConnection))
-            userDA.Fill(dt)
-            dgvPatients.DataSource = dt
-
-            If sectionKey.ToLowerInvariant() = "patients" Then
-                If dgvPatients.Columns.Contains("Province") Then dgvPatients.Columns("Province").Visible = False
-                If dgvPatients.Columns.Contains("City") Then dgvPatients.Columns("City").Visible = False
-                If dgvPatients.Columns.Contains("Street") Then dgvPatients.Columns("Street").Visible = False
-                If dgvPatients.Columns.Contains("HouseNumber") Then dgvPatients.Columns("HouseNumber").Visible = False
-
-                If dgvPatients.Columns.Contains("PatientID") Then dgvPatients.Columns("PatientID").Width = 80
-                If dgvPatients.Columns.Contains("FirstName") Then dgvPatients.Columns("FirstName").Width = 120
-                If dgvPatients.Columns.Contains("LastName") Then dgvPatients.Columns("LastName").Width = 120
-                If dgvPatients.Columns.Contains("Sex") Then dgvPatients.Columns("Sex").Width = 70
-                If dgvPatients.Columns.Contains("DateOfBirth") Then dgvPatients.Columns("DateOfBirth").Width = 95
-                If dgvPatients.Columns.Contains("PhoneNumber") Then dgvPatients.Columns("PhoneNumber").Width = 120
-                If dgvPatients.Columns.Contains("Address") Then
-                    dgvPatients.Columns("Address").AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
-                    dgvPatients.Columns("Address").MinimumWidth = 380
-                End If
-            Else
-                For Each col As DataGridViewColumn In dgvPatients.Columns
-                    col.Visible = True
-                Next
-            End If
-        Catch
-            dgvPatients.DataSource = Nothing
-        Finally
-            If MyConnection IsNot Nothing AndAlso MyConnection.State = ConnectionState.Open Then
-                MyConnection.Close()
-            End If
-        End Try
+        If pnlPatientsSection IsNot Nothing Then
+            pnlPatientsSection.Visible = False
+        End If
     End Sub
 
     Private Sub miDashboard_Click(sender As Object, e As EventArgs) Handles miDashboard.Click
@@ -399,6 +290,211 @@ Public Class frmDashboard
 
     Private Sub miPatients_Click(sender As Object, e As EventArgs) Handles miPatients.Click
         ShowEntitySection("patients")
+    End Sub
+
+    Private Sub InitializePatientsSectionUi()
+        If patientsSectionInitialized Then Return
+
+        pnlPatientsSection = New Panel()
+        pnlPatientsSection.Location = New Point(12, 39)
+        pnlPatientsSection.Size = New Size(1324, 678)
+        pnlPatientsSection.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        pnlPatientsSection.Visible = False
+
+        grpPatientOptions = New GroupBox()
+        grpPatientOptions.Text = "Patient Options"
+        grpPatientOptions.Font = New Font("Microsoft Sans Serif", 10.0!, FontStyle.Bold)
+        grpPatientOptions.ForeColor = Color.DarkBlue
+        grpPatientOptions.Location = New Point(0, 0)
+        grpPatientOptions.Size = New Size(260, 678)
+
+        btnAddPatient = New Button()
+        btnAddPatient.Text = "Add New Patient"
+        btnAddPatient.BackColor = Color.DarkBlue
+        btnAddPatient.ForeColor = Color.White
+        btnAddPatient.Size = New Size(224, 48)
+        btnAddPatient.Location = New Point(18, 44)
+        AddHandler btnAddPatient.Click, AddressOf BtnAddPatient_Click
+
+        btnDeletePatient = New Button()
+        btnDeletePatient.Text = "Delete Patient"
+        btnDeletePatient.BackColor = Color.Gray
+        btnDeletePatient.ForeColor = Color.White
+        btnDeletePatient.Size = New Size(224, 48)
+        btnDeletePatient.Location = New Point(18, 104)
+        AddHandler btnDeletePatient.Click, AddressOf BtnDeletePatient_Click
+
+        btnUpdatePatient = New Button()
+        btnUpdatePatient.Text = "Update Patient"
+        btnUpdatePatient.BackColor = Color.SteelBlue
+        btnUpdatePatient.ForeColor = Color.White
+        btnUpdatePatient.Size = New Size(224, 48)
+        btnUpdatePatient.Location = New Point(18, 164)
+        AddHandler btnUpdatePatient.Click, AddressOf BtnUpdatePatient_Click
+
+        grpPatientOptions.Controls.Add(btnAddPatient)
+        grpPatientOptions.Controls.Add(btnDeletePatient)
+        grpPatientOptions.Controls.Add(btnUpdatePatient)
+
+        grpPatientList = New GroupBox()
+        grpPatientList.Text = "Patients"
+        grpPatientList.Font = New Font("Microsoft Sans Serif", 10.0!, FontStyle.Bold)
+        grpPatientList.ForeColor = Color.DarkBlue
+        grpPatientList.Location = New Point(268, 0)
+        grpPatientList.Size = New Size(1056, 678)
+        grpPatientList.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+
+        dgvPatients = New DataGridView()
+        dgvPatients.Location = New Point(10, 24)
+        dgvPatients.Size = New Size(1036, 644)
+        dgvPatients.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        dgvPatients.AllowUserToAddRows = False
+        dgvPatients.AllowUserToDeleteRows = False
+        dgvPatients.ReadOnly = True
+        dgvPatients.RowHeadersVisible = False
+        dgvPatients.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+        dgvPatients.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+        dgvPatients.DefaultCellStyle.WrapMode = DataGridViewTriState.True
+        dgvPatients.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
+
+        grpPatientList.Controls.Add(dgvPatients)
+
+        pnlPatientsSection.Controls.Add(grpPatientList)
+        pnlPatientsSection.Controls.Add(grpPatientOptions)
+
+        pnlDashboard.Controls.Add(pnlPatientsSection)
+        pnlPatientsSection.BringToFront()
+
+        patientsSectionInitialized = True
+    End Sub
+
+    Private Sub ShowEntitySection(sectionKey As String)
+        InitializePatientsSectionUi()
+
+        Dim sectionTitle As String = ""
+        Dim sectionSingular As String = ""
+        Dim sectionQuery As String = ""
+        GetSectionConfig(sectionKey, sectionTitle, sectionSingular, sectionQuery)
+
+        currentSectionName = sectionTitle
+        currentSectionSingular = sectionSingular
+
+        grpPatientList.Text = sectionTitle
+        grpPatientOptions.Text = sectionTitle & " Options"
+        btnAddPatient.Text = "Add New " & sectionSingular
+        btnDeletePatient.Text = "Delete " & sectionSingular
+        btnUpdatePatient.Text = "Update " & sectionSingular
+
+        pnlSummaryCards.Visible = False
+        grpQuickActions.Visible = False
+        pnlPatientsSection.Visible = True
+
+        LoadSectionData(sectionKey, sectionQuery)
+    End Sub
+
+    Private Sub GetSectionConfig(sectionKey As String, ByRef sectionTitle As String, ByRef sectionSingular As String, ByRef sectionQuery As String)
+        Select Case sectionKey.ToLowerInvariant()
+            Case "patients"
+                sectionTitle = "Patients"
+                sectionSingular = "Patient"
+                sectionQuery = "SELECT PatientID, FirstName, LastName, Sex, DateOfBirth, PhoneNumber, " &
+                               "CONCAT(HouseNumber, ', ', Street, ', ', City, ', ', Province) AS Address " &
+                               "FROM patient ORDER BY PatientID DESC"
+            Case "consultations"
+                sectionTitle = "Consultations"
+                sectionSingular = "Consultation"
+                sectionQuery = "SELECT * FROM consultation ORDER BY ConsultationID DESC"
+            Case "diagnoses"
+                sectionTitle = "Diagnoses"
+                sectionSingular = "Diagnosis"
+                sectionQuery = "SELECT * FROM diagnosis ORDER BY DiagnosisID DESC"
+            Case "laborders"
+                sectionTitle = "Lab Orders"
+                sectionSingular = "Lab Order"
+                sectionQuery = "SELECT * FROM lab_order ORDER BY OrderID DESC"
+            Case "examinations"
+                sectionTitle = "Examinations"
+                sectionSingular = "Examination"
+                sectionQuery = "SELECT * FROM examination ORDER BY ExaminationID DESC"
+            Case "medicaltests"
+                sectionTitle = "Medical Tests"
+                sectionSingular = "Medical Test"
+                sectionQuery = "SELECT * FROM medical_test ORDER BY TestID DESC"
+            Case "medicines"
+                sectionTitle = "Medicines"
+                sectionSingular = "Medicine"
+                sectionQuery = "SELECT * FROM medicine ORDER BY MedicineID DESC"
+            Case "prescriptions"
+                sectionTitle = "Prescriptions"
+                sectionSingular = "Prescription"
+                sectionQuery = "SELECT * FROM prescription ORDER BY PrescriptionID DESC"
+            Case "physicians"
+                sectionTitle = "Physicians"
+                sectionSingular = "Physician"
+                sectionQuery = "SELECT * FROM physician ORDER BY PhysicianID DESC"
+            Case "medtechs"
+                sectionTitle = "MedTechs"
+                sectionSingular = "MedTech"
+                sectionQuery = "SELECT * FROM medtech ORDER BY MedtechID DESC"
+            Case Else
+                sectionTitle = "Patients"
+                sectionSingular = "Patient"
+                sectionQuery = "SELECT PatientID, FirstName, LastName, Sex, DateOfBirth, PhoneNumber, " &
+                               "CONCAT(HouseNumber, ', ', Street, ', ', City, ', ', Province) AS Address " &
+                               "FROM patient ORDER BY PatientID DESC"
+        End Select
+    End Sub
+
+    Private Sub LoadSectionData(sectionKey As String, query As String)
+        Dim dt As New DataTable()
+        If dgvPatients Is Nothing Then Return
+
+        Try
+            MyConnection = New MySqlConnection(MyConnectionString)
+            MyConnection.Open()
+
+            userDA = New MySqlDataAdapter(query, CType(MyConnection, MySqlConnection))
+            userDA.Fill(dt)
+
+            If dt.Rows.Count = 0 Then
+                dt = CreateInfoTable("No " & currentSectionName.ToLowerInvariant() & " found.")
+            End If
+
+            dgvPatients.DataSource = dt
+            dgvPatients.DefaultCellStyle.WrapMode = DataGridViewTriState.True
+            dgvPatients.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
+
+            If sectionKey.ToLowerInvariant() = "patients" Then
+                If dgvPatients.Columns.Contains("PatientID") Then dgvPatients.Columns("PatientID").Width = 90
+                If dgvPatients.Columns.Contains("FirstName") Then dgvPatients.Columns("FirstName").Width = 140
+                If dgvPatients.Columns.Contains("LastName") Then dgvPatients.Columns("LastName").Width = 140
+                If dgvPatients.Columns.Contains("Sex") Then dgvPatients.Columns("Sex").Width = 70
+                If dgvPatients.Columns.Contains("DateOfBirth") Then dgvPatients.Columns("DateOfBirth").Width = 105
+                If dgvPatients.Columns.Contains("PhoneNumber") Then dgvPatients.Columns("PhoneNumber").Width = 140
+                If dgvPatients.Columns.Contains("Address") Then
+                    dgvPatients.Columns("Address").AutoSizeMode = DataGridViewAutoSizeColumnsMode.Fill
+                    dgvPatients.Columns("Address").MinimumWidth = 420
+                End If
+            End If
+        Catch
+            dgvPatients.DataSource = CreateInfoTable("Unable to load " & currentSectionName.ToLowerInvariant() & ".")
+        Finally
+            If MyConnection IsNot Nothing AndAlso MyConnection.State = ConnectionState.Open Then
+                MyConnection.Close()
+            End If
+        End Try
+    End Sub
+
+    Private Sub BtnAddPatient_Click(sender As Object, e As EventArgs)
+        ShowQuickActionPlaceholder("Add New " & currentSectionSingular)
+    End Sub
+
+    Private Sub BtnUpdatePatient_Click(sender As Object, e As EventArgs)
+        ShowQuickActionPlaceholder("Update " & currentSectionSingular)
+    End Sub
+
+    Private Sub BtnDeletePatient_Click(sender As Object, e As EventArgs)
+        ShowQuickActionPlaceholder("Delete " & currentSectionSingular)
     End Sub
 
     Private Sub miConsultation_Click(sender As Object, e As EventArgs) Handles miConsultation.Click
@@ -410,7 +506,7 @@ Public Class frmDashboard
     End Sub
 
     Private Sub miLabOrders_Click(sender As Object, e As EventArgs) Handles miLabOrders.Click
-        ShowEntitySection("lab orders")
+        ShowEntitySection("laborders")
     End Sub
 
     Private Sub miExamination_Click(sender As Object, e As EventArgs) Handles miExamination.Click
@@ -418,7 +514,7 @@ Public Class frmDashboard
     End Sub
 
     Private Sub miMedicalTest_Click(sender As Object, e As EventArgs) Handles miMedicalTest.Click
-        ShowEntitySection("medical tests")
+        ShowEntitySection("medicaltests")
     End Sub
 
     Private Sub miMedicine_Click(sender As Object, e As EventArgs) Handles miMedicine.Click
@@ -437,15 +533,21 @@ Public Class frmDashboard
         ShowEntitySection("medtechs")
     End Sub
 
-    Private Sub btnAddPatient_Click(sender As Object, e As EventArgs) Handles btnAddPatient.Click
-        ShowQuickActionPlaceholder("Add New " & currentSectionSingular)
+    Private Sub ApplyGridWrapping(parent As Control)
+        For Each ctrl As Control In parent.Controls
+            If TypeOf ctrl Is DataGridView Then
+                Dim grid As DataGridView = CType(ctrl, DataGridView)
+                grid.DefaultCellStyle.WrapMode = DataGridViewTriState.True
+                grid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
+            End If
+
+            If ctrl.HasChildren Then
+                ApplyGridWrapping(ctrl)
+            End If
+        Next
     End Sub
 
-    Private Sub btnDeletePatient_Click(sender As Object, e As EventArgs) Handles btnDeletePatient.Click
-        ShowQuickActionPlaceholder("Delete " & currentSectionSingular)
-    End Sub
+    Private Sub lblLabOrdersValue_Click(sender As Object, e As EventArgs) Handles lblLabOrdersValue.Click
 
-    Private Sub btnUpdatePatient_Click(sender As Object, e As EventArgs) Handles btnUpdatePatient.Click
-        ShowQuickActionPlaceholder("Update " & currentSectionSingular)
     End Sub
 End Class

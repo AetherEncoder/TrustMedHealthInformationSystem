@@ -35,13 +35,6 @@ Partial Class frmDashboard
         Me.pnlLoginContainer = New System.Windows.Forms.Panel()
         Me.lblLoginError = New System.Windows.Forms.Label()
         Me.pnlDashboard = New System.Windows.Forms.Panel()
-        Me.pnlPatientsSection = New System.Windows.Forms.Panel()
-        Me.grpPatientList = New System.Windows.Forms.GroupBox()
-        Me.dgvPatients = New System.Windows.Forms.DataGridView()
-        Me.grpPatientOptions = New System.Windows.Forms.GroupBox()
-        Me.btnUpdatePatient = New System.Windows.Forms.Button()
-        Me.btnDeletePatient = New System.Windows.Forms.Button()
-        Me.btnAddPatient = New System.Windows.Forms.Button()
         Me.grpQuickActions = New System.Windows.Forms.GroupBox()
         Me.btnNewPatient = New System.Windows.Forms.Button()
         Me.btnNewDiagnosis = New System.Windows.Forms.Button()
@@ -81,10 +74,6 @@ Partial Class frmDashboard
         Me.miAccountSettings = New System.Windows.Forms.ToolStripMenuItem()
         Me.pnlLoginContainer.SuspendLayout()
         Me.pnlDashboard.SuspendLayout()
-        Me.pnlPatientsSection.SuspendLayout()
-        Me.grpPatientList.SuspendLayout()
-        CType(Me.dgvPatients, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.grpPatientOptions.SuspendLayout()
         Me.grpQuickActions.SuspendLayout()
         Me.pnlSummaryCards.SuspendLayout()
         Me.pnlBranding.SuspendLayout()
@@ -220,7 +209,6 @@ Partial Class frmDashboard
         '
         'pnlDashboard
         '
-        Me.pnlDashboard.Controls.Add(Me.pnlPatientsSection)
         Me.pnlDashboard.Controls.Add(Me.grpQuickActions)
         Me.pnlDashboard.Controls.Add(Me.pnlSummaryCards)
         Me.pnlDashboard.Controls.Add(Me.msDashboardMenu)
@@ -230,93 +218,6 @@ Partial Class frmDashboard
         Me.pnlDashboard.Size = New System.Drawing.Size(1348, 729)
         Me.pnlDashboard.TabIndex = 11
         Me.pnlDashboard.Visible = False
-        '
-        'pnlPatientsSection
-        '
-        Me.pnlPatientsSection.Controls.Add(Me.grpPatientList)
-        Me.pnlPatientsSection.Controls.Add(Me.grpPatientOptions)
-        Me.pnlPatientsSection.Location = New System.Drawing.Point(12, 39)
-        Me.pnlPatientsSection.Name = "pnlPatientsSection"
-        Me.pnlPatientsSection.Size = New System.Drawing.Size(1324, 678)
-        Me.pnlPatientsSection.TabIndex = 6
-        Me.pnlPatientsSection.Visible = False
-        '
-        'grpPatientList
-        '
-        Me.grpPatientList.Controls.Add(Me.dgvPatients)
-        Me.grpPatientList.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold)
-        Me.grpPatientList.ForeColor = System.Drawing.Color.DarkBlue
-        Me.grpPatientList.Location = New System.Drawing.Point(268, 0)
-        Me.grpPatientList.Name = "grpPatientList"
-        Me.grpPatientList.Size = New System.Drawing.Size(1056, 678)
-        Me.grpPatientList.TabIndex = 1
-        Me.grpPatientList.TabStop = False
-        Me.grpPatientList.Text = "Patients"
-        '
-        'dgvPatients
-        '
-        Me.dgvPatients.AllowUserToAddRows = False
-        Me.dgvPatients.AllowUserToDeleteRows = False
-        Me.dgvPatients.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.dgvPatients.BackgroundColor = System.Drawing.Color.White
-        Me.dgvPatients.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvPatients.Location = New System.Drawing.Point(10, 24)
-        Me.dgvPatients.Name = "dgvPatients"
-        Me.dgvPatients.ReadOnly = True
-        Me.dgvPatients.RowHeadersVisible = False
-        Me.dgvPatients.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgvPatients.Size = New System.Drawing.Size(1036, 644)
-        Me.dgvPatients.TabIndex = 0
-        '
-        'grpPatientOptions
-        '
-        Me.grpPatientOptions.Controls.Add(Me.btnUpdatePatient)
-        Me.grpPatientOptions.Controls.Add(Me.btnDeletePatient)
-        Me.grpPatientOptions.Controls.Add(Me.btnAddPatient)
-        Me.grpPatientOptions.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold)
-        Me.grpPatientOptions.ForeColor = System.Drawing.Color.DarkBlue
-        Me.grpPatientOptions.Location = New System.Drawing.Point(0, 0)
-        Me.grpPatientOptions.Name = "grpPatientOptions"
-        Me.grpPatientOptions.Size = New System.Drawing.Size(260, 678)
-        Me.grpPatientOptions.TabIndex = 0
-        Me.grpPatientOptions.TabStop = False
-        Me.grpPatientOptions.Text = "Options"
-        '
-        'btnUpdatePatient
-        '
-        Me.btnUpdatePatient.BackColor = System.Drawing.Color.SteelBlue
-        Me.btnUpdatePatient.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold)
-        Me.btnUpdatePatient.ForeColor = System.Drawing.Color.White
-        Me.btnUpdatePatient.Location = New System.Drawing.Point(18, 164)
-        Me.btnUpdatePatient.Name = "btnUpdatePatient"
-        Me.btnUpdatePatient.Size = New System.Drawing.Size(224, 48)
-        Me.btnUpdatePatient.TabIndex = 2
-        Me.btnUpdatePatient.Text = "Update Patient"
-        Me.btnUpdatePatient.UseVisualStyleBackColor = False
-        '
-        'btnDeletePatient
-        '
-        Me.btnDeletePatient.BackColor = System.Drawing.Color.Gray
-        Me.btnDeletePatient.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold)
-        Me.btnDeletePatient.ForeColor = System.Drawing.Color.White
-        Me.btnDeletePatient.Location = New System.Drawing.Point(18, 104)
-        Me.btnDeletePatient.Name = "btnDeletePatient"
-        Me.btnDeletePatient.Size = New System.Drawing.Size(224, 48)
-        Me.btnDeletePatient.TabIndex = 1
-        Me.btnDeletePatient.Text = "Delete Patient"
-        Me.btnDeletePatient.UseVisualStyleBackColor = False
-        '
-        'btnAddPatient
-        '
-        Me.btnAddPatient.BackColor = System.Drawing.Color.DarkBlue
-        Me.btnAddPatient.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold)
-        Me.btnAddPatient.ForeColor = System.Drawing.Color.White
-        Me.btnAddPatient.Location = New System.Drawing.Point(18, 44)
-        Me.btnAddPatient.Name = "btnAddPatient"
-        Me.btnAddPatient.Size = New System.Drawing.Size(224, 48)
-        Me.btnAddPatient.TabIndex = 0
-        Me.btnAddPatient.Text = "Add New Patient"
-        Me.btnAddPatient.UseVisualStyleBackColor = False
         '
         'grpQuickActions
         '
@@ -642,22 +543,18 @@ Partial Class frmDashboard
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(1348, 729)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
-        Me.MaximizeBox = False
         Me.Controls.Add(Me.pnlDashboard)
         Me.Controls.Add(Me.pnlLoginContainer)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.msDashboardMenu
+        Me.MaximizeBox = False
         Me.Name = "frmDashboard"
         Me.Text = "TrustMed Health Information System"
         Me.pnlLoginContainer.ResumeLayout(False)
         Me.pnlLoginContainer.PerformLayout()
         Me.pnlDashboard.ResumeLayout(False)
         Me.pnlDashboard.PerformLayout()
-        Me.pnlPatientsSection.ResumeLayout(False)
-        Me.grpPatientList.ResumeLayout(False)
-        CType(Me.dgvPatients, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.grpPatientOptions.ResumeLayout(False)
         Me.grpQuickActions.ResumeLayout(False)
         Me.pnlSummaryCards.ResumeLayout(False)
         Me.pnlBranding.ResumeLayout(False)
@@ -718,11 +615,4 @@ Partial Class frmDashboard
     Friend WithEvents btnNewConsultation As Button
     Friend WithEvents btnNewLabOrder As Button
     Friend WithEvents btnNewPrescription As Button
-    Friend WithEvents pnlPatientsSection As Panel
-    Friend WithEvents grpPatientOptions As GroupBox
-    Friend WithEvents btnAddPatient As Button
-    Friend WithEvents btnDeletePatient As Button
-    Friend WithEvents btnUpdatePatient As Button
-    Friend WithEvents grpPatientList As GroupBox
-    Friend WithEvents dgvPatients As DataGridView
 End Class

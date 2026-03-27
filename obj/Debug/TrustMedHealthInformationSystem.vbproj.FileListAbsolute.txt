@@ -30,3 +30,4 @@ G:\Assignment\SecondYearSecondSem\CCS5\TrustMedHealthInformationSystem\obj\Debug
 G:\Assignment\SecondYearSecondSem\CCS5\TrustMedHealthInformationSystem\obj\Debug\DiagcareMaintenanceSystem.exe
 G:\Assignment\SecondYearSecondSem\CCS5\TrustMedHealthInformationSystem\obj\Debug\DiagcareMaintenanceSystem.xml
 G:\Assignment\SecondYearSecondSem\CCS5\TrustMedHealthInformationSystem\obj\Debug\DiagcareMaintenanceSystem.pdb
+G:\Assignment\SecondYearSecondSem\CCS5\TrustMedHealthInformationSystem\obj\Debug\DiagcareMaintenanceSystem.frmPatientEntry.resources
