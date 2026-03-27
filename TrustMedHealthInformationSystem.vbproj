@@ -81,8 +81,12 @@
       <DependentUpon>frmDashboard.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmPatientEntry.Designer.vb" />
-    <Compile Include="frmPatientEntry.vb" />
+    <Compile Include="frmPatientEntry.Designer.vb">
+      <DependentUpon>frmPatientEntry.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmPatientEntry.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

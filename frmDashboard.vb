@@ -125,7 +125,7 @@ Public Class frmDashboard
     End Sub
 
     Private Sub btnNewPatient_Click(sender As Object, e As EventArgs) Handles btnNewPatient.Click
-        ShowQuickActionPlaceholder("New Patient")
+        OpenPatientEntryDialog()
     End Sub
 
     Private Sub btnNewDiagnosis_Click(sender As Object, e As EventArgs) Handles btnNewDiagnosis.Click
@@ -486,7 +486,28 @@ Public Class frmDashboard
     End Sub
 
     Private Sub BtnAddPatient_Click(sender As Object, e As EventArgs)
+        If currentSectionName = "Patients" Then
+            OpenPatientEntryDialog()
+            Return
+        End If
+
         ShowQuickActionPlaceholder("Add New " & currentSectionSingular)
+    End Sub
+
+    Private Sub OpenPatientEntryDialog()
+        Using patientEntry As New frmPatientEntry(MyConnectionString)
+            If patientEntry.ShowDialog(Me) = DialogResult.OK Then
+                LoadDashboardOverview()
+
+                If pnlPatientsSection IsNot Nothing AndAlso pnlPatientsSection.Visible Then
+                    Dim sectionTitle As String = ""
+                    Dim sectionSingular As String = ""
+                    Dim sectionQuery As String = ""
+                    GetSectionConfig("patients", sectionTitle, sectionSingular, sectionQuery)
+                    LoadSectionData("patients", sectionQuery)
+                End If
+            End If
+        End Using
     End Sub
 
     Private Sub BtnUpdatePatient_Click(sender As Object, e As EventArgs)
