@@ -27,6 +27,12 @@ Partial Class frmLabOrderEntry
         Me.cboPatient = New System.Windows.Forms.ComboBox()
         Me.lblOrderDate = New System.Windows.Forms.Label()
         Me.dtpOrderDate = New System.Windows.Forms.DateTimePicker()
+        Me.lblMedicalTest = New System.Windows.Forms.Label()
+        Me.cboMedicalTest = New System.Windows.Forms.ComboBox()
+        Me.btnAddMedicalTest = New System.Windows.Forms.Button()
+        Me.btnRemoveMedicalTest = New System.Windows.Forms.Button()
+        Me.lblSelectedTests = New System.Windows.Forms.Label()
+        Me.lstSelectedTests = New System.Windows.Forms.ListBox()
         Me.btnSave = New System.Windows.Forms.Button()
         Me.btnCancel = New System.Windows.Forms.Button()
         Me.SuspendLayout()
@@ -102,23 +108,76 @@ Partial Class frmLabOrderEntry
         Me.dtpOrderDate.Size = New System.Drawing.Size(330, 20)
         Me.dtpOrderDate.TabIndex = 7
         '
+        'lblMedicalTest
+        '
+        Me.lblMedicalTest.Location = New System.Drawing.Point(20, 172)
+        Me.lblMedicalTest.Name = "lblMedicalTest"
+        Me.lblMedicalTest.Size = New System.Drawing.Size(130, 24)
+        Me.lblMedicalTest.TabIndex = 8
+        Me.lblMedicalTest.Text = "Medical Test *:"
+        '
+        'cboMedicalTest
+        '
+        Me.cboMedicalTest.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.cboMedicalTest.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.cboMedicalTest.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown
+        Me.cboMedicalTest.FormattingEnabled = True
+        Me.cboMedicalTest.Location = New System.Drawing.Point(160, 168)
+        Me.cboMedicalTest.Name = "cboMedicalTest"
+        Me.cboMedicalTest.Size = New System.Drawing.Size(230, 21)
+        Me.cboMedicalTest.TabIndex = 9
+        '
+        'btnAddMedicalTest
+        '
+        Me.btnAddMedicalTest.Location = New System.Drawing.Point(396, 166)
+        Me.btnAddMedicalTest.Name = "btnAddMedicalTest"
+        Me.btnAddMedicalTest.Size = New System.Drawing.Size(94, 24)
+        Me.btnAddMedicalTest.TabIndex = 10
+        Me.btnAddMedicalTest.Text = "Add Test"
+        Me.btnAddMedicalTest.UseVisualStyleBackColor = True
+        '
+        'btnRemoveMedicalTest
+        '
+        Me.btnRemoveMedicalTest.Location = New System.Drawing.Point(396, 199)
+        Me.btnRemoveMedicalTest.Name = "btnRemoveMedicalTest"
+        Me.btnRemoveMedicalTest.Size = New System.Drawing.Size(94, 24)
+        Me.btnRemoveMedicalTest.TabIndex = 11
+        Me.btnRemoveMedicalTest.Text = "Remove"
+        Me.btnRemoveMedicalTest.UseVisualStyleBackColor = True
+        '
+        'lblSelectedTests
+        '
+        Me.lblSelectedTests.Location = New System.Drawing.Point(20, 201)
+        Me.lblSelectedTests.Name = "lblSelectedTests"
+        Me.lblSelectedTests.Size = New System.Drawing.Size(130, 24)
+        Me.lblSelectedTests.TabIndex = 12
+        Me.lblSelectedTests.Text = "Selected Tests *:"
+        '
+        'lstSelectedTests
+        '
+        Me.lstSelectedTests.FormattingEnabled = True
+        Me.lstSelectedTests.Location = New System.Drawing.Point(160, 199)
+        Me.lstSelectedTests.Name = "lstSelectedTests"
+        Me.lstSelectedTests.Size = New System.Drawing.Size(230, 95)
+        Me.lstSelectedTests.TabIndex = 13
+        '
         'btnSave
         '
         Me.btnSave.BackColor = System.Drawing.Color.DarkBlue
         Me.btnSave.ForeColor = System.Drawing.Color.White
-        Me.btnSave.Location = New System.Drawing.Point(300, 184)
+        Me.btnSave.Location = New System.Drawing.Point(300, 314)
         Me.btnSave.Name = "btnSave"
         Me.btnSave.Size = New System.Drawing.Size(90, 34)
-        Me.btnSave.TabIndex = 8
+        Me.btnSave.TabIndex = 14
         Me.btnSave.Text = "Save"
         Me.btnSave.UseVisualStyleBackColor = False
         '
         'btnCancel
         '
-        Me.btnCancel.Location = New System.Drawing.Point(400, 184)
+        Me.btnCancel.Location = New System.Drawing.Point(400, 314)
         Me.btnCancel.Name = "btnCancel"
         Me.btnCancel.Size = New System.Drawing.Size(90, 34)
-        Me.btnCancel.TabIndex = 9
+        Me.btnCancel.TabIndex = 15
         Me.btnCancel.Text = "Cancel"
         Me.btnCancel.UseVisualStyleBackColor = True
         '
@@ -126,9 +185,15 @@ Partial Class frmLabOrderEntry
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(520, 245)
+        Me.ClientSize = New System.Drawing.Size(520, 370)
         Me.Controls.Add(Me.btnCancel)
         Me.Controls.Add(Me.btnSave)
+        Me.Controls.Add(Me.lstSelectedTests)
+        Me.Controls.Add(Me.lblSelectedTests)
+        Me.Controls.Add(Me.btnRemoveMedicalTest)
+        Me.Controls.Add(Me.btnAddMedicalTest)
+        Me.Controls.Add(Me.cboMedicalTest)
+        Me.Controls.Add(Me.lblMedicalTest)
         Me.Controls.Add(Me.dtpOrderDate)
         Me.Controls.Add(Me.lblOrderDate)
         Me.Controls.Add(Me.cboPatient)
@@ -153,6 +218,12 @@ Partial Class frmLabOrderEntry
     Friend WithEvents cboPatient As ComboBox
     Friend WithEvents lblOrderDate As Label
     Friend WithEvents dtpOrderDate As DateTimePicker
+    Friend WithEvents lblMedicalTest As Label
+    Friend WithEvents cboMedicalTest As ComboBox
+    Friend WithEvents btnAddMedicalTest As Button
+    Friend WithEvents btnRemoveMedicalTest As Button
+    Friend WithEvents lblSelectedTests As Label
+    Friend WithEvents lstSelectedTests As ListBox
     Friend WithEvents btnSave As Button
     Friend WithEvents btnCancel As Button
 End Class

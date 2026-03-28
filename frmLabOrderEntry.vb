@@ -2,6 +2,16 @@
 
 Partial Class frmLabOrderEntry
     Private ReadOnly _connectionString As String
+    Private ReadOnly _selectedTests As New List(Of LabTestSelectionItem)()
+
+    Private Class LabTestSelectionItem
+        Public Property TestID As Integer
+        Public Property DisplayName As String
+
+        Public Overrides Function ToString() As String
+            Return DisplayName
+        End Function
+    End Class
 
     Public Sub New()
         InitializeComponent()
@@ -15,11 +25,72 @@ Partial Class frmLabOrderEntry
     Private Sub frmLabOrderEntry_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadNextOrderId()
         LoadPhysicianAndPatientOptions()
+        LoadMedicalTestOptions()
+        RefreshSelectedTestsList()
     End Sub
 
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
         Me.DialogResult = DialogResult.Cancel
         Me.Close()
+    End Sub
+
+    Private Sub btnAddMedicalTest_Click(sender As Object, e As EventArgs) Handles btnAddMedicalTest.Click
+        If cboMedicalTest.SelectedIndex < 0 OrElse cboMedicalTest.SelectedValue Is Nothing OrElse TypeOf cboMedicalTest.SelectedValue Is DataRowView Then
+            MessageBox.Show("Select a medical test to add.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            cboMedicalTest.Focus()
+            Return
+        End If
+
+        Dim testId As Integer = Convert.ToInt32(cboMedicalTest.SelectedValue)
+        If IsTestSelected(testId) Then
+            MessageBox.Show("Medical test is already added.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Return
+        End If
+
+        _selectedTests.Add(New LabTestSelectionItem With {
+            .TestID = testId,
+            .DisplayName = cboMedicalTest.Text.Trim()
+        })
+
+        RefreshSelectedTestsList()
+        cboMedicalTest.SelectedIndex = -1
+        cboMedicalTest.Focus()
+    End Sub
+
+    Private Sub btnRemoveMedicalTest_Click(sender As Object, e As EventArgs) Handles btnRemoveMedicalTest.Click
+        If lstSelectedTests.SelectedItem Is Nothing Then
+            MessageBox.Show("Select a medical test from the list to remove.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            lstSelectedTests.Focus()
+            Return
+        End If
+
+        Dim selectedItem As LabTestSelectionItem = TryCast(lstSelectedTests.SelectedItem, LabTestSelectionItem)
+        If selectedItem Is Nothing Then Return
+
+        For i As Integer = _selectedTests.Count - 1 To 0 Step -1
+            If _selectedTests(i).TestID = selectedItem.TestID Then
+                _selectedTests.RemoveAt(i)
+                Exit For
+            End If
+        Next
+
+        RefreshSelectedTestsList()
+    End Sub
+
+    Private Function IsTestSelected(testId As Integer) As Boolean
+        For Each item As LabTestSelectionItem In _selectedTests
+            If item.TestID = testId Then Return True
+        Next
+
+        Return False
+    End Function
+
+    Private Sub RefreshSelectedTestsList()
+        lstSelectedTests.Items.Clear()
+
+        For Each item As LabTestSelectionItem In _selectedTests
+            lstSelectedTests.Items.Add(item)
+        Next
     End Sub
 
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
@@ -50,6 +121,15 @@ Partial Class frmLabOrderEntry
                     cmd.Parameters.AddWithValue("@OrderDate", dtpOrderDate.Value.Date)
                     cmd.ExecuteNonQuery()
                 End Using
+
+                Dim inclusionSql As String = "INSERT INTO lab_order_inclusion (TestID, OrderID) VALUES (@TestID, @OrderID)"
+                For Each testItem As LabTestSelectionItem In _selectedTests
+                    Using inclusionCmd As New MySqlCommand(inclusionSql, conn)
+                        inclusionCmd.Parameters.AddWithValue("@TestID", testItem.TestID)
+                        inclusionCmd.Parameters.AddWithValue("@OrderID", orderId)
+                        inclusionCmd.ExecuteNonQuery()
+                    End Using
+                Next
             End Using
 
             MessageBox.Show("Lab order added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -80,6 +160,12 @@ Partial Class frmLabOrderEntry
         If cboPatient.SelectedIndex < 0 OrElse cboPatient.SelectedValue Is Nothing OrElse TypeOf cboPatient.SelectedValue Is DataRowView Then
             MessageBox.Show("Patient is required.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             cboPatient.Focus()
+            Return False
+        End If
+
+        If _selectedTests.Count = 0 Then
+            MessageBox.Show("Add at least one medical test.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            cboMedicalTest.Focus()
             Return False
         End If
 
@@ -192,4 +278,33 @@ Partial Class frmLabOrderEntry
 
         Return candidate
     End Function
+
+    Private Sub LoadMedicalTestOptions()
+        If String.IsNullOrWhiteSpace(_connectionString) Then
+            cboMedicalTest.DataSource = Nothing
+            Return
+        End If
+
+        Try
+            Using conn As New MySqlConnection(_connectionString)
+                conn.Open()
+
+                Dim testTable As New DataTable()
+                Dim testSql As String = "SELECT TestID, CONCAT(TestName, ' (', TestID, ')') AS FullName FROM medical_test ORDER BY TestName"
+                Using testCmd As New MySqlCommand(testSql, conn)
+                    Using testAdapter As New MySqlDataAdapter(testCmd)
+                        testAdapter.Fill(testTable)
+                    End Using
+                End Using
+
+                cboMedicalTest.DataSource = testTable
+                cboMedicalTest.DisplayMember = "FullName"
+                cboMedicalTest.ValueMember = "TestID"
+                cboMedicalTest.SelectedIndex = -1
+            End Using
+        Catch ex As Exception
+            cboMedicalTest.DataSource = Nothing
+            MessageBox.Show("Unable to load medical tests: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
 End Class
