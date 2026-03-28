@@ -514,6 +514,11 @@ Public Class frmDashboard
             Return
         End If
 
+        If sectionName = "medical tests" OrElse singular = "medical test" Then
+            OpenMedicalTestEntryDialog()
+            Return
+        End If
+
         If sectionName = "lab orders" OrElse singular = "lab order" Then
             OpenLabOrderEntryDialog()
             Return
@@ -585,6 +590,22 @@ Public Class frmDashboard
                     Dim sectionQuery As String = ""
                     GetSectionConfig("medicines", sectionTitle, sectionSingular, sectionQuery)
                     LoadSectionData("medicines", sectionQuery)
+                End If
+            End If
+        End Using
+    End Sub
+
+    Private Sub OpenMedicalTestEntryDialog()
+        Using medicalTestEntry As New frmMedicalTest(MyConnectionString)
+            If medicalTestEntry.ShowDialog(Me) = DialogResult.OK Then
+                LoadDashboardOverview()
+
+                If pnlPatientsSection IsNot Nothing AndAlso pnlPatientsSection.Visible Then
+                    Dim sectionTitle As String = ""
+                    Dim sectionSingular As String = ""
+                    Dim sectionQuery As String = ""
+                    GetSectionConfig("medicaltests", sectionTitle, sectionSingular, sectionQuery)
+                    LoadSectionData("medicaltests", sectionQuery)
                 End If
             End If
         End Using
