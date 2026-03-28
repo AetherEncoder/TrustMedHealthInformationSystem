@@ -180,19 +180,17 @@ Public Class frmExaminationEntry
         End If
 
         Dim patientId As Integer = Convert.ToInt32(cboPatient.SelectedValue)
-        Dim medTechId As Integer = Convert.ToInt32(cboMedTech.SelectedValue)
 
         Try
             Using conn As New MySqlConnection(_connectionString)
                 conn.Open()
 
-                Dim examSql As String = "INSERT INTO examination (ExaminationID, PatientID, Result, DatePerformed, MedTechID) VALUES (@ExaminationID, @PatientID, @Result, @DatePerformed, @MedTechID)"
+                Dim examSql As String = "INSERT INTO examination (ExaminationID, PatientID, Result, DatePerformed) VALUES (@ExaminationID, @PatientID, @Result, @DatePerformed)"
                 Using examCmd As New MySqlCommand(examSql, conn)
                     examCmd.Parameters.AddWithValue("@ExaminationID", examinationId)
                     examCmd.Parameters.AddWithValue("@PatientID", patientId)
                     examCmd.Parameters.AddWithValue("@Result", txtResult.Text.Trim())
                     examCmd.Parameters.AddWithValue("@DatePerformed", dtpDatePerformed.Value.Date)
-                    examCmd.Parameters.AddWithValue("@MedTechID", medTechId)
                     examCmd.ExecuteNonQuery()
                 End Using
 
