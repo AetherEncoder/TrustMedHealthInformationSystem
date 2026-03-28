@@ -403,19 +403,64 @@ Public Class frmDashboard
             Case "consultations"
                 sectionTitle = "Consultations"
                 sectionSingular = "Consultation"
-                sectionQuery = "SELECT * FROM consultation ORDER BY ConsultationID DESC"
+                sectionQuery = "SELECT c.ConsultationID, " &
+                               "CONCAT(pa.FirstName, ' ', pa.LastName) AS Patient, " &
+                               "CONCAT(ph.FirstName, ' ', ph.LastName) AS Physician, " &
+                               "c.Complaint, c.Notes, c.ConsultationDate " &
+                               "FROM consultation c " &
+                               "INNER JOIN patient pa ON pa.PatientID = c.PatientID " &
+                               "INNER JOIN physician ph ON ph.PhysicianID = c.PhysicianID " &
+                               "ORDER BY c.ConsultationID DESC"
             Case "diagnoses"
                 sectionTitle = "Diagnoses"
                 sectionSingular = "Diagnosis"
-                sectionQuery = "SELECT * FROM diagnosis ORDER BY DiagnosisID DESC"
+                sectionQuery = "SELECT d.DiagnosisID, " &
+                               "CONCAT(pa.FirstName, ' ', pa.LastName) AS Patient, " &
+                               "CONCAT(ph.FirstName, ' ', ph.LastName) AS Physician, " &
+                               "d.DiagnosisName, d.DiagnosisDescription, d.DiagnosisDate " &
+                               "FROM diagnosis d " &
+                               "INNER JOIN patient pa ON pa.PatientID = d.PatientID " &
+                               "INNER JOIN physician ph ON ph.PhysicianID = d.PhysicianID " &
+                               "ORDER BY d.DiagnosisID DESC"
             Case "laborders"
                 sectionTitle = "Lab Orders"
                 sectionSingular = "Lab Order"
-                sectionQuery = "SELECT * FROM lab_order ORDER BY OrderID DESC"
+                sectionQuery = "SELECT lo.OrderID, " &
+                               "CONCAT(ph.FirstName, ' ', ph.LastName) AS Physician, " &
+                               "CONCAT(pa.FirstName, ' ', pa.LastName) AS Patient, " &
+                               "lo.OrderDate, " &
+                               "COALESCE(GROUP_CONCAT(mt.TestName ORDER BY mt.TestName SEPARATOR ', '), 'No tests added') AS MedicalTests " &
+                               "FROM lab_order lo " &
+                               "INNER JOIN physician ph ON ph.PhysicianID = lo.PhysicianID " &
+                               "INNER JOIN patient pa ON pa.PatientID = lo.PatientID " &
+                               "LEFT JOIN lab_order_inclusion loi ON loi.OrderID = lo.OrderID " &
+                               "LEFT JOIN medical_test mt ON mt.TestID = loi.TestID " &
+                               "GROUP BY lo.OrderID, ph.FirstName, ph.LastName, pa.FirstName, pa.LastName, lo.OrderDate " &
+                               "ORDER BY lo.OrderID DESC"
             Case "examinations"
                 sectionTitle = "Examinations"
                 sectionSingular = "Examination"
-                sectionQuery = "SELECT * FROM examination ORDER BY ExaminationID DESC"
+                sectionQuery = "SELECT ex.ExaminationID, " &
+                               "CONCAT(pa.FirstName, ' ', pa.LastName) AS Patient, " &
+                               "ex.Result, " &
+                               "ex.DatePerformed, " &
+                               "COALESCE(tests.LaboratoryTests, 'No tests added') AS LaboratoryTests, " &
+                               "COALESCE(medtechs.MedTechs, 'No MedTechs added') AS MedTechs " &
+                               "FROM examination ex " &
+                               "INNER JOIN patient pa ON pa.PatientID = ex.PatientID " &
+                               "LEFT JOIN (" &
+                               "    SELECT ei.ExaminationID, GROUP_CONCAT(mt.TestName ORDER BY mt.TestName SEPARATOR ', ') AS LaboratoryTests " &
+                               "    FROM exam_inclusion ei " &
+                               "    INNER JOIN medical_test mt ON mt.TestID = ei.TestID " &
+                               "    GROUP BY ei.ExaminationID" &
+                               ") tests ON tests.ExaminationID = ex.ExaminationID " &
+                               "LEFT JOIN (" &
+                               "    SELECT pf.ExaminationID, GROUP_CONCAT(CONCAT(md.FirstName, ' ', md.LastName) ORDER BY md.FirstName, md.LastName SEPARATOR ', ') AS MedTechs " &
+                               "    FROM performance pf " &
+                               "    INNER JOIN medtech md ON md.MedtechID = pf.MedtechID " &
+                               "    GROUP BY pf.ExaminationID" &
+                               ") medtechs ON medtechs.ExaminationID = ex.ExaminationID " &
+                               "ORDER BY ex.ExaminationID DESC"
             Case "medicaltests"
                 sectionTitle = "Medical Tests"
                 sectionSingular = "Medical Test"
@@ -427,7 +472,14 @@ Public Class frmDashboard
             Case "prescriptions"
                 sectionTitle = "Prescriptions"
                 sectionSingular = "Prescription"
-                sectionQuery = "SELECT * FROM prescription ORDER BY PrescriptionID DESC"
+                sectionQuery = "SELECT pr.PrescriptionID, " &
+                               "CONCAT(ph.FirstName, ' ', ph.LastName) AS Physician, " &
+                               "CONCAT(pa.FirstName, ' ', pa.LastName) AS Patient, " &
+                               "pr.Instruction, pr.PrescriptionDate " &
+                               "FROM prescription pr " &
+                               "INNER JOIN physician ph ON ph.PhysicianID = pr.PhysicianID " &
+                               "INNER JOIN patient pa ON pa.PatientID = pr.PatientID " &
+                               "ORDER BY pr.PrescriptionID DESC"
             Case "physicians"
                 sectionTitle = "Physicians"
                 sectionSingular = "Physician"
