@@ -1,6 +1,6 @@
 ﻿Imports MySql.Data.MySqlClient
 
-Public Class frmMedicalTest
+Public Class frmMedicalTestEntry
     Private ReadOnly _connectionString As String
 
     Public Sub New()

@@ -74,11 +74,23 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmConsultationEntry.Designer.vb">
+      <DependentUpon>frmConsultationEntry.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmConsultationEntry.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmDashboard.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmDashboard.Designer.vb">
       <DependentUpon>frmDashboard.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDiagnosisEntry.Designer.vb">
+      <DependentUpon>frmDiagnosisEntry.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmDiagnosisEntry.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmExaminationEntry.Designer.vb">
@@ -93,10 +105,10 @@
     <Compile Include="frmLabOrderEntry.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmMedicalTest.Designer.vb">
-      <DependentUpon>frmMedicalTest.vb</DependentUpon>
+    <Compile Include="frmMedicalTestEntry.Designer.vb">
+      <DependentUpon>frmMedicalTestEntry.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmMedicalTest.vb">
+    <Compile Include="frmMedicalTestEntry.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmMedicineEntry.Designer.vb">

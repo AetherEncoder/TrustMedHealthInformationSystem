@@ -129,11 +129,11 @@ Public Class frmDashboard
     End Sub
 
     Private Sub btnNewDiagnosis_Click(sender As Object, e As EventArgs) Handles btnNewDiagnosis.Click
-        ShowQuickActionPlaceholder("New Diagnosis")
+        OpenDiagnosisEntryDialog()
     End Sub
 
     Private Sub btnNewConsultation_Click(sender As Object, e As EventArgs) Handles btnNewConsultation.Click
-        ShowQuickActionPlaceholder("New Consultation")
+        OpenConsultationEntryDialog()
     End Sub
 
     Private Sub btnNewLabOrder_Click(sender As Object, e As EventArgs) Handles btnNewLabOrder.Click
@@ -499,6 +499,16 @@ Public Class frmDashboard
             Return
         End If
 
+        If sectionName = "consultations" OrElse singular = "consultation" Then
+            OpenConsultationEntryDialog()
+            Return
+        End If
+
+        If sectionName = "diagnoses" OrElse singular = "diagnosis" Then
+            OpenDiagnosisEntryDialog()
+            Return
+        End If
+
         If sectionName = "medtechs" OrElse singular = "medtech" Then
             OpenMedTechEntryDialog()
             Return
@@ -564,6 +574,38 @@ Public Class frmDashboard
         End Using
     End Sub
 
+    Private Sub OpenConsultationEntryDialog()
+        Using consultationEntry As New frmConsultationEntry(MyConnectionString)
+            If consultationEntry.ShowDialog(Me) = DialogResult.OK Then
+                LoadDashboardOverview()
+
+                If pnlPatientsSection IsNot Nothing AndAlso pnlPatientsSection.Visible Then
+                    Dim sectionTitle As String = ""
+                    Dim sectionSingular As String = ""
+                    Dim sectionQuery As String = ""
+                    GetSectionConfig("consultations", sectionTitle, sectionSingular, sectionQuery)
+                    LoadSectionData("consultations", sectionQuery)
+                End If
+            End If
+        End Using
+    End Sub
+
+    Private Sub OpenDiagnosisEntryDialog()
+        Using diagnosisEntry As New frmDiagnosisEntry(MyConnectionString)
+            If diagnosisEntry.ShowDialog(Me) = DialogResult.OK Then
+                LoadDashboardOverview()
+
+                If pnlPatientsSection IsNot Nothing AndAlso pnlPatientsSection.Visible Then
+                    Dim sectionTitle As String = ""
+                    Dim sectionSingular As String = ""
+                    Dim sectionQuery As String = ""
+                    GetSectionConfig("diagnoses", sectionTitle, sectionSingular, sectionQuery)
+                    LoadSectionData("diagnoses", sectionQuery)
+                End If
+            End If
+        End Using
+    End Sub
+
     Private Sub OpenMedTechEntryDialog()
         ShowQuickActionPlaceholder("Add New MedTech")
     End Sub
@@ -601,7 +643,7 @@ Public Class frmDashboard
     End Sub
 
     Private Sub OpenMedicalTestEntryDialog()
-        Using medicalTestEntry As New frmMedicalTest(MyConnectionString)
+        Using medicalTestEntry As New frmMedicalTestEntry(MyConnectionString)
             If medicalTestEntry.ShowDialog(Me) = DialogResult.OK Then
                 LoadDashboardOverview()
 
