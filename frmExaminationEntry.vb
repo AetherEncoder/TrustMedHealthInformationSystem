@@ -60,7 +60,6 @@ Public Class frmExaminationEntry
             LoadNextExaminationId()
         End If
 
-        UiTheme.ApplyModernFormStyle(Me)
     End Sub
 
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click

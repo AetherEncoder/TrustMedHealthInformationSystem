@@ -45,8 +45,6 @@ Public Class frmDashboard
     Private dgvReports As DataGridView
     Private reportDefinitions As New Dictionary(Of String, ReportDefinition)
     Private reportOrder As New List(Of String)
-    Private pbLoginLogo As PictureBox
-    Private pnlLoginCard As Panel
 
     Private Class ReportDefinition
         Public Property Title As String
@@ -75,9 +73,6 @@ Public Class frmDashboard
         If pbTrustMedLogo.Image Is Nothing AndAlso Me.Icon IsNot Nothing Then
             pbTrustMedLogo.Image = Me.Icon.ToBitmap()
         End If
-
-        ApplyModernLoginAppearance()
-        AddHandler pnlLoginContainer.Resize, AddressOf PnlLoginContainer_Resize
 
         InitializePatientsSectionUi()
         InitializeReportsSectionUi()
@@ -195,7 +190,6 @@ Public Class frmDashboard
         txtUsername.Text = ""
         txtPassword.Text = ""
         ClearErrorMessages()
-        ApplyModernLoginAppearance()
 
         txtUsername.Focus()
     End Sub
@@ -1362,114 +1356,6 @@ Public Class frmDashboard
         End Using
     End Sub
 
-    Private Sub ApplyModernLoginAppearance()
-        Dim accentColor As Color = Color.FromArgb(184, 19, 66)
-
-        Me.BackColor = Color.White
-        pnlLoginContainer.BackColor = Color.FromArgb(246, 246, 248)
-
-        If pnlLoginCard Is Nothing Then
-            pnlLoginCard = New Panel()
-            pnlLoginCard.Name = "pnlLoginCard"
-            pnlLoginCard.Size = New Size(520, 540)
-            pnlLoginCard.BackColor = Color.White
-            pnlLoginCard.BorderStyle = BorderStyle.FixedSingle
-            pnlLoginContainer.Controls.Add(pnlLoginCard)
-            pnlLoginCard.BringToFront()
-        End If
-
-        If pbLoginLogo Is Nothing Then
-            pbLoginLogo = New PictureBox()
-            pbLoginLogo.Name = "pbLoginLogo"
-            pbLoginLogo.Size = New Size(140, 90)
-            pbLoginLogo.SizeMode = PictureBoxSizeMode.Zoom
-            pbLoginLogo.BackColor = Color.Transparent
-            pnlLoginCard.Controls.Add(pbLoginLogo)
-        End If
-
-        If pbTrustMedLogo.Image IsNot Nothing Then
-            pbLoginLogo.Image = pbTrustMedLogo.Image
-        End If
-
-        pnlLoginCard.Controls.Add(lblHeader)
-        pnlLoginCard.Controls.Add(lblUsername)
-        pnlLoginCard.Controls.Add(txtUsername)
-        pnlLoginCard.Controls.Add(lblUsernameError)
-        pnlLoginCard.Controls.Add(lblPassword)
-        pnlLoginCard.Controls.Add(txtPassword)
-        pnlLoginCard.Controls.Add(lblPasswordError)
-        pnlLoginCard.Controls.Add(lblLoginError)
-        pnlLoginCard.Controls.Add(btnLogin)
-        pnlLoginCard.Controls.Add(btnClose)
-
-        lblHeader.Font = New Font("Segoe UI", 20.0!, FontStyle.Bold)
-        lblHeader.ForeColor = accentColor
-        lblHeader.AutoSize = False
-        lblHeader.Width = 460
-        lblHeader.TextAlign = ContentAlignment.MiddleCenter
-
-        lblUsername.Font = New Font("Segoe UI", 10.5!, FontStyle.Regular)
-        lblPassword.Font = New Font("Segoe UI", 10.5!, FontStyle.Regular)
-        lblUsername.ForeColor = Color.FromArgb(60, 60, 60)
-        lblPassword.ForeColor = Color.FromArgb(60, 60, 60)
-
-        txtUsername.Font = New Font("Segoe UI", 11.0!, FontStyle.Regular)
-        txtPassword.Font = New Font("Segoe UI", 11.0!, FontStyle.Regular)
-        txtUsername.BorderStyle = BorderStyle.FixedSingle
-        txtPassword.BorderStyle = BorderStyle.FixedSingle
-
-        btnLogin.FlatStyle = FlatStyle.Flat
-        btnLogin.FlatAppearance.BorderSize = 0
-        btnLogin.BackColor = accentColor
-        btnLogin.ForeColor = Color.White
-        btnLogin.Font = New Font("Segoe UI", 10.0!, FontStyle.Bold)
-
-        btnClose.FlatStyle = FlatStyle.Flat
-        btnClose.FlatAppearance.BorderSize = 0
-        btnClose.BackColor = Color.FromArgb(220, 220, 225)
-        btnClose.ForeColor = Color.FromArgb(35, 35, 35)
-        btnClose.Font = New Font("Segoe UI", 10.0!, FontStyle.Bold)
-
-        PositionLoginControls()
-    End Sub
-
-    Private Sub PositionLoginControls()
-        If pnlLoginContainer Is Nothing OrElse pnlLoginCard Is Nothing Then Return
-
-        Dim cardLeft As Integer = (pnlLoginContainer.Width - pnlLoginCard.Width) \ 2
-        Dim cardTop As Integer = (pnlLoginContainer.Height - pnlLoginCard.Height) \ 2
-        pnlLoginCard.Location = New Point(Math.Max(12, cardLeft), Math.Max(12, cardTop))
-
-        Dim centerX As Integer = pnlLoginCard.Width \ 2
-
-        If pbLoginLogo IsNot Nothing Then
-            pbLoginLogo.Location = New Point(centerX - (pbLoginLogo.Width \ 2), 26)
-            pbLoginLogo.BringToFront()
-        End If
-
-        lblHeader.Location = New Point(centerX - (lblHeader.Width \ 2), 124)
-
-        lblUsername.Location = New Point(60, 210)
-        txtUsername.Location = New Point(60, 236)
-        txtUsername.Width = 400
-
-        lblUsernameError.Location = New Point(60, 264)
-
-        lblPassword.Location = New Point(60, 292)
-        txtPassword.Location = New Point(60, 318)
-        txtPassword.Width = 400
-
-        lblPasswordError.Location = New Point(60, 346)
-        lblLoginError.Location = New Point(60, 370)
-
-        btnLogin.Location = New Point(170, 420)
-        btnClose.Location = New Point(280, 420)
-    End Sub
-
-    Private Sub PnlLoginContainer_Resize(sender As Object, e As EventArgs)
-        PositionLoginControls()
-    End Sub
-
     Private Sub ApplyGridWrapping(parent As Control)
         For Each ctrl As Control In parent.Controls
             If TypeOf ctrl Is DataGridView Then
@@ -1492,77 +1378,4 @@ Public Class frmDashboard
 
     End Sub
 End Class
-
-Public Module UiTheme
-    Private ReadOnly AccentColor As Color = Color.FromArgb(184, 19, 66)
-    Private ReadOnly UpdateColor As Color = Color.FromArgb(217, 92, 128)
-    Private ReadOnly DeleteColor As Color = Color.FromArgb(239, 168, 188)
-
-    Public Sub ApplyModernFormStyle(targetForm As Form)
-        If targetForm Is Nothing Then Return
-
-        targetForm.BackColor = Color.White
-        targetForm.Font = New Font("Segoe UI", 9.0!, FontStyle.Regular)
-        ApplyToControls(targetForm)
-    End Sub
-
-    Private Sub ApplyToControls(parent As Control)
-        For Each ctrl As Control In parent.Controls
-            If TypeOf ctrl Is GroupBox Then
-                Dim grp As GroupBox = CType(ctrl, GroupBox)
-                grp.ForeColor = AccentColor
-                grp.Font = New Font("Segoe UI", 9.0!, FontStyle.Bold)
-            ElseIf TypeOf ctrl Is Label Then
-                Dim lbl As Label = CType(ctrl, Label)
-                lbl.ForeColor = Color.FromArgb(55, 55, 55)
-                lbl.Font = New Font("Segoe UI", 9.0!, lbl.Font.Style)
-            ElseIf TypeOf ctrl Is TextBox Then
-                Dim tb As TextBox = CType(ctrl, TextBox)
-                tb.BorderStyle = BorderStyle.FixedSingle
-                tb.Font = New Font("Segoe UI", 10.0!, FontStyle.Regular)
-                tb.BackColor = Color.White
-            ElseIf TypeOf ctrl Is ComboBox Then
-                Dim cb As ComboBox = CType(ctrl, ComboBox)
-                cb.Font = New Font("Segoe UI", 10.0!, FontStyle.Regular)
-                cb.BackColor = Color.White
-            ElseIf TypeOf ctrl Is DateTimePicker Then
-                Dim dtp As DateTimePicker = CType(ctrl, DateTimePicker)
-                dtp.Font = New Font("Segoe UI", 10.0!, FontStyle.Regular)
-                dtp.CalendarMonthBackground = Color.White
-            ElseIf TypeOf ctrl Is ListBox Then
-                Dim lb As ListBox = CType(ctrl, ListBox)
-                lb.Font = New Font("Segoe UI", 9.5!, FontStyle.Regular)
-                lb.BackColor = Color.White
-            ElseIf TypeOf ctrl Is Button Then
-                StyleButton(CType(ctrl, Button))
-            End If
-
-            If ctrl.HasChildren Then
-                ApplyToControls(ctrl)
-            End If
-        Next
-    End Sub
-
-    Private Sub StyleButton(btn As Button)
-        Dim text As String = If(btn.Text, String.Empty).ToLowerInvariant()
-
-        btn.FlatStyle = FlatStyle.Flat
-        btn.FlatAppearance.BorderSize = 0
-        btn.Font = New Font("Segoe UI", 9.0!, FontStyle.Bold)
-
-        If text.Contains("delete") OrElse text.Contains("remove") Then
-            btn.BackColor = DeleteColor
-            btn.ForeColor = Color.White
-        ElseIf text.Contains("update") Then
-            btn.BackColor = UpdateColor
-            btn.ForeColor = Color.White
-        ElseIf text.Contains("cancel") OrElse text.Contains("close") Then
-            btn.BackColor = Color.FromArgb(220, 220, 225)
-            btn.ForeColor = Color.FromArgb(35, 35, 35)
-        Else
-            btn.BackColor = AccentColor
-            btn.ForeColor = Color.White
-        End If
-    End Sub
-End Module
 

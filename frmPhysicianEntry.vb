@@ -35,7 +35,6 @@ Partial Class frmPhysicianEntry
             LoadNextPhysicianId()
         End If
 
-        UiTheme.ApplyModernFormStyle(Me)
     End Sub
 
     Private Sub txtPhoneNumber_Leave(sender As Object, e As EventArgs) Handles txtPhoneNumber.Leave
