@@ -35,6 +35,24 @@ Public Class frmDashboard
     Private btnDeletePatient As Button
     Private btnUpdatePatient As Button
 
+    Private reportsSectionInitialized As Boolean = False
+    Private pnlReportsSection As Panel
+    Private grpReportsList As GroupBox
+    Private grpReportView As GroupBox
+    Private lstReports As ListBox
+    Private lblReportDescription As Label
+    Private dgvReports As DataGridView
+    Private reportDefinitions As New Dictionary(Of String, ReportDefinition)
+    Private reportOrder As New List(Of String)
+
+    Private Class ReportDefinition
+        Public Property Title As String
+        Public Property Description As String
+        Public Property Query As String
+        Public Property EmptyMessage As String
+        Public Property RequiredTables As String()
+    End Class
+
     Private Sub frmLogin_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         MyConnectionString = "datasource=localhost;username=root;password=;database=trustmed"
 
@@ -56,6 +74,7 @@ Public Class frmDashboard
         End If
 
         InitializePatientsSectionUi()
+        InitializeReportsSectionUi()
         ClearErrorMessages()
         ApplyGridWrapping(Me)
     End Sub
@@ -283,6 +302,9 @@ Public Class frmDashboard
         If pnlPatientsSection IsNot Nothing Then
             pnlPatientsSection.Visible = False
         End If
+        If pnlReportsSection IsNot Nothing Then
+            pnlReportsSection.Visible = False
+        End If
     End Sub
 
     Private Sub miDashboard_Click(sender As Object, e As EventArgs) Handles miDashboard.Click
@@ -369,6 +391,319 @@ Public Class frmDashboard
         patientsSectionInitialized = True
     End Sub
 
+    Private Sub InitializeReportsSectionUi()
+        If reportsSectionInitialized Then Return
+
+        InitializeReportDefinitions()
+
+        pnlReportsSection = New Panel()
+        pnlReportsSection.Location = New Point(12, 39)
+        pnlReportsSection.Size = New Size(1324, 678)
+        pnlReportsSection.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        pnlReportsSection.Visible = False
+
+        grpReportsList = New GroupBox()
+        grpReportsList.Text = "Reports"
+        grpReportsList.Font = New Font("Microsoft Sans Serif", 10.0!, FontStyle.Bold)
+        grpReportsList.ForeColor = Color.DarkBlue
+        grpReportsList.Location = New Point(0, 0)
+        grpReportsList.Size = New Size(320, 678)
+
+        lstReports = New ListBox()
+        lstReports.Location = New Point(14, 28)
+        lstReports.Size = New Size(292, 550)
+        lstReports.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        lstReports.Font = New Font("Microsoft Sans Serif", 9.0!, FontStyle.Regular)
+        AddHandler lstReports.SelectedIndexChanged, AddressOf LstReports_SelectedIndexChanged
+
+        lblReportDescription = New Label()
+        lblReportDescription.Location = New Point(14, 588)
+        lblReportDescription.Size = New Size(292, 80)
+        lblReportDescription.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        lblReportDescription.Font = New Font("Microsoft Sans Serif", 8.5!, FontStyle.Regular)
+        lblReportDescription.ForeColor = Color.DimGray
+
+        grpReportsList.Controls.Add(lstReports)
+        grpReportsList.Controls.Add(lblReportDescription)
+
+        grpReportView = New GroupBox()
+        grpReportView.Text = "Report View"
+        grpReportView.Font = New Font("Microsoft Sans Serif", 10.0!, FontStyle.Bold)
+        grpReportView.ForeColor = Color.DarkBlue
+        grpReportView.Location = New Point(328, 0)
+        grpReportView.Size = New Size(996, 678)
+        grpReportView.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+
+        dgvReports = New DataGridView()
+        dgvReports.Location = New Point(10, 24)
+        dgvReports.Size = New Size(976, 644)
+        dgvReports.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        dgvReports.AllowUserToAddRows = False
+        dgvReports.AllowUserToDeleteRows = False
+        dgvReports.ReadOnly = True
+        dgvReports.RowHeadersVisible = False
+        dgvReports.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+        dgvReports.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+        dgvReports.DefaultCellStyle.WrapMode = DataGridViewTriState.True
+        dgvReports.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
+
+        grpReportView.Controls.Add(dgvReports)
+
+        pnlReportsSection.Controls.Add(grpReportsList)
+        pnlReportsSection.Controls.Add(grpReportView)
+
+        pnlDashboard.Controls.Add(pnlReportsSection)
+        pnlReportsSection.BringToFront()
+
+        For Each reportKey As String In reportOrder
+            If reportDefinitions.ContainsKey(reportKey) Then
+                lstReports.Items.Add(reportDefinitions(reportKey).Title)
+            End If
+        Next
+
+        reportsSectionInitialized = True
+    End Sub
+
+    Private Sub InitializeReportDefinitions()
+        If reportDefinitions.Count > 0 Then Return
+
+        reportDefinitions("patient_medical_history") = New ReportDefinition With {
+            .Title = "Patient Medical History Timeline",
+            .Description = "Unified timeline of consultations, diagnoses, examinations, and prescriptions per patient.",
+            .Query = "SELECT p.PatientID, CONCAT(p.FirstName, ' ', p.LastName) AS Patient, e.EventDate, e.EventType, e.ReferenceID, e.Provider, e.Details " &
+                     "FROM (" &
+                     " SELECT c.PatientID, c.ConsultationDate AS EventDate, 'Consultation' AS EventType, c.ConsultationID AS ReferenceID, " &
+                     "        CONCAT(ph.FirstName, ' ', ph.LastName) AS Provider, CONCAT('Complaint: ', c.Complaint, ' | Notes: ', c.Notes) AS Details " &
+                     " FROM consultation c " &
+                     " INNER JOIN physician ph ON ph.PhysicianID = c.PhysicianID " &
+                     " UNION ALL " &
+                     " SELECT d.PatientID, d.DiagnosisDate AS EventDate, 'Diagnosis' AS EventType, d.DiagnosisID AS ReferenceID, " &
+                     "        CONCAT(ph.FirstName, ' ', ph.LastName) AS Provider, CONCAT(d.DiagnosisName, ' - ', d.DiagnosisDescription) AS Details " &
+                     " FROM diagnosis d " &
+                     " INNER JOIN physician ph ON ph.PhysicianID = d.PhysicianID " &
+                     " UNION ALL " &
+                     " SELECT ex.PatientID, ex.DatePerformed AS EventDate, 'Examination' AS EventType, ex.ExaminationID AS ReferenceID, " &
+                     "        COALESCE(medtechs.MedTechs, 'No MedTech Assigned') AS Provider, CONCAT('Result: ', ex.Result) AS Details " &
+                     " FROM examination ex " &
+                     " LEFT JOIN (" &
+                     "    SELECT pf.ExaminationID, GROUP_CONCAT(CONCAT(md.FirstName, ' ', md.LastName) ORDER BY md.FirstName, md.LastName SEPARATOR ', ') AS MedTechs " &
+                     "    FROM performance pf " &
+                     "    INNER JOIN medtech md ON md.MedtechID = pf.MedtechID " &
+                     "    GROUP BY pf.ExaminationID" &
+                     " ) medtechs ON medtechs.ExaminationID = ex.ExaminationID " &
+                     " UNION ALL " &
+                     " SELECT pr.PatientID, pr.PrescriptionDate AS EventDate, 'Prescription' AS EventType, pr.PrescriptionID AS ReferenceID, " &
+                     "        CONCAT(ph.FirstName, ' ', ph.LastName) AS Provider, CONCAT('Instruction: ', pr.Instruction) AS Details " &
+                     " FROM prescription pr " &
+                     " INNER JOIN physician ph ON ph.PhysicianID = pr.PhysicianID " &
+                     ") e " &
+                     "INNER JOIN patient p ON p.PatientID = e.PatientID " &
+                     "ORDER BY p.PatientID, e.EventDate DESC, e.EventType",
+            .EmptyMessage = "No patient medical history records found.",
+            .RequiredTables = New String() {"patient", "consultation", "diagnosis", "examination", "prescription", "physician", "performance", "medtech"}
+        }
+
+        reportDefinitions("consultations_per_physician") = New ReportDefinition With {
+            .Title = "Consultations per Physician",
+            .Description = "Total consultations handled by each physician.",
+            .Query = "SELECT ph.PhysicianID, CONCAT(ph.FirstName, ' ', ph.LastName) AS Physician, COUNT(c.ConsultationID) AS TotalConsultations " &
+                     "FROM physician ph " &
+                     "LEFT JOIN consultation c ON c.PhysicianID = ph.PhysicianID " &
+                     "GROUP BY ph.PhysicianID, ph.FirstName, ph.LastName " &
+                     "ORDER BY TotalConsultations DESC, Physician",
+            .EmptyMessage = "No consultation records found.",
+            .RequiredTables = New String() {"physician", "consultation"}
+        }
+
+        reportDefinitions("common_diagnoses") = New ReportDefinition With {
+            .Title = "Most Common Diagnoses",
+            .Description = "Most frequently recorded diagnosis names in clinic records.",
+            .Query = "SELECT DiagnosisName, COUNT(*) AS CaseCount FROM diagnosis GROUP BY DiagnosisName ORDER BY CaseCount DESC, DiagnosisName",
+            .EmptyMessage = "No diagnosis records found.",
+            .RequiredTables = New String() {"diagnosis"}
+        }
+
+        reportDefinitions("total_lab_orders") = New ReportDefinition With {
+            .Title = "Total Lab Orders",
+            .Description = "Overall number of laboratory orders.",
+            .Query = "SELECT COUNT(*) AS TotalLabOrders FROM lab_order",
+            .EmptyMessage = "No lab order records found.",
+            .RequiredTables = New String() {"lab_order"}
+        }
+
+        reportDefinitions("most_requested_tests") = New ReportDefinition With {
+            .Title = "Most Requested Medical Tests",
+            .Description = "Medical tests most frequently included in lab orders.",
+            .Query = "SELECT mt.TestID, mt.TestName, COUNT(*) AS TimesRequested FROM lab_order_inclusion loi INNER JOIN medical_test mt ON mt.TestID = loi.TestID GROUP BY mt.TestID, mt.TestName ORDER BY TimesRequested DESC, mt.TestName",
+            .EmptyMessage = "No requested medical tests found.",
+            .RequiredTables = New String() {"lab_order_inclusion", "medical_test"}
+        }
+
+        reportDefinitions("completed_examinations") = New ReportDefinition With {
+            .Title = "Completed Examinations with Results",
+            .Description = "Performed examinations, patients, included tests, and encoded results.",
+            .Query = "SELECT ex.ExaminationID, CONCAT(pa.FirstName, ' ', pa.LastName) AS Patient, ex.DatePerformed, ex.Result, " &
+                     "COALESCE(GROUP_CONCAT(mt.TestName ORDER BY mt.TestName SEPARATOR ', '), 'No tests added') AS Tests " &
+                     "FROM examination ex " &
+                     "INNER JOIN patient pa ON pa.PatientID = ex.PatientID " &
+                     "LEFT JOIN exam_inclusion ei ON ei.ExaminationID = ex.ExaminationID " &
+                     "LEFT JOIN medical_test mt ON mt.TestID = ei.TestID " &
+                     "GROUP BY ex.ExaminationID, pa.FirstName, pa.LastName, ex.DatePerformed, ex.Result " &
+                     "ORDER BY ex.DatePerformed DESC, ex.ExaminationID DESC",
+            .EmptyMessage = "No completed examinations found.",
+            .RequiredTables = New String() {"examination", "patient", "exam_inclusion", "medical_test"}
+        }
+
+        reportDefinitions("test_usage_frequency") = New ReportDefinition With {
+            .Title = "Test Usage Frequency",
+            .Description = "Combined frequency of each medical test across lab orders and examinations.",
+            .Query = "SELECT mt.TestID, mt.TestName, COALESCE(ord.OrderUsage, 0) AS OrderedCount, COALESCE(exm.ExamUsage, 0) AS ExaminationCount, " &
+                     "(COALESCE(ord.OrderUsage, 0) + COALESCE(exm.ExamUsage, 0)) AS TotalUsage " &
+                     "FROM medical_test mt " &
+                     "LEFT JOIN (SELECT TestID, COUNT(*) AS OrderUsage FROM lab_order_inclusion GROUP BY TestID) ord ON ord.TestID = mt.TestID " &
+                     "LEFT JOIN (SELECT TestID, COUNT(*) AS ExamUsage FROM exam_inclusion GROUP BY TestID) exm ON exm.TestID = mt.TestID " &
+                     "ORDER BY TotalUsage DESC, mt.TestName",
+            .EmptyMessage = "No test usage records found.",
+            .RequiredTables = New String() {"medical_test", "lab_order_inclusion", "exam_inclusion"}
+        }
+
+        reportDefinitions("most_prescribed_medicines") = New ReportDefinition With {
+            .Title = "Most Prescribed Medicines",
+            .Description = "Medicines prescribed most frequently from prescription inclusions.",
+            .Query = "SELECT m.MedicineID, m.MedicineName, COUNT(*) AS TimesPrescribed " &
+                     "FROM prescription_inclusion pi " &
+                     "INNER JOIN medicine m ON m.MedicineID = pi.MedicineID " &
+                     "GROUP BY m.MedicineID, m.MedicineName " &
+                     "ORDER BY TimesPrescribed DESC, m.MedicineName",
+            .EmptyMessage = "No prescribed medicine records found.",
+            .RequiredTables = New String() {"prescription_inclusion", "medicine"}
+        }
+
+        reportDefinitions("prescriptions_per_physician") = New ReportDefinition With {
+            .Title = "Prescriptions per Physician",
+            .Description = "Total prescriptions issued by each physician.",
+            .Query = "SELECT ph.PhysicianID, CONCAT(ph.FirstName, ' ', ph.LastName) AS Physician, COUNT(pr.PrescriptionID) AS TotalPrescriptions " &
+                     "FROM physician ph " &
+                     "LEFT JOIN prescription pr ON pr.PhysicianID = ph.PhysicianID " &
+                     "GROUP BY ph.PhysicianID, ph.FirstName, ph.LastName " &
+                     "ORDER BY TotalPrescriptions DESC, Physician",
+            .EmptyMessage = "No prescription records found.",
+            .RequiredTables = New String() {"physician", "prescription"}
+        }
+
+        reportDefinitions("prescription_counts") = New ReportDefinition With {
+            .Title = "Prescription Counts Overview",
+            .Description = "Overall prescription count with number of distinct physicians and patients involved.",
+            .Query = "SELECT COUNT(*) AS TotalPrescriptions, COUNT(DISTINCT PhysicianID) AS PhysiciansInvolved, COUNT(DISTINCT PatientID) AS PatientsWithPrescriptions FROM prescription",
+            .EmptyMessage = "No prescription records found.",
+            .RequiredTables = New String() {"prescription"}
+        }
+
+        reportDefinitions("examinations_per_medtech") = New ReportDefinition With {
+            .Title = "Examinations per MedTech",
+            .Description = "Number of examinations performed by each medtech.",
+            .Query = "SELECT md.MedtechID, CONCAT(md.FirstName, ' ', md.LastName) AS MedTech, COUNT(pf.ExaminationID) AS TotalExaminations " &
+                     "FROM medtech md " &
+                     "LEFT JOIN performance pf ON pf.MedtechID = md.MedtechID " &
+                     "GROUP BY md.MedtechID, md.FirstName, md.LastName " &
+                     "ORDER BY TotalExaminations DESC, MedTech",
+            .EmptyMessage = "No medtech performance records found.",
+            .RequiredTables = New String() {"medtech", "performance"}
+        }
+
+        reportDefinitions("financial_summary") = New ReportDefinition With {
+            .Title = "Financial Summary Estimate",
+            .Description = "Estimated operational revenue based on ordered lab tests and prescribed medicines.",
+            .Query = "SELECT " &
+                     "COALESCE((SELECT SUM(mt.Cost) FROM lab_order_inclusion loi INNER JOIN medical_test mt ON mt.TestID = loi.TestID), 0) AS LabRevenueEstimate, " &
+                     "COALESCE((SELECT SUM(m.Price) FROM prescription_inclusion pi INNER JOIN medicine m ON m.MedicineID = pi.MedicineID), 0) AS MedicineRevenueEstimate, " &
+                     "COALESCE((SELECT SUM(mt.Cost) FROM lab_order_inclusion loi INNER JOIN medical_test mt ON mt.TestID = loi.TestID), 0) + " &
+                     "COALESCE((SELECT SUM(m.Price) FROM prescription_inclusion pi INNER JOIN medicine m ON m.MedicineID = pi.MedicineID), 0) AS TotalRevenueEstimate",
+            .EmptyMessage = "No financial summary data found.",
+            .RequiredTables = New String() {"lab_order_inclusion", "medical_test", "prescription_inclusion", "medicine"}
+        }
+
+        reportOrder.AddRange(New String() {
+            "patient_medical_history",
+            "consultations_per_physician",
+            "common_diagnoses",
+            "total_lab_orders",
+            "most_requested_tests",
+            "completed_examinations",
+            "test_usage_frequency",
+            "most_prescribed_medicines",
+            "prescriptions_per_physician",
+            "prescription_counts",
+            "examinations_per_medtech",
+            "financial_summary"
+        })
+    End Sub
+
+    Private Sub ShowReportsSection()
+        InitializeReportsSectionUi()
+
+        pnlSummaryCards.Visible = False
+        grpQuickActions.Visible = False
+        If pnlPatientsSection IsNot Nothing Then
+            pnlPatientsSection.Visible = False
+        End If
+
+        pnlReportsSection.Visible = True
+        pnlReportsSection.BringToFront()
+
+        If lstReports.Items.Count > 0 AndAlso lstReports.SelectedIndex < 0 Then
+            lstReports.SelectedIndex = 0
+        ElseIf lstReports.SelectedIndex >= 0 Then
+            LoadSelectedReport(lstReports.SelectedIndex)
+        End If
+    End Sub
+
+    Private Sub LstReports_SelectedIndexChanged(sender As Object, e As EventArgs)
+        If lstReports Is Nothing OrElse lstReports.SelectedIndex < 0 Then Return
+        LoadSelectedReport(lstReports.SelectedIndex)
+    End Sub
+
+    Private Sub LoadSelectedReport(selectedIndex As Integer)
+        If selectedIndex < 0 OrElse selectedIndex >= reportOrder.Count Then Return
+
+        Dim reportKey As String = reportOrder(selectedIndex)
+        If Not reportDefinitions.ContainsKey(reportKey) Then Return
+
+        Dim definition As ReportDefinition = reportDefinitions(reportKey)
+        grpReportView.Text = definition.Title
+        lblReportDescription.Text = definition.Description
+        LoadReportData(definition)
+    End Sub
+
+    Private Sub LoadReportData(definition As ReportDefinition)
+        If dgvReports Is Nothing Then Return
+
+        Try
+            MyConnection = New MySqlConnection(MyConnectionString)
+            MyConnection.Open()
+
+            If definition.RequiredTables IsNot Nothing Then
+                For Each tableName As String In definition.RequiredTables
+                    If Not TableExists(tableName) Then
+                        dgvReports.DataSource = CreateInfoTable("Unable to load report. Missing table: " & tableName)
+                        Return
+                    End If
+                Next
+            End If
+
+            Dim reportTable As DataTable = ExecuteTableQuerySafe(definition.Query, definition.EmptyMessage)
+            dgvReports.DataSource = reportTable
+            dgvReports.DefaultCellStyle.WrapMode = DataGridViewTriState.True
+            dgvReports.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
+        Catch
+            dgvReports.DataSource = CreateInfoTable("Unable to load selected report.")
+        Finally
+            If MyConnection IsNot Nothing AndAlso MyConnection.State = ConnectionState.Open Then
+                MyConnection.Close()
+            End If
+        End Try
+    End Sub
+
     Private Sub ShowEntitySection(sectionKey As String)
         InitializePatientsSectionUi()
 
@@ -389,6 +724,9 @@ Public Class frmDashboard
 
         pnlSummaryCards.Visible = False
         grpQuickActions.Visible = False
+        If pnlReportsSection IsNot Nothing Then
+            pnlReportsSection.Visible = False
+        End If
         pnlPatientsSection.Visible = True
 
         LoadSectionData(sectionKey, sectionQuery)
@@ -984,6 +1322,10 @@ Public Class frmDashboard
 
     Private Sub miMedTech_Click(sender As Object, e As EventArgs) Handles miMedTech.Click
         ShowEntitySection("medtechs")
+    End Sub
+
+    Private Sub miReports_Click(sender As Object, e As EventArgs) Handles miReports.Click
+        ShowReportsSection()
     End Sub
 
     Private Sub ApplyGridWrapping(parent As Control)
