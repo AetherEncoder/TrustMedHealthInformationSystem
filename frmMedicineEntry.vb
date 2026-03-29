@@ -2,6 +2,8 @@
 
 Public Class frmMedicineEntry
     Private ReadOnly _connectionString As String
+    Private ReadOnly _isUpdateMode As Boolean
+    Private ReadOnly _existingMedicineId As Integer
 
     Public Sub New()
         InitializeComponent()
@@ -12,8 +14,23 @@ Public Class frmMedicineEntry
         InitializeComponent()
     End Sub
 
+    Public Sub New(connectionString As String, medicineId As Integer)
+        _connectionString = connectionString
+        _isUpdateMode = True
+        _existingMedicineId = medicineId
+        InitializeComponent()
+    End Sub
+
     Private Sub frmMedicineEntry_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        LoadNextMedicineId()
+        If _isUpdateMode Then
+            Me.Text = "Update Medicine"
+            btnSave.Text = "Update"
+            LoadMedicineForUpdate()
+        Else
+            Me.Text = "Add New Medicine"
+            btnSave.Text = "Save"
+            LoadNextMedicineId()
+        End If
     End Sub
 
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
@@ -33,8 +50,8 @@ Public Class frmMedicineEntry
         End If
 
         Dim priceValue As Decimal
-        If Not Decimal.TryParse(txtPrice.Text.Trim(), priceValue) Then
-            MessageBox.Show("Price must be numeric.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        If Not Decimal.TryParse(txtPrice.Text.Trim(), priceValue) OrElse priceValue < 0D Then
+            MessageBox.Show("Price must be a valid non-negative number.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             txtPrice.Focus()
             Return
         End If
@@ -43,8 +60,12 @@ Public Class frmMedicineEntry
             Using conn As New MySqlConnection(_connectionString)
                 conn.Open()
 
-                Dim sql As String = "INSERT INTO medicine (MedicineID, MedicineName, Price, MedicineDescription) " &
-                                    "VALUES (@MedicineID, @MedicineName, @Price, @MedicineDescription)"
+                Dim sql As String
+                If _isUpdateMode Then
+                    sql = "UPDATE medicine SET MedicineName = @MedicineName, Price = @Price, MedicineDescription = @MedicineDescription WHERE MedicineID = @MedicineID"
+                Else
+                    sql = "INSERT INTO medicine (MedicineID, MedicineName, Price, MedicineDescription) VALUES (@MedicineID, @MedicineName, @Price, @MedicineDescription)"
+                End If
 
                 Using cmd As New MySqlCommand(sql, conn)
                     cmd.Parameters.AddWithValue("@MedicineID", medicineId)
@@ -55,11 +76,54 @@ Public Class frmMedicineEntry
                 End Using
             End Using
 
-            MessageBox.Show("Medicine added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            If _isUpdateMode Then
+                MessageBox.Show("Medicine updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Else
+                MessageBox.Show("Medicine added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+
             Me.DialogResult = DialogResult.OK
             Me.Close()
         Catch ex As Exception
             MessageBox.Show("Unable to save medicine: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Sub LoadMedicineForUpdate()
+        If String.IsNullOrWhiteSpace(_connectionString) OrElse _existingMedicineId <= 0 Then
+            MessageBox.Show("Unable to load selected medicine.", "Update", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Me.DialogResult = DialogResult.Cancel
+            Me.Close()
+            Return
+        End If
+
+        Try
+            Using conn As New MySqlConnection(_connectionString)
+                conn.Open()
+
+                Dim sql As String = "SELECT MedicineID, MedicineName, Price, MedicineDescription FROM medicine WHERE MedicineID = @MedicineID"
+                Using cmd As New MySqlCommand(sql, conn)
+                    cmd.Parameters.AddWithValue("@MedicineID", _existingMedicineId)
+
+                    Using reader As MySqlDataReader = cmd.ExecuteReader()
+                        If Not reader.Read() Then
+                            MessageBox.Show("Selected medicine was not found.", "Update", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                            Me.DialogResult = DialogResult.Cancel
+                            Me.Close()
+                            Return
+                        End If
+
+                        txtMedicineID.Text = Convert.ToInt32(reader("MedicineID")).ToString()
+                        txtMedicineName.Text = reader("MedicineName").ToString()
+                        txtPrice.Text = Convert.ToDecimal(reader("Price")).ToString("0.##")
+                        txtMedicineDescription.Text = reader("MedicineDescription").ToString()
+                    End Using
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Unable to load selected medicine: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Me.DialogResult = DialogResult.Cancel
+            Me.Close()
         End Try
     End Sub
 

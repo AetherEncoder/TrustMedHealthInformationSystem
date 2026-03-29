@@ -3,6 +3,8 @@ Imports System.Text.RegularExpressions
 
 Partial Class frmPhysicianEntry
     Private ReadOnly _connectionString As String
+    Private ReadOnly _isUpdateMode As Boolean
+    Private ReadOnly _existingPhysicianId As Integer
 
     Public Sub New()
         InitializeComponent()
@@ -13,8 +15,23 @@ Partial Class frmPhysicianEntry
         InitializeComponent()
     End Sub
 
+    Public Sub New(connectionString As String, physicianId As Integer)
+        _connectionString = connectionString
+        _isUpdateMode = True
+        _existingPhysicianId = physicianId
+        InitializeComponent()
+    End Sub
+
     Private Sub frmPhysicianEntry_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        LoadNextPhysicianId()
+        If _isUpdateMode Then
+            Me.Text = "Update Physician"
+            btnSave.Text = "Update"
+            LoadPhysicianForUpdate()
+        Else
+            Me.Text = "Add New Physician"
+            btnSave.Text = "Save"
+            LoadNextPhysicianId()
+        End If
     End Sub
 
     Private Sub txtPhoneNumber_Leave(sender As Object, e As EventArgs) Handles txtPhoneNumber.Leave
@@ -43,8 +60,12 @@ Partial Class frmPhysicianEntry
             Using conn As New MySqlConnection(_connectionString)
                 conn.Open()
 
-                Dim sql As String = "INSERT INTO physician (PhysicianID, FirstName, LastName, Specialty, LicenseNo, PhoneNumber) " &
-                                    "VALUES (@PhysicianID, @FirstName, @LastName, @Specialty, @LicenseNo, @PhoneNumber)"
+                Dim sql As String
+                If _isUpdateMode Then
+                    sql = "UPDATE physician SET FirstName = @FirstName, LastName = @LastName, Specialty = @Specialty, LicenseNo = @LicenseNo, PhoneNumber = @PhoneNumber WHERE PhysicianID = @PhysicianID"
+                Else
+                    sql = "INSERT INTO physician (PhysicianID, FirstName, LastName, Specialty, LicenseNo, PhoneNumber) VALUES (@PhysicianID, @FirstName, @LastName, @Specialty, @LicenseNo, @PhoneNumber)"
+                End If
 
                 Using cmd As New MySqlCommand(sql, conn)
                     cmd.Parameters.AddWithValue("@PhysicianID", physicianId)
@@ -57,11 +78,56 @@ Partial Class frmPhysicianEntry
                 End Using
             End Using
 
-            MessageBox.Show("Physician added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            If _isUpdateMode Then
+                MessageBox.Show("Physician updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Else
+                MessageBox.Show("Physician added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+
             Me.DialogResult = DialogResult.OK
             Me.Close()
         Catch ex As Exception
             MessageBox.Show("Unable to save physician: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Sub LoadPhysicianForUpdate()
+        If String.IsNullOrWhiteSpace(_connectionString) OrElse _existingPhysicianId <= 0 Then
+            MessageBox.Show("Unable to load selected physician.", "Update", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Me.DialogResult = DialogResult.Cancel
+            Me.Close()
+            Return
+        End If
+
+        Try
+            Using conn As New MySqlConnection(_connectionString)
+                conn.Open()
+
+                Dim sql As String = "SELECT PhysicianID, FirstName, LastName, Specialty, LicenseNo, PhoneNumber FROM physician WHERE PhysicianID = @PhysicianID"
+                Using cmd As New MySqlCommand(sql, conn)
+                    cmd.Parameters.AddWithValue("@PhysicianID", _existingPhysicianId)
+
+                    Using reader As MySqlDataReader = cmd.ExecuteReader()
+                        If Not reader.Read() Then
+                            MessageBox.Show("Selected physician was not found.", "Update", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                            Me.DialogResult = DialogResult.Cancel
+                            Me.Close()
+                            Return
+                        End If
+
+                        txtPhysicianID.Text = Convert.ToInt32(reader("PhysicianID")).ToString()
+                        txtFirstName.Text = reader("FirstName").ToString()
+                        txtLastName.Text = reader("LastName").ToString()
+                        txtSpecialty.Text = reader("Specialty").ToString()
+                        txtLicenseNo.Text = reader("LicenseNo").ToString()
+                        txtPhoneNumber.Text = reader("PhoneNumber").ToString()
+                    End Using
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Unable to load selected physician: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Me.DialogResult = DialogResult.Cancel
+            Me.Close()
         End Try
     End Sub
 

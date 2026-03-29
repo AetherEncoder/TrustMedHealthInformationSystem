@@ -661,7 +661,19 @@ Public Class frmDashboard
     End Sub
 
     Private Sub OpenMedTechEntryDialog()
-        ShowQuickActionPlaceholder("Add New MedTech")
+        Using medTechEntry As New frmMedTechEntry(MyConnectionString)
+            If medTechEntry.ShowDialog(Me) = DialogResult.OK Then
+                LoadDashboardOverview()
+
+                If pnlPatientsSection IsNot Nothing AndAlso pnlPatientsSection.Visible Then
+                    Dim sectionTitle As String = ""
+                    Dim sectionSingular As String = ""
+                    Dim sectionQuery As String = ""
+                    GetSectionConfig("medtechs", sectionTitle, sectionSingular, sectionQuery)
+                    LoadSectionData("medtechs", sectionQuery)
+                End If
+            End If
+        End Using
     End Sub
 
     Private Sub OpenPrescriptionEntryDialog()
@@ -748,20 +760,16 @@ Public Class frmDashboard
         Dim idColumn As String = ""
 
         Select Case currentSectionKey
-            Case "patients"
-                idColumn = "PatientID"
-            Case "consultations"
-                idColumn = "ConsultationID"
-            Case "diagnoses"
-                idColumn = "DiagnosisID"
-            Case "laborders"
-                idColumn = "OrderID"
-            Case "examinations"
-                idColumn = "ExaminationID"
-            Case "medicaltests"
-                idColumn = "TestID"
-            Case "prescriptions"
-                idColumn = "PrescriptionID"
+            Case "patients" : idColumn = "PatientID"
+            Case "consultations" : idColumn = "ConsultationID"
+            Case "diagnoses" : idColumn = "DiagnosisID"
+            Case "laborders" : idColumn = "OrderID"
+            Case "examinations" : idColumn = "ExaminationID"
+            Case "medicaltests" : idColumn = "TestID"
+            Case "prescriptions" : idColumn = "PrescriptionID"
+            Case "medicines" : idColumn = "MedicineID"
+            Case "physicians" : idColumn = "PhysicianID"
+            Case "medtechs" : idColumn = "MedtechID"
             Case Else
                 ShowQuickActionPlaceholder("Update " & currentSectionSingular)
                 Return
@@ -790,99 +798,58 @@ Public Class frmDashboard
             Return
         End If
 
+        Dim sectionTitle As String = ""
+        Dim sectionSingular As String = ""
+        Dim sectionQuery As String = ""
+
         Select Case currentSectionKey
             Case "patients"
-                Using patientEntry As New frmPatientEntry(MyConnectionString, selectedId)
-                    If patientEntry.ShowDialog(Me) = DialogResult.OK Then
-                        LoadDashboardOverview()
-                        If pnlPatientsSection IsNot Nothing AndAlso pnlPatientsSection.Visible Then
-                            Dim sectionTitle As String = ""
-                            Dim sectionSingular As String = ""
-                            Dim sectionQuery As String = ""
-                            GetSectionConfig("patients", sectionTitle, sectionSingular, sectionQuery)
-                            LoadSectionData("patients", sectionQuery)
-                        End If
-                    End If
+                Using entry As New frmPatientEntry(MyConnectionString, selectedId)
+                    If entry.ShowDialog(Me) <> DialogResult.OK Then Return
                 End Using
             Case "consultations"
-                Using consultationEntry As New frmConsultationEntry(MyConnectionString, selectedId)
-                    If consultationEntry.ShowDialog(Me) = DialogResult.OK Then
-                        LoadDashboardOverview()
-                        If pnlPatientsSection IsNot Nothing AndAlso pnlPatientsSection.Visible Then
-                            Dim sectionTitle As String = ""
-                            Dim sectionSingular As String = ""
-                            Dim sectionQuery As String = ""
-                            GetSectionConfig("consultations", sectionTitle, sectionSingular, sectionQuery)
-                            LoadSectionData("consultations", sectionQuery)
-                        End If
-                    End If
+                Using entry As New frmConsultationEntry(MyConnectionString, selectedId)
+                    If entry.ShowDialog(Me) <> DialogResult.OK Then Return
                 End Using
             Case "diagnoses"
-                Using diagnosisEntry As New frmDiagnosisEntry(MyConnectionString, selectedId)
-                    If diagnosisEntry.ShowDialog(Me) = DialogResult.OK Then
-                        LoadDashboardOverview()
-                        If pnlPatientsSection IsNot Nothing AndAlso pnlPatientsSection.Visible Then
-                            Dim sectionTitle As String = ""
-                            Dim sectionSingular As String = ""
-                            Dim sectionQuery As String = ""
-                            GetSectionConfig("diagnoses", sectionTitle, sectionSingular, sectionQuery)
-                            LoadSectionData("diagnoses", sectionQuery)
-                        End If
-                    End If
+                Using entry As New frmDiagnosisEntry(MyConnectionString, selectedId)
+                    If entry.ShowDialog(Me) <> DialogResult.OK Then Return
                 End Using
             Case "laborders"
-                Using labOrderEntry As New frmLabOrderEntry(MyConnectionString, selectedId)
-                    If labOrderEntry.ShowDialog(Me) = DialogResult.OK Then
-                        LoadDashboardOverview()
-                        If pnlPatientsSection IsNot Nothing AndAlso pnlPatientsSection.Visible Then
-                            Dim sectionTitle As String = ""
-                            Dim sectionSingular As String = ""
-                            Dim sectionQuery As String = ""
-                            GetSectionConfig("laborders", sectionTitle, sectionSingular, sectionQuery)
-                            LoadSectionData("laborders", sectionQuery)
-                        End If
-                    End If
+                Using entry As New frmLabOrderEntry(MyConnectionString, selectedId)
+                    If entry.ShowDialog(Me) <> DialogResult.OK Then Return
                 End Using
             Case "examinations"
-                Using examinationEntry As New frmExaminationEntry(MyConnectionString, selectedId)
-                    If examinationEntry.ShowDialog(Me) = DialogResult.OK Then
-                        LoadDashboardOverview()
-                        If pnlPatientsSection IsNot Nothing AndAlso pnlPatientsSection.Visible Then
-                            Dim sectionTitle As String = ""
-                            Dim sectionSingular As String = ""
-                            Dim sectionQuery As String = ""
-                            GetSectionConfig("examinations", sectionTitle, sectionSingular, sectionQuery)
-                            LoadSectionData("examinations", sectionQuery)
-                        End If
-                    End If
+                Using entry As New frmExaminationEntry(MyConnectionString, selectedId)
+                    If entry.ShowDialog(Me) <> DialogResult.OK Then Return
                 End Using
             Case "medicaltests"
-                Using medicalTestEntry As New frmMedicalTestEntry(MyConnectionString, selectedId)
-                    If medicalTestEntry.ShowDialog(Me) = DialogResult.OK Then
-                        LoadDashboardOverview()
-                        If pnlPatientsSection IsNot Nothing AndAlso pnlPatientsSection.Visible Then
-                            Dim sectionTitle As String = ""
-                            Dim sectionSingular As String = ""
-                            Dim sectionQuery As String = ""
-                            GetSectionConfig("medicaltests", sectionTitle, sectionSingular, sectionQuery)
-                            LoadSectionData("medicaltests", sectionQuery)
-                        End If
-                    End If
+                Using entry As New frmMedicalTestEntry(MyConnectionString, selectedId)
+                    If entry.ShowDialog(Me) <> DialogResult.OK Then Return
                 End Using
             Case "prescriptions"
-                Using prescriptionEntry As New frmPrescriptionEntry(MyConnectionString, selectedId)
-                    If prescriptionEntry.ShowDialog(Me) = DialogResult.OK Then
-                        LoadDashboardOverview()
-                        If pnlPatientsSection IsNot Nothing AndAlso pnlPatientsSection.Visible Then
-                            Dim sectionTitle As String = ""
-                            Dim sectionSingular As String = ""
-                            Dim sectionQuery As String = ""
-                            GetSectionConfig("prescriptions", sectionTitle, sectionSingular, sectionQuery)
-                            LoadSectionData("prescriptions", sectionQuery)
-                        End If
-                    End If
+                Using entry As New frmPrescriptionEntry(MyConnectionString, selectedId)
+                    If entry.ShowDialog(Me) <> DialogResult.OK Then Return
+                End Using
+            Case "medicines"
+                Using entry As New frmMedicineEntry(MyConnectionString, selectedId)
+                    If entry.ShowDialog(Me) <> DialogResult.OK Then Return
+                End Using
+            Case "physicians"
+                Using entry As New frmPhysicianEntry(MyConnectionString, selectedId)
+                    If entry.ShowDialog(Me) <> DialogResult.OK Then Return
+                End Using
+            Case "medtechs"
+                Using entry As New frmMedTechEntry(MyConnectionString, selectedId)
+                    If entry.ShowDialog(Me) <> DialogResult.OK Then Return
                 End Using
         End Select
+
+        LoadDashboardOverview()
+        If pnlPatientsSection IsNot Nothing AndAlso pnlPatientsSection.Visible Then
+            GetSectionConfig(currentSectionKey, sectionTitle, sectionSingular, sectionQuery)
+            LoadSectionData(currentSectionKey, sectionQuery)
+        End If
     End Sub
 
     Private Sub BtnDeletePatient_Click(sender As Object, e As EventArgs)
