@@ -162,7 +162,7 @@ Partial Class frmPrescriptionEntry
         '
         'btnRemoveMedicine
         '
-        Me.btnRemoveMedicine.BackColor = System.Drawing.Color.FromArgb(CType(CType(239, Byte), Integer), CType(CType(168, Byte), Integer), CType(CType(188, Byte), Integer))
+        Me.btnRemoveMedicine.BackColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(19, Byte), Integer), CType(CType(66, Byte), Integer))
         Me.btnRemoveMedicine.FlatAppearance.BorderSize = 0
         Me.btnRemoveMedicine.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnRemoveMedicine.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -271,6 +271,7 @@ Partial Class frmPrescriptionEntry
     Friend WithEvents btnSave As Button
     Friend WithEvents btnCancel As Button
 End Class
+
 
 
 

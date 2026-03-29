@@ -26,7 +26,7 @@ Public Class frmMedTechEntry
         If _isUpdateMode Then
             Me.Text = "Update MedTech"
             btnSave.Text = "Update"
-            btnSave.BackColor = Color.FromArgb(217, 92, 128)
+            btnSave.BackColor = Color.FromArgb(184, 19, 66)
             LoadMedTechForUpdate()
         Else
             Me.Text = "Add New MedTech"
@@ -265,3 +265,4 @@ Public Class frmMedTechEntry
         Return candidate
     End Function
 End Class
+

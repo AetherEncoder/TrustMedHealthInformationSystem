@@ -143,7 +143,7 @@ Partial Class frmExaminationEntry
         '
         'btnRemoveLabTest
         '
-        Me.btnRemoveLabTest.BackColor = System.Drawing.Color.FromArgb(CType(CType(239, Byte), Integer), CType(CType(168, Byte), Integer), CType(CType(188, Byte), Integer))
+        Me.btnRemoveLabTest.BackColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(19, Byte), Integer), CType(CType(66, Byte), Integer))
         Me.btnRemoveLabTest.FlatAppearance.BorderSize = 0
         Me.btnRemoveLabTest.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnRemoveLabTest.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -205,7 +205,7 @@ Partial Class frmExaminationEntry
         '
         'btnRemoveMedTech
         '
-        Me.btnRemoveMedTech.BackColor = System.Drawing.Color.FromArgb(CType(CType(239, Byte), Integer), CType(CType(168, Byte), Integer), CType(CType(188, Byte), Integer))
+        Me.btnRemoveMedTech.BackColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(19, Byte), Integer), CType(CType(66, Byte), Integer))
         Me.btnRemoveMedTech.FlatAppearance.BorderSize = 0
         Me.btnRemoveMedTech.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnRemoveMedTech.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -322,6 +322,7 @@ Partial Class frmExaminationEntry
     Friend WithEvents btnSave As Button
     Friend WithEvents btnCancel As Button
 End Class
+
 
 
 

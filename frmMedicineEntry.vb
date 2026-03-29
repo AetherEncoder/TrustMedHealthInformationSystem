@@ -25,7 +25,7 @@ Public Class frmMedicineEntry
         If _isUpdateMode Then
             Me.Text = "Update Medicine"
             btnSave.Text = "Update"
-            btnSave.BackColor = Color.FromArgb(217, 92, 128)
+            btnSave.BackColor = Color.FromArgb(184, 19, 66)
             LoadMedicineForUpdate()
         Else
             Me.Text = "Add New Medicine"
@@ -232,3 +232,4 @@ Public Class frmMedicineEntry
         Return candidate
     End Function
 End Class
+

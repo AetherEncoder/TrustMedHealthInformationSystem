@@ -39,7 +39,7 @@ Partial Class frmLabOrderEntry
         If _isUpdateMode Then
             Me.Text = "Update Lab Order"
             btnSave.Text = "Update"
-            btnSave.BackColor = Color.FromArgb(217, 92, 128)
+            btnSave.BackColor = Color.FromArgb(184, 19, 66)
             LoadLabOrderForUpdate()
         Else
             Me.Text = "Add New Lab Order"
@@ -405,3 +405,4 @@ Partial Class frmLabOrderEntry
         End Try
     End Sub
 End Class
+

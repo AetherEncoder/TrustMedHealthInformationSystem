@@ -348,7 +348,7 @@ Public Class frmDashboard
 
         btnDeletePatient = New Button()
         btnDeletePatient.Text = "Delete Patient"
-        btnDeletePatient.BackColor = Color.FromArgb(239, 168, 188)
+        btnDeletePatient.BackColor = Color.FromArgb(184, 19, 66)
         btnDeletePatient.ForeColor = Color.White
         btnDeletePatient.Size = New Size(224, 48)
         btnDeletePatient.Location = New Point(18, 164)
@@ -356,7 +356,7 @@ Public Class frmDashboard
 
         btnUpdatePatient = New Button()
         btnUpdatePatient.Text = "Update Patient"
-        btnUpdatePatient.BackColor = Color.FromArgb(217, 92, 128)
+        btnUpdatePatient.BackColor = Color.FromArgb(184, 19, 66)
         btnUpdatePatient.ForeColor = Color.White
         btnUpdatePatient.Size = New Size(224, 48)
         btnUpdatePatient.Location = New Point(18, 104)
@@ -571,7 +571,7 @@ Public Class frmDashboard
                      "LEFT JOIN (SELECT TestID, COUNT(*) AS ExamUsage FROM exam_inclusion GROUP BY TestID) exm ON exm.TestID = mt.TestID " &
                      "ORDER BY TotalUsage DESC, mt.TestName",
             .EmptyMessage = "No test usage records found.",
-            .RequiredTables = New String() {"medical_tests", "lab_order_inclusion", "exam_inclusion"}
+            .RequiredTables = New String() {"medical_test", "lab_order_inclusion", "exam_inclusion"}
         }
 
         reportDefinitions("most_prescribed_medicines") = New ReportDefinition With {
@@ -1382,4 +1382,5 @@ Public Class frmDashboard
 
     End Sub
 End Class
+
 

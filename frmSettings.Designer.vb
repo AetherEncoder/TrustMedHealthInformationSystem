@@ -57,7 +57,7 @@ Partial Class frmSettings
         '
         'btnSaveUsername
         '
-        Me.btnSaveUsername.BackColor = System.Drawing.Color.FromArgb(CType(CType(217, Byte), Integer), CType(CType(92, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.btnSaveUsername.BackColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(19, Byte), Integer), CType(CType(66, Byte), Integer))
         Me.btnSaveUsername.FlatAppearance.BorderSize = 0
         Me.btnSaveUsername.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnSaveUsername.ForeColor = System.Drawing.Color.White
@@ -103,7 +103,7 @@ Partial Class frmSettings
         '
         'btnSavePassword
         '
-        Me.btnSavePassword.BackColor = System.Drawing.Color.FromArgb(CType(CType(217, Byte), Integer), CType(CType(92, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.btnSavePassword.BackColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(19, Byte), Integer), CType(CType(66, Byte), Integer))
         Me.btnSavePassword.FlatAppearance.BorderSize = 0
         Me.btnSavePassword.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnSavePassword.ForeColor = System.Drawing.Color.White
@@ -164,7 +164,7 @@ Partial Class frmSettings
         '
         'btnDeleteAccount
         '
-        Me.btnDeleteAccount.BackColor = System.Drawing.Color.FromArgb(CType(CType(239, Byte), Integer), CType(CType(168, Byte), Integer), CType(CType(188, Byte), Integer))
+        Me.btnDeleteAccount.BackColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(19, Byte), Integer), CType(CType(66, Byte), Integer))
         Me.btnDeleteAccount.FlatAppearance.BorderSize = 0
         Me.btnDeleteAccount.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnDeleteAccount.ForeColor = System.Drawing.Color.White
@@ -224,3 +224,4 @@ Partial Class frmSettings
     Friend WithEvents btnDeleteAccount As Button
     Friend WithEvents btnClose As Button
 End Class
+
