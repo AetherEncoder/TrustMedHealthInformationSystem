@@ -2,6 +2,8 @@
 
 Public Class frmMedicalTestEntry
     Private ReadOnly _connectionString As String
+    Private ReadOnly _isUpdateMode As Boolean
+    Private ReadOnly _existingTestId As Integer
 
     Public Sub New()
         InitializeComponent()
@@ -12,8 +14,23 @@ Public Class frmMedicalTestEntry
         InitializeComponent()
     End Sub
 
+    Public Sub New(connectionString As String, testId As Integer)
+        _connectionString = connectionString
+        _isUpdateMode = True
+        _existingTestId = testId
+        InitializeComponent()
+    End Sub
+
     Private Sub frmMedicalTest_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        LoadNextTestId()
+        If _isUpdateMode Then
+            Me.Text = "Update Medical Test"
+            btnSave.Text = "Update"
+            LoadMedicalTestForUpdate()
+        Else
+            Me.Text = "Add New Medical Test"
+            btnSave.Text = "Save"
+            LoadNextTestId()
+        End If
     End Sub
 
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
@@ -48,8 +65,12 @@ Public Class frmMedicalTestEntry
             Using conn As New MySqlConnection(_connectionString)
                 conn.Open()
 
-                Dim sql As String = "INSERT INTO medical_test (TestID, TestName, TestDescription, Cost) " &
-                                    "VALUES (@TestID, @TestName, @TestDescription, @Cost)"
+                Dim sql As String
+                If _isUpdateMode Then
+                    sql = "UPDATE medical_test SET TestName = @TestName, TestDescription = @TestDescription, Cost = @Cost WHERE TestID = @TestID"
+                Else
+                    sql = "INSERT INTO medical_test (TestID, TestName, TestDescription, Cost) VALUES (@TestID, @TestName, @TestDescription, @Cost)"
+                End If
 
                 Using cmd As New MySqlCommand(sql, conn)
                     cmd.Parameters.AddWithValue("@TestID", testId)
@@ -60,7 +81,12 @@ Public Class frmMedicalTestEntry
                 End Using
             End Using
 
-            MessageBox.Show("Medical test added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            If _isUpdateMode Then
+                MessageBox.Show("Medical test updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Else
+                MessageBox.Show("Medical test added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+
             Me.DialogResult = DialogResult.OK
             Me.Close()
         Catch ex As Exception
@@ -162,4 +188,42 @@ Public Class frmMedicalTestEntry
 
         Return candidate
     End Function
+
+    Private Sub LoadMedicalTestForUpdate()
+        If String.IsNullOrWhiteSpace(_connectionString) OrElse _existingTestId <= 0 Then
+            MessageBox.Show("Unable to load selected medical test.", "Update", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Me.DialogResult = DialogResult.Cancel
+            Me.Close()
+            Return
+        End If
+
+        Try
+            Using conn As New MySqlConnection(_connectionString)
+                conn.Open()
+
+                Dim sql As String = "SELECT TestID, TestName, TestDescription, Cost FROM medical_test WHERE TestID = @TestID"
+                Using cmd As New MySqlCommand(sql, conn)
+                    cmd.Parameters.AddWithValue("@TestID", _existingTestId)
+
+                    Using reader As MySqlDataReader = cmd.ExecuteReader()
+                        If Not reader.Read() Then
+                            MessageBox.Show("Selected medical test was not found.", "Update", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                            Me.DialogResult = DialogResult.Cancel
+                            Me.Close()
+                            Return
+                        End If
+
+                        txtTestID.Text = Convert.ToInt32(reader("TestID")).ToString()
+                        txtTestName.Text = reader("TestName").ToString()
+                        txtTestDescription.Text = reader("TestDescription").ToString()
+                        txtCost.Text = Convert.ToDecimal(reader("Cost")).ToString("0.##")
+                    End Using
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Unable to load selected medical test: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Me.DialogResult = DialogResult.Cancel
+            Me.Close()
+        End Try
+    End Sub
 End Class

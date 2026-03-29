@@ -1,9 +1,10 @@
 ﻿Imports MySql.Data.MySqlClient
 
 Partial Class frmPrescriptionEntry
-
     Private ReadOnly _connectionString As String
     Private ReadOnly _selectedMedicines As New List(Of MedicineSelectionItem)()
+    Private ReadOnly _isUpdateMode As Boolean
+    Private ReadOnly _existingPrescriptionId As Integer
 
     Private Class MedicineSelectionItem
         Public Property MedicineID As Integer
@@ -23,11 +24,27 @@ Partial Class frmPrescriptionEntry
         InitializeComponent()
     End Sub
 
+    Public Sub New(connectionString As String, prescriptionId As Integer)
+        _connectionString = connectionString
+        _isUpdateMode = True
+        _existingPrescriptionId = prescriptionId
+        InitializeComponent()
+    End Sub
+
     Private Sub frmPrescriptionEntry_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        LoadNextPrescriptionId()
         LoadPhysicianAndPatientOptions()
         LoadMedicineOptions()
         RefreshSelectedMedicinesList()
+
+        If _isUpdateMode Then
+            Me.Text = "Update Prescription"
+            btnSave.Text = "Update"
+            LoadPrescriptionForUpdate()
+        Else
+            Me.Text = "Add New Prescription"
+            btnSave.Text = "Save"
+            LoadNextPrescriptionId()
+        End If
     End Sub
 
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
@@ -93,13 +110,71 @@ Partial Class frmPrescriptionEntry
         Next
     End Sub
 
+    Private Sub LoadPrescriptionForUpdate()
+        If String.IsNullOrWhiteSpace(_connectionString) OrElse _existingPrescriptionId <= 0 Then
+            MessageBox.Show("Unable to load selected prescription.", "Update", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Me.DialogResult = DialogResult.Cancel
+            Me.Close()
+            Return
+        End If
+
+        Try
+            Using conn As New MySqlConnection(_connectionString)
+                conn.Open()
+
+                Dim prescriptionSql As String = "SELECT PrescriptionID, PhysicianID, PatientID, Instruction, PrescriptionDate FROM prescription WHERE PrescriptionID = @PrescriptionID"
+                Using prescriptionCmd As New MySqlCommand(prescriptionSql, conn)
+                    prescriptionCmd.Parameters.AddWithValue("@PrescriptionID", _existingPrescriptionId)
+
+                    Using reader As MySqlDataReader = prescriptionCmd.ExecuteReader()
+                        If Not reader.Read() Then
+                            MessageBox.Show("Selected prescription was not found.", "Update", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                            Me.DialogResult = DialogResult.Cancel
+                            Me.Close()
+                            Return
+                        End If
+
+                        txtPrescriptionID.Text = Convert.ToInt32(reader("PrescriptionID")).ToString()
+                        cboPhysician.SelectedValue = Convert.ToInt32(reader("PhysicianID"))
+                        cboPatient.SelectedValue = Convert.ToInt32(reader("PatientID"))
+                        txtInstruction.Text = reader("Instruction").ToString()
+
+                        If Not Convert.IsDBNull(reader("PrescriptionDate")) Then
+                            dtpPrescriptionDate.Value = Convert.ToDateTime(reader("PrescriptionDate"))
+                        End If
+                    End Using
+                End Using
+
+                _selectedMedicines.Clear()
+                Dim medsSql As String = "SELECT m.MedicineID, CONCAT(m.MedicineName, ' (', m.MedicineID, ')') AS FullName FROM prescription_inclusion pi INNER JOIN medicine m ON m.MedicineID = pi.MedicineID WHERE pi.PrescriptionID = @PrescriptionID ORDER BY m.MedicineName"
+                Using medsCmd As New MySqlCommand(medsSql, conn)
+                    medsCmd.Parameters.AddWithValue("@PrescriptionID", _existingPrescriptionId)
+
+                    Using reader As MySqlDataReader = medsCmd.ExecuteReader()
+                        While reader.Read()
+                            _selectedMedicines.Add(New MedicineSelectionItem With {
+                                .MedicineID = Convert.ToInt32(reader("MedicineID")),
+                                .DisplayName = reader("FullName").ToString()
+                            })
+                        End While
+                    End Using
+                End Using
+
+                RefreshSelectedMedicinesList()
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Unable to load selected prescription: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Me.DialogResult = DialogResult.Cancel
+            Me.Close()
+        End Try
+    End Sub
+
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
         If Not ValidateInputs() Then
             Return
         End If
 
         Dim prescriptionId As Integer
-
         If Not Integer.TryParse(txtPrescriptionID.Text.Trim(), prescriptionId) Then
             MessageBox.Show("Invalid Prescription ID.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
@@ -112,29 +187,54 @@ Partial Class frmPrescriptionEntry
             Using conn As New MySqlConnection(_connectionString)
                 conn.Open()
 
-                Dim sql As String = "INSERT INTO prescription (PrescriptionID, PhysicianID, PatientID, Instruction, PrescriptionDate) " &
-                                    "VALUES (@PrescriptionID, @PhysicianID, @PatientID, @Instruction, @PrescriptionDate)"
+                Using tx As MySqlTransaction = conn.BeginTransaction()
+                    Try
+                        Dim sql As String
+                        If _isUpdateMode Then
+                            sql = "UPDATE prescription SET PhysicianID = @PhysicianID, PatientID = @PatientID, Instruction = @Instruction, PrescriptionDate = @PrescriptionDate WHERE PrescriptionID = @PrescriptionID"
+                        Else
+                            sql = "INSERT INTO prescription (PrescriptionID, PhysicianID, PatientID, Instruction, PrescriptionDate) VALUES (@PrescriptionID, @PhysicianID, @PatientID, @Instruction, @PrescriptionDate)"
+                        End If
 
-                Using cmd As New MySqlCommand(sql, conn)
-                    cmd.Parameters.AddWithValue("@PrescriptionID", prescriptionId)
-                    cmd.Parameters.AddWithValue("@PhysicianID", physicianId)
-                    cmd.Parameters.AddWithValue("@PatientID", patientId)
-                    cmd.Parameters.AddWithValue("@Instruction", txtInstruction.Text.Trim())
-                    cmd.Parameters.AddWithValue("@PrescriptionDate", dtpPrescriptionDate.Value.Date)
-                    cmd.ExecuteNonQuery()
+                        Using cmd As New MySqlCommand(sql, conn, tx)
+                            cmd.Parameters.AddWithValue("@PrescriptionID", prescriptionId)
+                            cmd.Parameters.AddWithValue("@PhysicianID", physicianId)
+                            cmd.Parameters.AddWithValue("@PatientID", patientId)
+                            cmd.Parameters.AddWithValue("@Instruction", txtInstruction.Text.Trim())
+                            cmd.Parameters.AddWithValue("@PrescriptionDate", dtpPrescriptionDate.Value.Date)
+                            cmd.ExecuteNonQuery()
+                        End Using
+
+                        If _isUpdateMode Then
+                            Using deleteCmd As New MySqlCommand("DELETE FROM prescription_inclusion WHERE PrescriptionID = @PrescriptionID", conn, tx)
+                                deleteCmd.Parameters.AddWithValue("@PrescriptionID", prescriptionId)
+                                deleteCmd.ExecuteNonQuery()
+                            End Using
+                        End If
+
+                        Dim inclusionSql As String = "INSERT INTO prescription_inclusion (MedicineID, PrescriptionID) VALUES (@MedicineID, @PrescriptionID)"
+                        For Each medicine As MedicineSelectionItem In _selectedMedicines
+                            Using inclusionCmd As New MySqlCommand(inclusionSql, conn, tx)
+                                inclusionCmd.Parameters.AddWithValue("@MedicineID", medicine.MedicineID)
+                                inclusionCmd.Parameters.AddWithValue("@PrescriptionID", prescriptionId)
+                                inclusionCmd.ExecuteNonQuery()
+                            End Using
+                        Next
+
+                        tx.Commit()
+                    Catch
+                        tx.Rollback()
+                        Throw
+                    End Try
                 End Using
-
-                Dim inclusionSql As String = "INSERT INTO prescription_inclusion (MedicineID, PrescriptionID) VALUES (@MedicineID, @PrescriptionID)"
-                For Each medicine As MedicineSelectionItem In _selectedMedicines
-                    Using inclusionCmd As New MySqlCommand(inclusionSql, conn)
-                        inclusionCmd.Parameters.AddWithValue("@MedicineID", medicine.MedicineID)
-                        inclusionCmd.Parameters.AddWithValue("@PrescriptionID", prescriptionId)
-                        inclusionCmd.ExecuteNonQuery()
-                    End Using
-                Next
             End Using
 
-            MessageBox.Show("Prescription added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            If _isUpdateMode Then
+                MessageBox.Show("Prescription updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Else
+                MessageBox.Show("Prescription added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+
             Me.DialogResult = DialogResult.OK
             Me.Close()
         Catch ex As Exception

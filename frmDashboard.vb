@@ -758,6 +758,10 @@ Public Class frmDashboard
                 idColumn = "OrderID"
             Case "examinations"
                 idColumn = "ExaminationID"
+            Case "medicaltests"
+                idColumn = "TestID"
+            Case "prescriptions"
+                idColumn = "PrescriptionID"
             Case Else
                 ShowQuickActionPlaceholder("Update " & currentSectionSingular)
                 Return
@@ -791,7 +795,6 @@ Public Class frmDashboard
                 Using patientEntry As New frmPatientEntry(MyConnectionString, selectedId)
                     If patientEntry.ShowDialog(Me) = DialogResult.OK Then
                         LoadDashboardOverview()
-
                         If pnlPatientsSection IsNot Nothing AndAlso pnlPatientsSection.Visible Then
                             Dim sectionTitle As String = ""
                             Dim sectionSingular As String = ""
@@ -805,7 +808,6 @@ Public Class frmDashboard
                 Using consultationEntry As New frmConsultationEntry(MyConnectionString, selectedId)
                     If consultationEntry.ShowDialog(Me) = DialogResult.OK Then
                         LoadDashboardOverview()
-
                         If pnlPatientsSection IsNot Nothing AndAlso pnlPatientsSection.Visible Then
                             Dim sectionTitle As String = ""
                             Dim sectionSingular As String = ""
@@ -819,7 +821,6 @@ Public Class frmDashboard
                 Using diagnosisEntry As New frmDiagnosisEntry(MyConnectionString, selectedId)
                     If diagnosisEntry.ShowDialog(Me) = DialogResult.OK Then
                         LoadDashboardOverview()
-
                         If pnlPatientsSection IsNot Nothing AndAlso pnlPatientsSection.Visible Then
                             Dim sectionTitle As String = ""
                             Dim sectionSingular As String = ""
@@ -833,7 +834,6 @@ Public Class frmDashboard
                 Using labOrderEntry As New frmLabOrderEntry(MyConnectionString, selectedId)
                     If labOrderEntry.ShowDialog(Me) = DialogResult.OK Then
                         LoadDashboardOverview()
-
                         If pnlPatientsSection IsNot Nothing AndAlso pnlPatientsSection.Visible Then
                             Dim sectionTitle As String = ""
                             Dim sectionSingular As String = ""
@@ -847,13 +847,38 @@ Public Class frmDashboard
                 Using examinationEntry As New frmExaminationEntry(MyConnectionString, selectedId)
                     If examinationEntry.ShowDialog(Me) = DialogResult.OK Then
                         LoadDashboardOverview()
-
                         If pnlPatientsSection IsNot Nothing AndAlso pnlPatientsSection.Visible Then
                             Dim sectionTitle As String = ""
                             Dim sectionSingular As String = ""
                             Dim sectionQuery As String = ""
                             GetSectionConfig("examinations", sectionTitle, sectionSingular, sectionQuery)
                             LoadSectionData("examinations", sectionQuery)
+                        End If
+                    End If
+                End Using
+            Case "medicaltests"
+                Using medicalTestEntry As New frmMedicalTestEntry(MyConnectionString, selectedId)
+                    If medicalTestEntry.ShowDialog(Me) = DialogResult.OK Then
+                        LoadDashboardOverview()
+                        If pnlPatientsSection IsNot Nothing AndAlso pnlPatientsSection.Visible Then
+                            Dim sectionTitle As String = ""
+                            Dim sectionSingular As String = ""
+                            Dim sectionQuery As String = ""
+                            GetSectionConfig("medicaltests", sectionTitle, sectionSingular, sectionQuery)
+                            LoadSectionData("medicaltests", sectionQuery)
+                        End If
+                    End If
+                End Using
+            Case "prescriptions"
+                Using prescriptionEntry As New frmPrescriptionEntry(MyConnectionString, selectedId)
+                    If prescriptionEntry.ShowDialog(Me) = DialogResult.OK Then
+                        LoadDashboardOverview()
+                        If pnlPatientsSection IsNot Nothing AndAlso pnlPatientsSection.Visible Then
+                            Dim sectionTitle As String = ""
+                            Dim sectionSingular As String = ""
+                            Dim sectionQuery As String = ""
+                            GetSectionConfig("prescriptions", sectionTitle, sectionSingular, sectionQuery)
+                            LoadSectionData("prescriptions", sectionQuery)
                         End If
                     End If
                 End Using
