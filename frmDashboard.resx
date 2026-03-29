@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="pbQuickAddDiagnosis.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="btnNewPatient.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAALBJREFUWEft
         llEKgCAQRD1KR+ko3bSjeBAF22B+khmpWOmjffC+bJwFqUxB0FNKWWut2WzO5nNv1Gjswb0LeppRoyEh
@@ -127,7 +127,7 @@
         AElFTkSuQmCC
 </value>
   </data>
-  <data name="pbQuickAddConsultation.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="btnNewDiagnosis.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAALBJREFUWEft
         llEKgCAQRD1KR+ko3bSjeBAF22B+khmpWOmjffC+bJwFqUxB0FNKWWut2WzO5nNv1Gjswb0LeppRoyEh
@@ -136,7 +136,7 @@
         AElFTkSuQmCC
 </value>
   </data>
-  <data name="pbQuickAddLabOrder.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="btnNewConsultation.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAALBJREFUWEft
         llEKgCAQRD1KR+ko3bSjeBAF22B+khmpWOmjffC+bJwFqUxB0FNKWWut2WzO5nNv1Gjswb0LeppRoyEh
@@ -145,7 +145,7 @@
         AElFTkSuQmCC
 </value>
   </data>
-  <data name="pbQuickAddPrescription.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="btnNewLabOrder.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAALBJREFUWEft
         llEKgCAQRD1KR+ko3bSjeBAF22B+khmpWOmjffC+bJwFqUxB0FNKWWut2WzO5nNv1Gjswb0LeppRoyEh
@@ -154,7 +154,7 @@
         AElFTkSuQmCC
 </value>
   </data>
-  <data name="pbQuickAddPatient.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="btnNewPrescription.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAALBJREFUWEft
         llEKgCAQRD1KR+ko3bSjeBAF22B+khmpWOmjffC+bJwFqUxB0FNKWWut2WzO5nNv1Gjswb0LeppRoyEh
@@ -913,6 +913,24 @@
         IIhMBQAAIIhMBQAAIIhMBQAAIIhMBQAAIIhMBQAAIIhMBQAAIIhMBQAAIIhMBQAAIIhMBQAAIIhMBQAA
         IIhMBQAAIIhMBQAAIIhMBQAAIIhMBQAAIIhMBQAAIIhMBQAAIIhMBQAAIIhMBQAAIIhMBQAAIIhMBQAA
         IIhMBQAAIIhMBQAAIIhMBQAAIIhMBQAAIMZvf/v/rx+UdliOf58AAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="Button1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAANtJREFUWEft
+        l9EJwzAMRDNKR+ko3aSjZJSM4kFscKVyhpDI9QWp9KN+cB+VrRcR0uAskyvknJ+llPohSfdgeyzExfdZ
+        0RaHSJPKZZA7SidqrTcMkFCKA+KKn13YfV2keWuSL2R8Z2TTemiKzIbLjDGaXYGWx5J4Ai2PJfEEWh5L
+        4gm0PJZEo++B3f99WG+BlseSaLB8Wkd52EdjSTRYngPMAeYAvxtA8tCXzoX6O9DyWBJPoOWxJJ5Ay2NJ
+        PIGWx5J4Ai2PNEWeDfmjWANPdMQQ+rHSPcpP/p1leQHSDtxk8LG0FAAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="Button2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAANRJREFUWEft
+        luENwiAQhRnFUdyso3QUR2EQSCivuTOVHBUoh0nlS96PQrjvaVOtmdyKEMLDe7/GWOfcQstjIPkrJhyy
+        0rYuidzStaVr3RKpnJZ5XbdETs6olkjkewGs0fYblRKCfFyJEzlHLBEfyyfv01I9BXLOR4nkXNs3UCHn
+        7CWSc22fvkHOwX3/mfyYKa/jf+UgHsb/uTS0NO1yIAysyTU5EIaW5rocCINL0kcOhOHf0k8OBMFZ+sqB
+        IMmlvxzEwSW/ATpyQC8O2RLD3/cnN8eYDcgL6WPaYGh9AAAAAElFTkSuQmCC
 </value>
   </data>
   <metadata name="msDashboardMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">

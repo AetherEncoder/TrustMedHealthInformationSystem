@@ -3,6 +3,14 @@ Imports System.IO
 Imports MySql.Data.MySqlClient
 
 Public Class frmDashboard
+    Public Sub New()
+        InitializeComponent()
+
+        If IsDesignTimeMode() Then
+            PreviewPatientSectionInDesigner()
+        End If
+    End Sub
+
     'Create connection variable/object named "MyConnection" 
     Dim MyConnection As Common.DbConnection
 
@@ -323,6 +331,7 @@ Public Class frmDashboard
     End Sub
 
     Private Sub InitializePatientsSectionUi()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmDashboard))
         If patientsSectionInitialized Then Return
 
         pnlPatientsSection = New Panel()
@@ -344,6 +353,10 @@ Public Class frmDashboard
         btnAddPatient.ForeColor = Color.White
         btnAddPatient.Size = New Size(224, 48)
         btnAddPatient.Location = New Point(18, 44)
+        btnAddPatient.Image = CType(resources.GetObject("btnNewPatient.Image"), System.Drawing.Image)
+        btnAddPatient.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        btnAddPatient.Padding = New System.Windows.Forms.Padding(20, 0, 0, 0)
+        btnAddPatient.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
         AddHandler btnAddPatient.Click, AddressOf BtnAddPatient_Click
 
         btnDeletePatient = New Button()
@@ -352,6 +365,10 @@ Public Class frmDashboard
         btnDeletePatient.ForeColor = Color.White
         btnDeletePatient.Size = New Size(224, 48)
         btnDeletePatient.Location = New Point(18, 164)
+        btnDeletePatient.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
+        btnDeletePatient.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        btnDeletePatient.Padding = New System.Windows.Forms.Padding(20, 0, 0, 0)
+        btnDeletePatient.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
         AddHandler btnDeletePatient.Click, AddressOf BtnDeletePatient_Click
 
         btnUpdatePatient = New Button()
@@ -360,6 +377,10 @@ Public Class frmDashboard
         btnUpdatePatient.ForeColor = Color.White
         btnUpdatePatient.Size = New Size(224, 48)
         btnUpdatePatient.Location = New Point(18, 104)
+        btnUpdatePatient.Image = CType(resources.GetObject("Button2.Image"), System.Drawing.Image)
+        btnUpdatePatient.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        btnUpdatePatient.Padding = New System.Windows.Forms.Padding(20, 0, 0, 0)
+        btnUpdatePatient.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
         AddHandler btnUpdatePatient.Click, AddressOf BtnUpdatePatient_Click
 
         grpPatientOptions.Controls.Add(btnAddPatient)
@@ -1374,11 +1395,38 @@ Public Class frmDashboard
         Next
     End Sub
 
+    Private Function IsDesignTimeMode() As Boolean
+        Return System.ComponentModel.LicenseManager.UsageMode = System.ComponentModel.LicenseUsageMode.Designtime
+    End Function
+
+    Private Sub PreviewPatientSectionInDesigner()
+        Try
+            InitializePatientsSectionUi()
+            pnlDashboard.Visible = True
+            pnlLoginContainer.Visible = False
+            pnlSummaryCards.Visible = False
+            grpQuickActions.Visible = False
+            If pnlReportsSection IsNot Nothing Then
+                pnlReportsSection.Visible = False
+            End If
+            If pnlPatientsSection IsNot Nothing Then
+                pnlPatientsSection.Visible = True
+                pnlPatientsSection.BringToFront()
+            End If
+        Catch
+            ' Design-time preview only; ignore designer-time exceptions.
+        End Try
+    End Sub
+
     Private Sub PictureBox1_Click(sender As Object, e As EventArgs)
 
     End Sub
 
-    Private Sub pbAdd_Click(sender As Object, e As EventArgs) Handles pbQuickAddPatient.Click
+    Private Sub pbAdd_Click(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub pnlDashboard_Paint(sender As Object, e As PaintEventArgs) Handles pnlDashboard.Paint
 
     End Sub
 End Class
