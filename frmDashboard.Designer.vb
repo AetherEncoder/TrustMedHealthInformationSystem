@@ -72,12 +72,16 @@ Partial Class frmDashboard
         Me.miAccount = New System.Windows.Forms.ToolStripMenuItem()
         Me.miAccountLogout = New System.Windows.Forms.ToolStripMenuItem()
         Me.miAccountSettings = New System.Windows.Forms.ToolStripMenuItem()
+        Me.pnlLoginCard = New System.Windows.Forms.Panel()
+        Me.pbLoginLogo = New System.Windows.Forms.PictureBox()
         Me.pnlLoginContainer.SuspendLayout()
+        Me.pnlLoginCard.SuspendLayout()
         Me.pnlDashboard.SuspendLayout()
         Me.grpQuickActions.SuspendLayout()
         Me.pnlSummaryCards.SuspendLayout()
         Me.pnlBranding.SuspendLayout()
         CType(Me.pbTrustMedLogo, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbLoginLogo, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlLabOrders.SuspendLayout()
         Me.pnlTotalPatients.SuspendLayout()
         Me.msDashboardMenu.SuspendLayout()
@@ -85,59 +89,61 @@ Partial Class frmDashboard
         '
         'lblHeader
         '
-        Me.lblHeader.AutoSize = True
-        Me.lblHeader.Font = New System.Drawing.Font("Microsoft Sans Serif", 24.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblHeader.AutoSize = False
+        Me.lblHeader.Font = New System.Drawing.Font("Segoe UI", 20.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblHeader.ForeColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(19, Byte), Integer), CType(CType(66, Byte), Integer))
-        Me.lblHeader.Location = New System.Drawing.Point(388, 50)
+        Me.lblHeader.Location = New System.Drawing.Point(30, 124)
         Me.lblHeader.Name = "lblHeader"
-        Me.lblHeader.Size = New System.Drawing.Size(571, 37)
+        Me.lblHeader.Size = New System.Drawing.Size(460, 42)
         Me.lblHeader.TabIndex = 0
         Me.lblHeader.Text = "TrustMed Health Information System"
-        Me.lblHeader.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.lblHeader.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'lblUsername
         '
         Me.lblUsername.AutoSize = True
-        Me.lblUsername.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblUsername.Location = New System.Drawing.Point(474, 200)
+        Me.lblUsername.Font = New System.Drawing.Font("Segoe UI", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblUsername.Location = New System.Drawing.Point(60, 210)
         Me.lblUsername.Name = "lblUsername"
-        Me.lblUsername.Size = New System.Drawing.Size(97, 20)
+        Me.lblUsername.Size = New System.Drawing.Size(97, 19)
         Me.lblUsername.TabIndex = 1
         Me.lblUsername.Text = "Username: *"
         '
         'lblPassword
         '
         Me.lblPassword.AutoSize = True
-        Me.lblPassword.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblPassword.Location = New System.Drawing.Point(474, 280)
+        Me.lblPassword.Font = New System.Drawing.Font("Segoe UI", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblPassword.Location = New System.Drawing.Point(60, 292)
         Me.lblPassword.Name = "lblPassword"
-        Me.lblPassword.Size = New System.Drawing.Size(92, 20)
+        Me.lblPassword.Size = New System.Drawing.Size(92, 19)
         Me.lblPassword.TabIndex = 2
         Me.lblPassword.Text = "Password: *"
         '
         'txtUsername
         '
-        Me.txtUsername.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtUsername.Location = New System.Drawing.Point(474, 230)
+        Me.txtUsername.Font = New System.Drawing.Font("Segoe UI", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtUsername.Location = New System.Drawing.Point(60, 236)
         Me.txtUsername.Name = "txtUsername"
-        Me.txtUsername.Size = New System.Drawing.Size(400, 26)
+        Me.txtUsername.Size = New System.Drawing.Size(400, 27)
         Me.txtUsername.TabIndex = 3
         '
         'txtPassword
         '
-        Me.txtPassword.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtPassword.Location = New System.Drawing.Point(474, 310)
+        Me.txtPassword.Font = New System.Drawing.Font("Segoe UI", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtPassword.Location = New System.Drawing.Point(60, 318)
         Me.txtPassword.Name = "txtPassword"
-        Me.txtPassword.Size = New System.Drawing.Size(400, 26)
+        Me.txtPassword.Size = New System.Drawing.Size(400, 27)
         Me.txtPassword.TabIndex = 4
         Me.txtPassword.UseSystemPasswordChar = True
         '
         'btnLogin
         '
         Me.btnLogin.BackColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(19, Byte), Integer), CType(CType(66, Byte), Integer))
-        Me.btnLogin.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnLogin.FlatAppearance.BorderSize = 0
+        Me.btnLogin.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnLogin.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnLogin.ForeColor = System.Drawing.Color.White
-        Me.btnLogin.Location = New System.Drawing.Point(524, 420)
+        Me.btnLogin.Location = New System.Drawing.Point(170, 420)
         Me.btnLogin.Name = "btnLogin"
         Me.btnLogin.Size = New System.Drawing.Size(100, 40)
         Me.btnLogin.TabIndex = 5
@@ -146,10 +152,12 @@ Partial Class frmDashboard
         '
         'btnClose
         '
-        Me.btnClose.BackColor = System.Drawing.Color.Gray
-        Me.btnClose.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnClose.ForeColor = System.Drawing.Color.White
-        Me.btnClose.Location = New System.Drawing.Point(724, 420)
+        Me.btnClose.BackColor = System.Drawing.Color.FromArgb(CType(CType(220, Byte), Integer), CType(CType(220, Byte), Integer), CType(CType(225, Byte), Integer))
+        Me.btnClose.FlatAppearance.BorderSize = 0
+        Me.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnClose.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnClose.ForeColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.btnClose.Location = New System.Drawing.Point(280, 420)
         Me.btnClose.Name = "btnClose"
         Me.btnClose.Size = New System.Drawing.Size(100, 40)
         Me.btnClose.TabIndex = 6
@@ -161,7 +169,7 @@ Partial Class frmDashboard
         Me.lblUsernameError.AutoSize = True
         Me.lblUsernameError.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblUsernameError.ForeColor = System.Drawing.Color.Red
-        Me.lblUsernameError.Location = New System.Drawing.Point(474, 260)
+        Me.lblUsernameError.Location = New System.Drawing.Point(60, 269)
         Me.lblUsernameError.Name = "lblUsernameError"
         Me.lblUsernameError.Size = New System.Drawing.Size(0, 15)
         Me.lblUsernameError.TabIndex = 7
@@ -172,7 +180,7 @@ Partial Class frmDashboard
         Me.lblPasswordError.AutoSize = True
         Me.lblPasswordError.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblPasswordError.ForeColor = System.Drawing.Color.Red
-        Me.lblPasswordError.Location = New System.Drawing.Point(474, 340)
+        Me.lblPasswordError.Location = New System.Drawing.Point(60, 351)
         Me.lblPasswordError.Name = "lblPasswordError"
         Me.lblPasswordError.Size = New System.Drawing.Size(0, 15)
         Me.lblPasswordError.TabIndex = 8
@@ -180,16 +188,8 @@ Partial Class frmDashboard
         '
         'pnlLoginContainer
         '
-        Me.pnlLoginContainer.Controls.Add(Me.lblLoginError)
-        Me.pnlLoginContainer.Controls.Add(Me.lblPasswordError)
-        Me.pnlLoginContainer.Controls.Add(Me.lblUsernameError)
-        Me.pnlLoginContainer.Controls.Add(Me.btnClose)
-        Me.pnlLoginContainer.Controls.Add(Me.btnLogin)
-        Me.pnlLoginContainer.Controls.Add(Me.txtPassword)
-        Me.pnlLoginContainer.Controls.Add(Me.txtUsername)
-        Me.pnlLoginContainer.Controls.Add(Me.lblPassword)
-        Me.pnlLoginContainer.Controls.Add(Me.lblUsername)
-        Me.pnlLoginContainer.Controls.Add(Me.lblHeader)
+        Me.pnlLoginContainer.BackColor = System.Drawing.Color.FromArgb(CType(CType(246, Byte), Integer), CType(CType(246, Byte), Integer), CType(CType(248, Byte), Integer))
+        Me.pnlLoginContainer.Controls.Add(Me.pnlLoginCard)
         Me.pnlLoginContainer.Dock = System.Windows.Forms.DockStyle.Fill
         Me.pnlLoginContainer.Location = New System.Drawing.Point(0, 0)
         Me.pnlLoginContainer.Name = "pnlLoginContainer"
@@ -201,7 +201,7 @@ Partial Class frmDashboard
         Me.lblLoginError.AutoSize = True
         Me.lblLoginError.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblLoginError.ForeColor = System.Drawing.Color.Red
-        Me.lblLoginError.Location = New System.Drawing.Point(474, 365)
+        Me.lblLoginError.Location = New System.Drawing.Point(60, 378)
         Me.lblLoginError.Name = "lblLoginError"
         Me.lblLoginError.Size = New System.Drawing.Size(0, 17)
         Me.lblLoginError.TabIndex = 9
@@ -538,6 +538,36 @@ Partial Class frmDashboard
         Me.miAccountSettings.Size = New System.Drawing.Size(116, 22)
         Me.miAccountSettings.Text = "Settings"
         '
+        'pnlLoginCard
+        '
+        Me.pnlLoginCard.BackColor = System.Drawing.Color.White
+        Me.pnlLoginCard.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pnlLoginCard.Controls.Add(Me.pbLoginLogo)
+        Me.pnlLoginCard.Controls.Add(Me.lblLoginError)
+        Me.pnlLoginCard.Controls.Add(Me.lblPasswordError)
+        Me.pnlLoginCard.Controls.Add(Me.lblUsernameError)
+        Me.pnlLoginCard.Controls.Add(Me.btnClose)
+        Me.pnlLoginCard.Controls.Add(Me.btnLogin)
+        Me.pnlLoginCard.Controls.Add(Me.txtPassword)
+        Me.pnlLoginCard.Controls.Add(Me.txtUsername)
+        Me.pnlLoginCard.Controls.Add(Me.lblPassword)
+        Me.pnlLoginCard.Controls.Add(Me.lblUsername)
+        Me.pnlLoginCard.Controls.Add(Me.lblHeader)
+        Me.pnlLoginCard.Location = New System.Drawing.Point(414, 92)
+        Me.pnlLoginCard.Name = "pnlLoginCard"
+        Me.pnlLoginCard.Size = New System.Drawing.Size(520, 540)
+        Me.pnlLoginCard.TabIndex = 11
+        '
+        'pbLoginLogo
+        '
+        Me.pbLoginLogo.BackColor = System.Drawing.Color.Transparent
+        Me.pbLoginLogo.Location = New System.Drawing.Point(190, 26)
+        Me.pbLoginLogo.Name = "pbLoginLogo"
+        Me.pbLoginLogo.Size = New System.Drawing.Size(140, 90)
+        Me.pbLoginLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.pbLoginLogo.TabIndex = 10
+        Me.pbLoginLogo.TabStop = False
+        '
         'frmDashboard
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -553,13 +583,15 @@ Partial Class frmDashboard
         Me.Name = "frmDashboard"
         Me.Text = "TrustMed Health Information System"
         Me.pnlLoginContainer.ResumeLayout(False)
-        Me.pnlLoginContainer.PerformLayout()
+        Me.pnlLoginCard.ResumeLayout(False)
+        Me.pnlLoginCard.PerformLayout()
         Me.pnlDashboard.ResumeLayout(False)
         Me.pnlDashboard.PerformLayout()
         Me.grpQuickActions.ResumeLayout(False)
         Me.pnlSummaryCards.ResumeLayout(False)
         Me.pnlBranding.ResumeLayout(False)
         CType(Me.pbTrustMedLogo, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbLoginLogo, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnlLabOrders.ResumeLayout(False)
         Me.pnlTotalPatients.ResumeLayout(False)
         Me.msDashboardMenu.ResumeLayout(False)
@@ -567,6 +599,8 @@ Partial Class frmDashboard
         Me.ResumeLayout(False)
 
     End Sub
+    Friend WithEvents pnlLoginCard As Panel
+    Friend WithEvents pbLoginLogo As PictureBox
     Friend WithEvents lblHeader As Label
     Friend WithEvents lblUsername As Label
     Friend WithEvents lblPassword As Label

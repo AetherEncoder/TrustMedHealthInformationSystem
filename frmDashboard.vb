@@ -74,6 +74,10 @@ Public Class frmDashboard
             pbTrustMedLogo.Image = Me.Icon.ToBitmap()
         End If
 
+        If pbLoginLogo IsNot Nothing Then
+            pbLoginLogo.Image = pbTrustMedLogo.Image
+        End If
+
         InitializePatientsSectionUi()
         InitializeReportsSectionUi()
         ClearErrorMessages()
