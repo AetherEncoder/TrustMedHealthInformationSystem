@@ -219,5 +219,14 @@
     </None>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="src\add.png" />
+    <Content Include="src\delete.png" />
+    <Content Include="src\pencil-simple-fill.png" />
+    <Content Include="src\plus-fill.png" />
+    <Content Include="src\trash-fill.png" />
+    <Content Include="src\update.png" />
+    <Content Include="src\user-plus-fill.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

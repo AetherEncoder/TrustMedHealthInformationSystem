@@ -118,6 +118,51 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="pbQuickAddDiagnosis.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAALBJREFUWEft
+        llEKgCAQRD1KR+ko3bSjeBAF22B+khmpWOmjffC+bJwFqUxB0FNKWWut2WzO5nNv1Gjswb0LeppRoyEh
+        V1GjYSFPUaNhIeV5pq21ha0pUaNhISUirzISFlIiEgPEAHMHuPX5FLBXFEuaPmBuWHoM/iuX/bCk6QMj
+        EZl7BCMRiQFigO8GMDf2qo1EjYaFPEWNhoU8RY3GHpp5Kd1Ro8GZzhji3rU8+BkpHWMBC2OF/sK8AAAA
+        AElFTkSuQmCC
+</value>
+  </data>
+  <data name="pbQuickAddConsultation.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAALBJREFUWEft
+        llEKgCAQRD1KR+ko3bSjeBAF22B+khmpWOmjffC+bJwFqUxB0FNKWWut2WzO5nNv1Gjswb0LeppRoyEh
+        V1GjYSFPUaNhIeV5pq21ha0pUaNhISUirzISFlIiEgPEAHMHuPX5FLBXFEuaPmBuWHoM/iuX/bCk6QMj
+        EZl7BCMRiQFigO8GMDf2qo1EjYaFPEWNhoU8RY3GHpp5Kd1Ro8GZzhji3rU8+BkpHWMBC2OF/sK8AAAA
+        AElFTkSuQmCC
+</value>
+  </data>
+  <data name="pbQuickAddLabOrder.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAALBJREFUWEft
+        llEKgCAQRD1KR+ko3bSjeBAF22B+khmpWOmjffC+bJwFqUxB0FNKWWut2WzO5nNv1Gjswb0LeppRoyEh
+        V1GjYSFPUaNhIeV5pq21ha0pUaNhISUirzISFlIiEgPEAHMHuPX5FLBXFEuaPmBuWHoM/iuX/bCk6QMj
+        EZl7BCMRiQFigO8GMDf2qo1EjYaFPEWNhoU8RY3GHpp5Kd1Ro8GZzhji3rU8+BkpHWMBC2OF/sK8AAAA
+        AElFTkSuQmCC
+</value>
+  </data>
+  <data name="pbQuickAddPrescription.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAALBJREFUWEft
+        llEKgCAQRD1KR+ko3bSjeBAF22B+khmpWOmjffC+bJwFqUxB0FNKWWut2WzO5nNv1Gjswb0LeppRoyEh
+        V1GjYSFPUaNhIeV5pq21ha0pUaNhISUirzISFlIiEgPEAHMHuPX5FLBXFEuaPmBuWHoM/iuX/bCk6QMj
+        EZl7BCMRiQFigO8GMDf2qo1EjYaFPEWNhoU8RY3GHpp5Kd1Ro8GZzhji3rU8+BkpHWMBC2OF/sK8AAAA
+        AElFTkSuQmCC
+</value>
+  </data>
+  <data name="pbQuickAddPatient.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAALBJREFUWEft
+        llEKgCAQRD1KR+ko3bSjeBAF22B+khmpWOmjffC+bJwFqUxB0FNKWWut2WzO5nNv1Gjswb0LeppRoyEh
+        V1GjYSFPUaNhIeV5pq21ha0pUaNhISUirzISFlIiEgPEAHMHuPX5FLBXFEuaPmBuWHoM/iuX/bCk6QMj
+        EZl7BCMRiQFigO8GMDf2qo1EjYaFPEWNhoU8RY3GHpp5Kd1Ro8GZzhji3rU8+BkpHWMBC2OF/sK8AAAA
+        AElFTkSuQmCC
+</value>
+  </data>
   <data name="pbTrustMedLogo.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAABOIAAATiCAIAAACY5NsRAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAu

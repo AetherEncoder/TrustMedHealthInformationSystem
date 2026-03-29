@@ -33,8 +33,11 @@ Partial Class frmDashboard
         Me.lblUsernameError = New System.Windows.Forms.Label()
         Me.lblPasswordError = New System.Windows.Forms.Label()
         Me.pnlLoginContainer = New System.Windows.Forms.Panel()
+        Me.pnlLoginCard = New System.Windows.Forms.Panel()
+        Me.pbLoginLogo = New System.Windows.Forms.PictureBox()
         Me.lblLoginError = New System.Windows.Forms.Label()
         Me.pnlDashboard = New System.Windows.Forms.Panel()
+        Me.pbQuickAddPatient = New System.Windows.Forms.PictureBox()
         Me.grpQuickActions = New System.Windows.Forms.GroupBox()
         Me.btnNewPatient = New System.Windows.Forms.Button()
         Me.btnNewDiagnosis = New System.Windows.Forms.Button()
@@ -72,24 +75,30 @@ Partial Class frmDashboard
         Me.miAccount = New System.Windows.Forms.ToolStripMenuItem()
         Me.miAccountLogout = New System.Windows.Forms.ToolStripMenuItem()
         Me.miAccountSettings = New System.Windows.Forms.ToolStripMenuItem()
-        Me.pnlLoginCard = New System.Windows.Forms.Panel()
-        Me.pbLoginLogo = New System.Windows.Forms.PictureBox()
+        Me.pbQuickAddPrescription = New System.Windows.Forms.PictureBox()
+        Me.pbQuickAddLabOrder = New System.Windows.Forms.PictureBox()
+        Me.pbQuickAddConsultation = New System.Windows.Forms.PictureBox()
+        Me.pbQuickAddDiagnosis = New System.Windows.Forms.PictureBox()
         Me.pnlLoginContainer.SuspendLayout()
         Me.pnlLoginCard.SuspendLayout()
+        CType(Me.pbLoginLogo, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlDashboard.SuspendLayout()
+        CType(Me.pbQuickAddPatient, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.grpQuickActions.SuspendLayout()
         Me.pnlSummaryCards.SuspendLayout()
         Me.pnlBranding.SuspendLayout()
         CType(Me.pbTrustMedLogo, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.pbLoginLogo, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlLabOrders.SuspendLayout()
         Me.pnlTotalPatients.SuspendLayout()
         Me.msDashboardMenu.SuspendLayout()
+        CType(Me.pbQuickAddPrescription, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbQuickAddLabOrder, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbQuickAddConsultation, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbQuickAddDiagnosis, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'lblHeader
         '
-        Me.lblHeader.AutoSize = False
         Me.lblHeader.Font = New System.Drawing.Font("Segoe UI", 20.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblHeader.ForeColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(19, Byte), Integer), CType(CType(66, Byte), Integer))
         Me.lblHeader.Location = New System.Drawing.Point(30, 124)
@@ -105,7 +114,7 @@ Partial Class frmDashboard
         Me.lblUsername.Font = New System.Drawing.Font("Segoe UI", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblUsername.Location = New System.Drawing.Point(60, 210)
         Me.lblUsername.Name = "lblUsername"
-        Me.lblUsername.Size = New System.Drawing.Size(97, 19)
+        Me.lblUsername.Size = New System.Drawing.Size(84, 19)
         Me.lblUsername.TabIndex = 1
         Me.lblUsername.Text = "Username: *"
         '
@@ -115,7 +124,7 @@ Partial Class frmDashboard
         Me.lblPassword.Font = New System.Drawing.Font("Segoe UI", 10.5!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblPassword.Location = New System.Drawing.Point(60, 292)
         Me.lblPassword.Name = "lblPassword"
-        Me.lblPassword.Size = New System.Drawing.Size(92, 19)
+        Me.lblPassword.Size = New System.Drawing.Size(80, 19)
         Me.lblPassword.TabIndex = 2
         Me.lblPassword.Text = "Password: *"
         '
@@ -196,6 +205,36 @@ Partial Class frmDashboard
         Me.pnlLoginContainer.Size = New System.Drawing.Size(1348, 729)
         Me.pnlLoginContainer.TabIndex = 10
         '
+        'pnlLoginCard
+        '
+        Me.pnlLoginCard.BackColor = System.Drawing.Color.White
+        Me.pnlLoginCard.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pnlLoginCard.Controls.Add(Me.pbLoginLogo)
+        Me.pnlLoginCard.Controls.Add(Me.lblLoginError)
+        Me.pnlLoginCard.Controls.Add(Me.lblPasswordError)
+        Me.pnlLoginCard.Controls.Add(Me.lblUsernameError)
+        Me.pnlLoginCard.Controls.Add(Me.btnClose)
+        Me.pnlLoginCard.Controls.Add(Me.btnLogin)
+        Me.pnlLoginCard.Controls.Add(Me.txtPassword)
+        Me.pnlLoginCard.Controls.Add(Me.txtUsername)
+        Me.pnlLoginCard.Controls.Add(Me.lblPassword)
+        Me.pnlLoginCard.Controls.Add(Me.lblUsername)
+        Me.pnlLoginCard.Controls.Add(Me.lblHeader)
+        Me.pnlLoginCard.Location = New System.Drawing.Point(414, 92)
+        Me.pnlLoginCard.Name = "pnlLoginCard"
+        Me.pnlLoginCard.Size = New System.Drawing.Size(520, 540)
+        Me.pnlLoginCard.TabIndex = 11
+        '
+        'pbLoginLogo
+        '
+        Me.pbLoginLogo.BackColor = System.Drawing.Color.Transparent
+        Me.pbLoginLogo.Location = New System.Drawing.Point(190, 26)
+        Me.pbLoginLogo.Name = "pbLoginLogo"
+        Me.pbLoginLogo.Size = New System.Drawing.Size(140, 90)
+        Me.pbLoginLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.pbLoginLogo.TabIndex = 10
+        Me.pbLoginLogo.TabStop = False
+        '
         'lblLoginError
         '
         Me.lblLoginError.AutoSize = True
@@ -219,8 +258,25 @@ Partial Class frmDashboard
         Me.pnlDashboard.TabIndex = 11
         Me.pnlDashboard.Visible = False
         '
+        'pbQuickAddPatient
+        '
+        Me.pbQuickAddPatient.BackColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(19, Byte), Integer), CType(CType(66, Byte), Integer))
+        Me.pbQuickAddPatient.BackgroundImage = CType(resources.GetObject("pbQuickAddPatient.BackgroundImage"), System.Drawing.Image)
+        Me.pbQuickAddPatient.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.pbQuickAddPatient.Location = New System.Drawing.Point(65, 45)
+        Me.pbQuickAddPatient.Name = "pbQuickAddPatient"
+        Me.pbQuickAddPatient.Size = New System.Drawing.Size(29, 24)
+        Me.pbQuickAddPatient.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.pbQuickAddPatient.TabIndex = 6
+        Me.pbQuickAddPatient.TabStop = False
+        '
         'grpQuickActions
         '
+        Me.grpQuickActions.Controls.Add(Me.pbQuickAddDiagnosis)
+        Me.grpQuickActions.Controls.Add(Me.pbQuickAddConsultation)
+        Me.grpQuickActions.Controls.Add(Me.pbQuickAddLabOrder)
+        Me.grpQuickActions.Controls.Add(Me.pbQuickAddPrescription)
+        Me.grpQuickActions.Controls.Add(Me.pbQuickAddPatient)
         Me.grpQuickActions.Controls.Add(Me.btnNewPatient)
         Me.grpQuickActions.Controls.Add(Me.btnNewDiagnosis)
         Me.grpQuickActions.Controls.Add(Me.btnNewConsultation)
@@ -310,7 +366,7 @@ Partial Class frmDashboard
         Me.pnlBranding.BackColor = System.Drawing.Color.White
         Me.pnlBranding.Controls.Add(Me.pbTrustMedLogo)
         Me.pnlBranding.Controls.Add(Me.lblBrandingTitle)
-        Me.pnlBranding.Location = New System.Drawing.Point(894, 15)
+        Me.pnlBranding.Location = New System.Drawing.Point(3, 15)
         Me.pnlBranding.Name = "pnlBranding"
         Me.pnlBranding.Size = New System.Drawing.Size(424, 160)
         Me.pnlBranding.TabIndex = 2
@@ -343,7 +399,7 @@ Partial Class frmDashboard
         Me.pnlLabOrders.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.pnlLabOrders.Controls.Add(Me.lblLabOrdersValue)
         Me.pnlLabOrders.Controls.Add(Me.lblLabOrdersTitle)
-        Me.pnlLabOrders.Location = New System.Drawing.Point(450, 15)
+        Me.pnlLabOrders.Location = New System.Drawing.Point(433, 15)
         Me.pnlLabOrders.Name = "pnlLabOrders"
         Me.pnlLabOrders.Size = New System.Drawing.Size(438, 160)
         Me.pnlLabOrders.TabIndex = 1
@@ -376,7 +432,7 @@ Partial Class frmDashboard
         Me.pnlTotalPatients.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.pnlTotalPatients.Controls.Add(Me.lblTotalPatientsValue)
         Me.pnlTotalPatients.Controls.Add(Me.lblTotalPatientsTitle)
-        Me.pnlTotalPatients.Location = New System.Drawing.Point(6, 15)
+        Me.pnlTotalPatients.Location = New System.Drawing.Point(877, 15)
         Me.pnlTotalPatients.Name = "pnlTotalPatients"
         Me.pnlTotalPatients.Size = New System.Drawing.Size(438, 160)
         Me.pnlTotalPatients.TabIndex = 0
@@ -538,35 +594,53 @@ Partial Class frmDashboard
         Me.miAccountSettings.Size = New System.Drawing.Size(116, 22)
         Me.miAccountSettings.Text = "Settings"
         '
-        'pnlLoginCard
+        'pbQuickAddPrescription
         '
-        Me.pnlLoginCard.BackColor = System.Drawing.Color.White
-        Me.pnlLoginCard.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.pnlLoginCard.Controls.Add(Me.pbLoginLogo)
-        Me.pnlLoginCard.Controls.Add(Me.lblLoginError)
-        Me.pnlLoginCard.Controls.Add(Me.lblPasswordError)
-        Me.pnlLoginCard.Controls.Add(Me.lblUsernameError)
-        Me.pnlLoginCard.Controls.Add(Me.btnClose)
-        Me.pnlLoginCard.Controls.Add(Me.btnLogin)
-        Me.pnlLoginCard.Controls.Add(Me.txtPassword)
-        Me.pnlLoginCard.Controls.Add(Me.txtUsername)
-        Me.pnlLoginCard.Controls.Add(Me.lblPassword)
-        Me.pnlLoginCard.Controls.Add(Me.lblUsername)
-        Me.pnlLoginCard.Controls.Add(Me.lblHeader)
-        Me.pnlLoginCard.Location = New System.Drawing.Point(414, 92)
-        Me.pnlLoginCard.Name = "pnlLoginCard"
-        Me.pnlLoginCard.Size = New System.Drawing.Size(520, 540)
-        Me.pnlLoginCard.TabIndex = 11
+        Me.pbQuickAddPrescription.BackColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(19, Byte), Integer), CType(CType(66, Byte), Integer))
+        Me.pbQuickAddPrescription.BackgroundImage = CType(resources.GetObject("pbQuickAddPrescription.BackgroundImage"), System.Drawing.Image)
+        Me.pbQuickAddPrescription.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.pbQuickAddPrescription.Location = New System.Drawing.Point(1094, 45)
+        Me.pbQuickAddPrescription.Name = "pbQuickAddPrescription"
+        Me.pbQuickAddPrescription.Size = New System.Drawing.Size(29, 24)
+        Me.pbQuickAddPrescription.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.pbQuickAddPrescription.TabIndex = 7
+        Me.pbQuickAddPrescription.TabStop = False
         '
-        'pbLoginLogo
+        'pbQuickAddLabOrder
         '
-        Me.pbLoginLogo.BackColor = System.Drawing.Color.Transparent
-        Me.pbLoginLogo.Location = New System.Drawing.Point(190, 26)
-        Me.pbLoginLogo.Name = "pbLoginLogo"
-        Me.pbLoginLogo.Size = New System.Drawing.Size(140, 90)
-        Me.pbLoginLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.pbLoginLogo.TabIndex = 10
-        Me.pbLoginLogo.TabStop = False
+        Me.pbQuickAddLabOrder.BackColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(19, Byte), Integer), CType(CType(66, Byte), Integer))
+        Me.pbQuickAddLabOrder.BackgroundImage = CType(resources.GetObject("pbQuickAddLabOrder.BackgroundImage"), System.Drawing.Image)
+        Me.pbQuickAddLabOrder.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.pbQuickAddLabOrder.Location = New System.Drawing.Point(838, 45)
+        Me.pbQuickAddLabOrder.Name = "pbQuickAddLabOrder"
+        Me.pbQuickAddLabOrder.Size = New System.Drawing.Size(29, 24)
+        Me.pbQuickAddLabOrder.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.pbQuickAddLabOrder.TabIndex = 8
+        Me.pbQuickAddLabOrder.TabStop = False
+        '
+        'pbQuickAddConsultation
+        '
+        Me.pbQuickAddConsultation.BackColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(19, Byte), Integer), CType(CType(66, Byte), Integer))
+        Me.pbQuickAddConsultation.BackgroundImage = CType(resources.GetObject("pbQuickAddConsultation.BackgroundImage"), System.Drawing.Image)
+        Me.pbQuickAddConsultation.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.pbQuickAddConsultation.Location = New System.Drawing.Point(573, 45)
+        Me.pbQuickAddConsultation.Name = "pbQuickAddConsultation"
+        Me.pbQuickAddConsultation.Size = New System.Drawing.Size(29, 24)
+        Me.pbQuickAddConsultation.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.pbQuickAddConsultation.TabIndex = 9
+        Me.pbQuickAddConsultation.TabStop = False
+        '
+        'pbQuickAddDiagnosis
+        '
+        Me.pbQuickAddDiagnosis.BackColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(19, Byte), Integer), CType(CType(66, Byte), Integer))
+        Me.pbQuickAddDiagnosis.BackgroundImage = CType(resources.GetObject("pbQuickAddDiagnosis.BackgroundImage"), System.Drawing.Image)
+        Me.pbQuickAddDiagnosis.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.pbQuickAddDiagnosis.Location = New System.Drawing.Point(315, 45)
+        Me.pbQuickAddDiagnosis.Name = "pbQuickAddDiagnosis"
+        Me.pbQuickAddDiagnosis.Size = New System.Drawing.Size(29, 24)
+        Me.pbQuickAddDiagnosis.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.pbQuickAddDiagnosis.TabIndex = 10
+        Me.pbQuickAddDiagnosis.TabStop = False
         '
         'frmDashboard
         '
@@ -585,17 +659,22 @@ Partial Class frmDashboard
         Me.pnlLoginContainer.ResumeLayout(False)
         Me.pnlLoginCard.ResumeLayout(False)
         Me.pnlLoginCard.PerformLayout()
+        CType(Me.pbLoginLogo, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnlDashboard.ResumeLayout(False)
         Me.pnlDashboard.PerformLayout()
+        CType(Me.pbQuickAddPatient, System.ComponentModel.ISupportInitialize).EndInit()
         Me.grpQuickActions.ResumeLayout(False)
         Me.pnlSummaryCards.ResumeLayout(False)
         Me.pnlBranding.ResumeLayout(False)
         CType(Me.pbTrustMedLogo, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.pbLoginLogo, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnlLabOrders.ResumeLayout(False)
         Me.pnlTotalPatients.ResumeLayout(False)
         Me.msDashboardMenu.ResumeLayout(False)
         Me.msDashboardMenu.PerformLayout()
+        CType(Me.pbQuickAddPrescription, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbQuickAddLabOrder, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbQuickAddConsultation, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbQuickAddDiagnosis, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -650,4 +729,9 @@ Partial Class frmDashboard
     Friend WithEvents btnNewConsultation As Button
     Friend WithEvents btnNewLabOrder As Button
     Friend WithEvents btnNewPrescription As Button
+    Friend WithEvents pbQuickAddPatient As PictureBox
+    Friend WithEvents pbQuickAddDiagnosis As PictureBox
+    Friend WithEvents pbQuickAddConsultation As PictureBox
+    Friend WithEvents pbQuickAddLabOrder As PictureBox
+    Friend WithEvents pbQuickAddPrescription As PictureBox
 End Class

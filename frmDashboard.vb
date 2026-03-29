@@ -1374,11 +1374,11 @@ Public Class frmDashboard
         Next
     End Sub
 
-    Private Sub lblLabOrdersValue_Click(sender As Object, e As EventArgs) Handles lblLabOrdersValue.Click
+    Private Sub PictureBox1_Click(sender As Object, e As EventArgs)
 
     End Sub
 
-    Private Sub lblTotalPatientsValue_Click(sender As Object, e As EventArgs) Handles lblTotalPatientsValue.Click
+    Private Sub pbAdd_Click(sender As Object, e As EventArgs) Handles pbQuickAddPatient.Click
 
     End Sub
 End Class
