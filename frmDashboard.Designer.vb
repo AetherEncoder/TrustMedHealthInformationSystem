@@ -284,7 +284,7 @@ Partial Class frmDashboard
         Me.btnNewPatient.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.btnNewPatient.Location = New System.Drawing.Point(14, 36)
         Me.btnNewPatient.Name = "btnNewPatient"
-        Me.btnNewPatient.Padding = New System.Windows.Forms.Padding(60, 0, 0, 0)
+        Me.btnNewPatient.Padding = New System.Windows.Forms.Padding(80, 0, 0, 0)
         Me.btnNewPatient.Size = New System.Drawing.Size(250, 42)
         Me.btnNewPatient.TabIndex = 0
         Me.btnNewPatient.Text = "New Patient"
@@ -300,7 +300,7 @@ Partial Class frmDashboard
         Me.btnNewDiagnosis.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.btnNewDiagnosis.Location = New System.Drawing.Point(274, 36)
         Me.btnNewDiagnosis.Name = "btnNewDiagnosis"
-        Me.btnNewDiagnosis.Padding = New System.Windows.Forms.Padding(55, 0, 0, 0)
+        Me.btnNewDiagnosis.Padding = New System.Windows.Forms.Padding(60, 0, 0, 0)
         Me.btnNewDiagnosis.Size = New System.Drawing.Size(250, 42)
         Me.btnNewDiagnosis.TabIndex = 1
         Me.btnNewDiagnosis.Text = "New Diagnosis"
@@ -316,7 +316,7 @@ Partial Class frmDashboard
         Me.btnNewConsultation.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.btnNewConsultation.Location = New System.Drawing.Point(534, 36)
         Me.btnNewConsultation.Name = "btnNewConsultation"
-        Me.btnNewConsultation.Padding = New System.Windows.Forms.Padding(50, 0, 0, 0)
+        Me.btnNewConsultation.Padding = New System.Windows.Forms.Padding(55, 0, 0, 0)
         Me.btnNewConsultation.Size = New System.Drawing.Size(250, 42)
         Me.btnNewConsultation.TabIndex = 2
         Me.btnNewConsultation.Text = "New Consultation"
@@ -332,7 +332,7 @@ Partial Class frmDashboard
         Me.btnNewLabOrder.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.btnNewLabOrder.Location = New System.Drawing.Point(794, 36)
         Me.btnNewLabOrder.Name = "btnNewLabOrder"
-        Me.btnNewLabOrder.Padding = New System.Windows.Forms.Padding(50, 0, 0, 0)
+        Me.btnNewLabOrder.Padding = New System.Windows.Forms.Padding(60, 0, 0, 0)
         Me.btnNewLabOrder.Size = New System.Drawing.Size(250, 42)
         Me.btnNewLabOrder.TabIndex = 3
         Me.btnNewLabOrder.Text = "New Lab Order"
@@ -348,7 +348,7 @@ Partial Class frmDashboard
         Me.btnNewPrescription.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.btnNewPrescription.Location = New System.Drawing.Point(1054, 36)
         Me.btnNewPrescription.Name = "btnNewPrescription"
-        Me.btnNewPrescription.Padding = New System.Windows.Forms.Padding(45, 0, 0, 0)
+        Me.btnNewPrescription.Padding = New System.Windows.Forms.Padding(60, 0, 0, 0)
         Me.btnNewPrescription.Size = New System.Drawing.Size(250, 42)
         Me.btnNewPrescription.TabIndex = 4
         Me.btnNewPrescription.Text = "New Prescription"

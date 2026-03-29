@@ -88,6 +88,7 @@ Public Class frmDashboard
 
         InitializePatientsSectionUi()
         InitializeReportsSectionUi()
+        ApplySmallButtonIcons()
         ClearErrorMessages()
         ApplyGridWrapping(Me)
     End Sub
@@ -355,7 +356,7 @@ Public Class frmDashboard
         btnAddPatient.Location = New Point(18, 44)
         btnAddPatient.Image = CType(resources.GetObject("btnNewPatient.Image"), System.Drawing.Image)
         btnAddPatient.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        btnAddPatient.Padding = New System.Windows.Forms.Padding(20, 0, 0, 0)
+        btnAddPatient.Padding = New System.Windows.Forms.Padding(30, 0, 0, 0)
         btnAddPatient.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
         AddHandler btnAddPatient.Click, AddressOf BtnAddPatient_Click
 
@@ -367,7 +368,7 @@ Public Class frmDashboard
         btnDeletePatient.Location = New Point(18, 164)
         btnDeletePatient.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
         btnDeletePatient.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        btnDeletePatient.Padding = New System.Windows.Forms.Padding(20, 0, 0, 0)
+        btnDeletePatient.Padding = New System.Windows.Forms.Padding(30, 0, 0, 0)
         btnDeletePatient.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
         AddHandler btnDeletePatient.Click, AddressOf BtnDeletePatient_Click
 
@@ -379,7 +380,7 @@ Public Class frmDashboard
         btnUpdatePatient.Location = New Point(18, 104)
         btnUpdatePatient.Image = CType(resources.GetObject("Button2.Image"), System.Drawing.Image)
         btnUpdatePatient.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        btnUpdatePatient.Padding = New System.Windows.Forms.Padding(20, 0, 0, 0)
+        btnUpdatePatient.Padding = New System.Windows.Forms.Padding(30, 0, 0, 0)
         btnUpdatePatient.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
         AddHandler btnUpdatePatient.Click, AddressOf BtnUpdatePatient_Click
 
@@ -1361,24 +1362,6 @@ Public Class frmDashboard
     End Sub
 
     Private Sub ShowAccountSettingsDialog()
-        If String.IsNullOrWhiteSpace(currentLoggedInUsername) Then
-            MessageBox.Show("No active account session found.", "Settings", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            Return
-        End If
-
-        Using settingsForm As New frmSettings(MyConnectionString, currentLoggedInUsername)
-            Dim dialogResultValue As DialogResult = settingsForm.ShowDialog(Me)
-
-            If settingsForm.AccountDeleted Then
-                MessageBox.Show("Account deleted successfully.", "Settings", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                ShowLoginPage()
-                Return
-            End If
-
-            If dialogResultValue = DialogResult.OK OrElse dialogResultValue = DialogResult.Cancel Then
-                currentLoggedInUsername = settingsForm.UpdatedUsername
-            End If
-        End Using
     End Sub
 
     Private Sub ApplyGridWrapping(parent As Control)
@@ -1402,6 +1385,7 @@ Public Class frmDashboard
     Private Sub PreviewPatientSectionInDesigner()
         Try
             InitializePatientsSectionUi()
+            ApplySmallButtonIcons()
             pnlDashboard.Visible = True
             pnlLoginContainer.Visible = False
             pnlSummaryCards.Visible = False
@@ -1418,15 +1402,34 @@ Public Class frmDashboard
         End Try
     End Sub
 
-    Private Sub PictureBox1_Click(sender As Object, e As EventArgs)
+    Private Sub ApplySmallButtonIcons()
+        ApplySmallButtonIcon(btnNewPatient)
+        ApplySmallButtonIcon(btnNewDiagnosis)
+        ApplySmallButtonIcon(btnNewConsultation)
+        ApplySmallButtonIcon(btnNewLabOrder)
+        ApplySmallButtonIcon(btnNewPrescription)
 
+        ApplySmallButtonIcon(btnAddPatient)
+        ApplySmallButtonIcon(btnUpdatePatient)
+        ApplySmallButtonIcon(btnDeletePatient)
     End Sub
 
-    Private Sub pbAdd_Click(sender As Object, e As EventArgs)
-
+    Private Sub ApplySmallButtonIcon(targetButton As Button)
+        If targetButton Is Nothing OrElse targetButton.Image Is Nothing Then Return
+        targetButton.Image = ResizeImage(targetButton.Image, 14, 14)
     End Sub
 
-    Private Sub pnlDashboard_Paint(sender As Object, e As PaintEventArgs) Handles pnlDashboard.Paint
+    Private Function ResizeImage(source As Image, width As Integer, height As Integer) As Image
+        Dim bmp As New Bitmap(width, height)
+        Using g As Graphics = Graphics.FromImage(bmp)
+            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic
+            g.DrawImage(source, New Rectangle(0, 0, width, height))
+        End Using
+
+        Return bmp
+    End Function
+
+    Private Sub pb1_Click(sender As Object, e As EventArgs)
 
     End Sub
 End Class
