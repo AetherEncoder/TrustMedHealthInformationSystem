@@ -2,6 +2,8 @@
 
 Public Class frmConsultationEntry
     Private ReadOnly _connectionString As String
+    Private ReadOnly _isUpdateMode As Boolean
+    Private ReadOnly _existingConsultationId As Integer
 
     Public Sub New()
         InitializeComponent()
@@ -12,9 +14,25 @@ Public Class frmConsultationEntry
         InitializeComponent()
     End Sub
 
+    Public Sub New(connectionString As String, consultationId As Integer)
+        _connectionString = connectionString
+        _isUpdateMode = True
+        _existingConsultationId = consultationId
+        InitializeComponent()
+    End Sub
+
     Private Sub frmConsultationEntry_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        LoadNextConsultationId()
         LoadPatientAndPhysicianOptions()
+
+        If _isUpdateMode Then
+            Me.Text = "Update Consultation"
+            btnSave.Text = "Update"
+            LoadConsultationForUpdate()
+        Else
+            Me.Text = "Add New Consultation"
+            btnSave.Text = "Save"
+            LoadNextConsultationId()
+        End If
     End Sub
 
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
@@ -23,9 +41,7 @@ Public Class frmConsultationEntry
     End Sub
 
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
-        If Not ValidateInputs() Then
-            Return
-        End If
+        If Not ValidateInputs() Then Return
 
         Dim consultationId As Integer
         If Not Integer.TryParse(txtConsultationID.Text.Trim(), consultationId) Then
@@ -40,8 +56,12 @@ Public Class frmConsultationEntry
             Using conn As New MySqlConnection(_connectionString)
                 conn.Open()
 
-                Dim sql As String = "INSERT INTO consultation (ConsultationID, PatientID, PhysicianID, Complaint, Notes, ConsultationDate) " &
-                                    "VALUES (@ConsultationID, @PatientID, @PhysicianID, @Complaint, @Notes, @ConsultationDate)"
+                Dim sql As String
+                If _isUpdateMode Then
+                    sql = "UPDATE consultation SET PatientID = @PatientID, PhysicianID = @PhysicianID, Complaint = @Complaint, Notes = @Notes, ConsultationDate = @ConsultationDate WHERE ConsultationID = @ConsultationID"
+                Else
+                    sql = "INSERT INTO consultation (ConsultationID, PatientID, PhysicianID, Complaint, Notes, ConsultationDate) VALUES (@ConsultationID, @PatientID, @PhysicianID, @Complaint, @Notes, @ConsultationDate)"
+                End If
 
                 Using cmd As New MySqlCommand(sql, conn)
                     cmd.Parameters.AddWithValue("@ConsultationID", consultationId)
@@ -54,11 +74,60 @@ Public Class frmConsultationEntry
                 End Using
             End Using
 
-            MessageBox.Show("Consultation added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            If _isUpdateMode Then
+                MessageBox.Show("Consultation updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Else
+                MessageBox.Show("Consultation added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+
             Me.DialogResult = DialogResult.OK
             Me.Close()
         Catch ex As Exception
             MessageBox.Show("Unable to save consultation: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Sub LoadConsultationForUpdate()
+        If String.IsNullOrWhiteSpace(_connectionString) OrElse _existingConsultationId <= 0 Then
+            MessageBox.Show("Unable to load selected consultation.", "Update", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Me.DialogResult = DialogResult.Cancel
+            Me.Close()
+            Return
+        End If
+
+        Try
+            Using conn As New MySqlConnection(_connectionString)
+                conn.Open()
+
+                Dim sql As String = "SELECT ConsultationID, PatientID, PhysicianID, Complaint, Notes, ConsultationDate FROM consultation WHERE ConsultationID = @ConsultationID"
+                Using cmd As New MySqlCommand(sql, conn)
+                    cmd.Parameters.AddWithValue("@ConsultationID", _existingConsultationId)
+
+                    Using reader As MySqlDataReader = cmd.ExecuteReader()
+                        If Not reader.Read() Then
+                            MessageBox.Show("Selected consultation was not found.", "Update", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                            Me.DialogResult = DialogResult.Cancel
+                            Me.Close()
+                            Return
+                        End If
+
+                        txtConsultationID.Text = Convert.ToInt32(reader("ConsultationID")).ToString()
+                        txtComplaint.Text = reader("Complaint").ToString()
+                        txtNotes.Text = reader("Notes").ToString()
+
+                        If Not Convert.IsDBNull(reader("ConsultationDate")) Then
+                            dtpConsultationDate.Value = Convert.ToDateTime(reader("ConsultationDate"))
+                        End If
+
+                        cboPatient.SelectedValue = Convert.ToInt32(reader("PatientID"))
+                        cboPhysician.SelectedValue = Convert.ToInt32(reader("PhysicianID"))
+                    End Using
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Unable to load selected consultation: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Me.DialogResult = DialogResult.Cancel
+            Me.Close()
         End Try
     End Sub
 

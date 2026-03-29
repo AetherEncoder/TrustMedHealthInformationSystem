@@ -2,6 +2,8 @@
 
 Public Class frmDiagnosisEntry
     Private ReadOnly _connectionString As String
+    Private ReadOnly _isUpdateMode As Boolean
+    Private ReadOnly _existingDiagnosisId As Integer
 
     Public Sub New()
         InitializeComponent()
@@ -12,9 +14,25 @@ Public Class frmDiagnosisEntry
         InitializeComponent()
     End Sub
 
+    Public Sub New(connectionString As String, diagnosisId As Integer)
+        _connectionString = connectionString
+        _isUpdateMode = True
+        _existingDiagnosisId = diagnosisId
+        InitializeComponent()
+    End Sub
+
     Private Sub frmDiagnosisEntry_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        LoadNextDiagnosisId()
         LoadPatientAndPhysicianOptions()
+
+        If _isUpdateMode Then
+            Me.Text = "Update Diagnosis"
+            btnSave.Text = "Update"
+            LoadDiagnosisForUpdate()
+        Else
+            Me.Text = "Add New Diagnosis"
+            btnSave.Text = "Save"
+            LoadNextDiagnosisId()
+        End If
     End Sub
 
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
@@ -38,8 +56,12 @@ Public Class frmDiagnosisEntry
             Using conn As New MySqlConnection(_connectionString)
                 conn.Open()
 
-                Dim sql As String = "INSERT INTO diagnosis (DiagnosisID, PatientID, PhysicianID, DiagnosisName, DiagnosisDescription, DiagnosisDate) " &
-                                    "VALUES (@DiagnosisID, @PatientID, @PhysicianID, @DiagnosisName, @DiagnosisDescription, @DiagnosisDate)"
+                Dim sql As String
+                If _isUpdateMode Then
+                    sql = "UPDATE diagnosis SET PatientID = @PatientID, PhysicianID = @PhysicianID, DiagnosisName = @DiagnosisName, DiagnosisDescription = @DiagnosisDescription, DiagnosisDate = @DiagnosisDate WHERE DiagnosisID = @DiagnosisID"
+                Else
+                    sql = "INSERT INTO diagnosis (DiagnosisID, PatientID, PhysicianID, DiagnosisName, DiagnosisDescription, DiagnosisDate) VALUES (@DiagnosisID, @PatientID, @PhysicianID, @DiagnosisName, @DiagnosisDescription, @DiagnosisDate)"
+                End If
 
                 Using cmd As New MySqlCommand(sql, conn)
                     cmd.Parameters.AddWithValue("@DiagnosisID", diagnosisId)
@@ -52,11 +74,60 @@ Public Class frmDiagnosisEntry
                 End Using
             End Using
 
-            MessageBox.Show("Diagnosis added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            If _isUpdateMode Then
+                MessageBox.Show("Diagnosis updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Else
+                MessageBox.Show("Diagnosis added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+
             Me.DialogResult = DialogResult.OK
             Me.Close()
         Catch ex As Exception
             MessageBox.Show("Unable to save diagnosis: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Sub LoadDiagnosisForUpdate()
+        If String.IsNullOrWhiteSpace(_connectionString) OrElse _existingDiagnosisId <= 0 Then
+            MessageBox.Show("Unable to load selected diagnosis.", "Update", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Me.DialogResult = DialogResult.Cancel
+            Me.Close()
+            Return
+        End If
+
+        Try
+            Using conn As New MySqlConnection(_connectionString)
+                conn.Open()
+
+                Dim sql As String = "SELECT DiagnosisID, PatientID, PhysicianID, DiagnosisName, DiagnosisDescription, DiagnosisDate FROM diagnosis WHERE DiagnosisID = @DiagnosisID"
+                Using cmd As New MySqlCommand(sql, conn)
+                    cmd.Parameters.AddWithValue("@DiagnosisID", _existingDiagnosisId)
+
+                    Using reader As MySqlDataReader = cmd.ExecuteReader()
+                        If Not reader.Read() Then
+                            MessageBox.Show("Selected diagnosis was not found.", "Update", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                            Me.DialogResult = DialogResult.Cancel
+                            Me.Close()
+                            Return
+                        End If
+
+                        txtDiagnosisID.Text = Convert.ToInt32(reader("DiagnosisID")).ToString()
+                        txtDiagnosisName.Text = reader("DiagnosisName").ToString()
+                        txtDiagnosisDescription.Text = reader("DiagnosisDescription").ToString()
+
+                        If Not Convert.IsDBNull(reader("DiagnosisDate")) Then
+                            dtpDiagnosisDate.Value = Convert.ToDateTime(reader("DiagnosisDate"))
+                        End If
+
+                        cboPatient.SelectedValue = Convert.ToInt32(reader("PatientID"))
+                        cboPhysician.SelectedValue = Convert.ToInt32(reader("PhysicianID"))
+                    End Using
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Unable to load selected diagnosis: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Me.DialogResult = DialogResult.Cancel
+            Me.Close()
         End Try
     End Sub
 

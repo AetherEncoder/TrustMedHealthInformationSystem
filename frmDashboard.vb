@@ -745,47 +745,87 @@ Public Class frmDashboard
     End Sub
 
     Private Sub BtnUpdatePatient_Click(sender As Object, e As EventArgs)
-        If currentSectionKey <> "patients" Then
-            ShowQuickActionPlaceholder("Update " & currentSectionSingular)
-            Return
-        End If
+        Dim idColumn As String = ""
+
+        Select Case currentSectionKey
+            Case "patients"
+                idColumn = "PatientID"
+            Case "consultations"
+                idColumn = "ConsultationID"
+            Case "diagnoses"
+                idColumn = "DiagnosisID"
+            Case Else
+                ShowQuickActionPlaceholder("Update " & currentSectionSingular)
+                Return
+        End Select
 
         If dgvPatients Is Nothing OrElse dgvPatients.SelectedRows.Count = 0 Then
-            MessageBox.Show("Select a patient row to update.", "Update", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            MessageBox.Show("Select a row to update.", "Update", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
         End If
 
-        If Not dgvPatients.Columns.Contains("PatientID") Then
-            MessageBox.Show("Unable to resolve selected patient ID.", "Update", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        If Not dgvPatients.Columns.Contains(idColumn) Then
+            MessageBox.Show("Unable to resolve selected record ID.", "Update", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
         End If
 
         Dim selectedRow As DataGridViewRow = dgvPatients.SelectedRows(0)
-        Dim idValue As Object = selectedRow.Cells("PatientID").Value
+        Dim idValue As Object = selectedRow.Cells(idColumn).Value
         If idValue Is Nothing OrElse idValue Is DBNull.Value Then
-            MessageBox.Show("Unable to resolve selected patient ID.", "Update", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            MessageBox.Show("Unable to resolve selected record ID.", "Update", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
         End If
 
-        Dim patientId As Integer
-        If Not Integer.TryParse(idValue.ToString(), patientId) Then
-            MessageBox.Show("Invalid selected patient ID.", "Update", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        Dim selectedId As Integer
+        If Not Integer.TryParse(idValue.ToString(), selectedId) Then
+            MessageBox.Show("Invalid selected record ID.", "Update", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
         End If
 
-        Using patientEntry As New frmPatientEntry(MyConnectionString, patientId)
-            If patientEntry.ShowDialog(Me) = DialogResult.OK Then
-                LoadDashboardOverview()
+        Select Case currentSectionKey
+            Case "patients"
+                Using patientEntry As New frmPatientEntry(MyConnectionString, selectedId)
+                    If patientEntry.ShowDialog(Me) = DialogResult.OK Then
+                        LoadDashboardOverview()
 
-                If pnlPatientsSection IsNot Nothing AndAlso pnlPatientsSection.Visible Then
-                    Dim sectionTitle As String = ""
-                    Dim sectionSingular As String = ""
-                    Dim sectionQuery As String = ""
-                    GetSectionConfig("patients", sectionTitle, sectionSingular, sectionQuery)
-                    LoadSectionData("patients", sectionQuery)
-                End If
-            End If
-        End Using
+                        If pnlPatientsSection IsNot Nothing AndAlso pnlPatientsSection.Visible Then
+                            Dim sectionTitle As String = ""
+                            Dim sectionSingular As String = ""
+                            Dim sectionQuery As String = ""
+                            GetSectionConfig("patients", sectionTitle, sectionSingular, sectionQuery)
+                            LoadSectionData("patients", sectionQuery)
+                        End If
+                    End If
+                End Using
+            Case "consultations"
+                Using consultationEntry As New frmConsultationEntry(MyConnectionString, selectedId)
+                    If consultationEntry.ShowDialog(Me) = DialogResult.OK Then
+                        LoadDashboardOverview()
+
+                        If pnlPatientsSection IsNot Nothing AndAlso pnlPatientsSection.Visible Then
+                            Dim sectionTitle As String = ""
+                            Dim sectionSingular As String = ""
+                            Dim sectionQuery As String = ""
+                            GetSectionConfig("consultations", sectionTitle, sectionSingular, sectionQuery)
+                            LoadSectionData("consultations", sectionQuery)
+                        End If
+                    End If
+                End Using
+            Case "diagnoses"
+                Using diagnosisEntry As New frmDiagnosisEntry(MyConnectionString, selectedId)
+                    If diagnosisEntry.ShowDialog(Me) = DialogResult.OK Then
+                        LoadDashboardOverview()
+
+                        If pnlPatientsSection IsNot Nothing AndAlso pnlPatientsSection.Visible Then
+                            Dim sectionTitle As String = ""
+                            Dim sectionSingular As String = ""
+                            Dim sectionQuery As String = ""
+                            GetSectionConfig("diagnoses", sectionTitle, sectionSingular, sectionQuery)
+                            LoadSectionData("diagnoses", sectionQuery)
+                        End If
+                    End If
+                End Using
+        End Select
     End Sub
 
     Private Sub BtnDeletePatient_Click(sender As Object, e As EventArgs)
