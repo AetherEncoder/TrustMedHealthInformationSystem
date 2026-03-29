@@ -28,6 +28,7 @@ Partial Class frmDashboard
         Me.lblPassword = New System.Windows.Forms.Label()
         Me.txtUsername = New System.Windows.Forms.TextBox()
         Me.txtPassword = New System.Windows.Forms.TextBox()
+        Me.btnTogglePassword = New System.Windows.Forms.Button()
         Me.btnLogin = New System.Windows.Forms.Button()
         Me.btnClose = New System.Windows.Forms.Button()
         Me.lblUsernameError = New System.Windows.Forms.Label()
@@ -141,9 +142,20 @@ Partial Class frmDashboard
         Me.txtPassword.Font = New System.Drawing.Font("Segoe UI", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtPassword.Location = New System.Drawing.Point(60, 318)
         Me.txtPassword.Name = "txtPassword"
-        Me.txtPassword.Size = New System.Drawing.Size(400, 27)
+        Me.txtPassword.Size = New System.Drawing.Size(370, 27)
         Me.txtPassword.TabIndex = 4
         Me.txtPassword.UseSystemPasswordChar = True
+        '
+        'btnTogglePassword
+        '
+        Me.btnTogglePassword.BackColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(19, Byte), Integer), CType(CType(66, Byte), Integer))
+        Me.btnTogglePassword.FlatAppearance.BorderSize = 0
+        Me.btnTogglePassword.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnTogglePassword.Location = New System.Drawing.Point(432, 318)
+        Me.btnTogglePassword.Name = "btnTogglePassword"
+        Me.btnTogglePassword.Size = New System.Drawing.Size(28, 27)
+        Me.btnTogglePassword.TabIndex = 5
+        Me.btnTogglePassword.UseVisualStyleBackColor = False
         '
         'btnLogin
         '
@@ -155,7 +167,7 @@ Partial Class frmDashboard
         Me.btnLogin.Location = New System.Drawing.Point(170, 420)
         Me.btnLogin.Name = "btnLogin"
         Me.btnLogin.Size = New System.Drawing.Size(100, 40)
-        Me.btnLogin.TabIndex = 5
+        Me.btnLogin.TabIndex = 6
         Me.btnLogin.Text = "Login"
         Me.btnLogin.UseVisualStyleBackColor = False
         '
@@ -169,7 +181,7 @@ Partial Class frmDashboard
         Me.btnClose.Location = New System.Drawing.Point(280, 420)
         Me.btnClose.Name = "btnClose"
         Me.btnClose.Size = New System.Drawing.Size(100, 40)
-        Me.btnClose.TabIndex = 6
+        Me.btnClose.TabIndex = 7
         Me.btnClose.Text = "Close"
         Me.btnClose.UseVisualStyleBackColor = False
         '
@@ -216,6 +228,7 @@ Partial Class frmDashboard
         Me.pnlLoginCard.Controls.Add(Me.btnClose)
         Me.pnlLoginCard.Controls.Add(Me.btnLogin)
         Me.pnlLoginCard.Controls.Add(Me.txtPassword)
+        Me.pnlLoginCard.Controls.Add(Me.btnTogglePassword)
         Me.pnlLoginCard.Controls.Add(Me.txtUsername)
         Me.pnlLoginCard.Controls.Add(Me.lblPassword)
         Me.pnlLoginCard.Controls.Add(Me.lblUsername)
@@ -742,6 +755,7 @@ Partial Class frmDashboard
     Friend WithEvents lblPassword As Label
     Friend WithEvents txtUsername As TextBox
     Friend WithEvents txtPassword As TextBox
+    Friend WithEvents btnTogglePassword As Button
     Friend WithEvents btnLogin As Button
     Friend WithEvents btnClose As Button
     Friend WithEvents lblUsernameError As Label

@@ -53,6 +53,8 @@ Public Class frmDashboard
     Private dgvReports As DataGridView
     Private reportDefinitions As New Dictionary(Of String, ReportDefinition)
     Private reportOrder As New List(Of String)
+    Private loginEyeIcon As Image
+    Private loginEyeSlashIcon As Image
 
     Private Class ReportDefinition
         Public Property Title As String
@@ -85,6 +87,10 @@ Public Class frmDashboard
         If pbLoginLogo IsNot Nothing Then
             pbLoginLogo.Image = pbTrustMedLogo.Image
         End If
+
+        LoadPasswordToggleIcons()
+        txtPassword.UseSystemPasswordChar = True
+        btnTogglePassword.Image = loginEyeIcon
 
         InitializePatientsSectionUi()
         InitializeReportsSectionUi()
@@ -202,6 +208,8 @@ Public Class frmDashboard
         currentLoggedInUsername = ""
         txtUsername.Text = ""
         txtPassword.Text = ""
+        txtPassword.UseSystemPasswordChar = True
+        btnTogglePassword.Image = loginEyeIcon
         ClearErrorMessages()
 
         txtUsername.Focus()
@@ -1429,8 +1437,37 @@ Public Class frmDashboard
         Return bmp
     End Function
 
-    Private Sub pb1_Click(sender As Object, e As EventArgs)
+    Private Sub LoadPasswordToggleIcons()
+        Dim eyeCandidates As String() = {
+            Path.Combine(Application.StartupPath, "src\eye-fill.png"),
+            Path.GetFullPath(Path.Combine(Application.StartupPath, "..\src\eye-fill.png")),
+            Path.GetFullPath(Path.Combine(Application.StartupPath, "..\..\src\eye-fill.png"))
+        }
 
+        Dim eyeSlashCandidates As String() = {
+            Path.Combine(Application.StartupPath, "src\eye-slash-fill.png"),
+            Path.GetFullPath(Path.Combine(Application.StartupPath, "..\src\eye-slash-fill.png")),
+            Path.GetFullPath(Path.Combine(Application.StartupPath, "..\..\src\eye-slash-fill.png"))
+        }
+
+        For Each iconPath As String In eyeCandidates
+            If File.Exists(iconPath) Then
+                loginEyeIcon = ResizeImage(Image.FromFile(iconPath), 14, 14)
+                Exit For
+            End If
+        Next
+
+        For Each iconPath As String In eyeSlashCandidates
+            If File.Exists(iconPath) Then
+                loginEyeSlashIcon = ResizeImage(Image.FromFile(iconPath), 14, 14)
+                Exit For
+            End If
+        Next
+    End Sub
+
+    Private Sub btnTogglePassword_Click(sender As Object, e As EventArgs) Handles btnTogglePassword.Click
+        txtPassword.UseSystemPasswordChar = Not txtPassword.UseSystemPasswordChar
+        btnTogglePassword.Image = If(txtPassword.UseSystemPasswordChar, loginEyeIcon, loginEyeSlashIcon)
     End Sub
 End Class
 

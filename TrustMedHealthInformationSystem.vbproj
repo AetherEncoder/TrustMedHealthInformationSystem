@@ -222,6 +222,8 @@
   <ItemGroup>
     <Content Include="src\add.png" />
     <Content Include="src\delete.png" />
+    <Content Include="src\eye-fill.png" />
+    <Content Include="src\eye-slash-fill.png" />
     <Content Include="src\pencil-simple-fill.png" />
     <Content Include="src\plus-fill.png" />
     <Content Include="src\trash-fill.png" />
