@@ -43,6 +43,9 @@ Public Class frmDashboard
     Private btnAddPatient As Button
     Private btnDeletePatient As Button
     Private btnUpdatePatient As Button
+    Private lblPatientSearch As Label
+    Private txtPatientSearch As TextBox
+    Private currentSectionTable As DataTable
 
     Private reportsSectionInitialized As Boolean = False
     Private pnlReportsSection As Panel
@@ -51,6 +54,9 @@ Public Class frmDashboard
     Private lstReports As ListBox
     Private lblReportDescription As Label
     Private dgvReports As DataGridView
+    Private lblReportSearch As Label
+    Private txtReportSearch As TextBox
+    Private currentReportTable As DataTable
     Private reportDefinitions As New Dictionary(Of String, ReportDefinition)
     Private reportOrder As New List(Of String)
     Private loginEyeIcon As Image
@@ -405,9 +411,21 @@ Public Class frmDashboard
         grpPatientList.Size = New Size(1056, 678)
         grpPatientList.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
 
+        lblPatientSearch = New Label()
+        lblPatientSearch.Text = "Search:"
+        lblPatientSearch.AutoSize = True
+        lblPatientSearch.Location = New Point(674, 31)
+        lblPatientSearch.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+
+        txtPatientSearch = New TextBox()
+        txtPatientSearch.Location = New Point(736, 27)
+        txtPatientSearch.Size = New Size(310, 23)
+        txtPatientSearch.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        AddHandler txtPatientSearch.TextChanged, AddressOf TxtPatientSearch_TextChanged
+
         dgvPatients = New DataGridView()
-        dgvPatients.Location = New Point(10, 24)
-        dgvPatients.Size = New Size(1036, 644)
+        dgvPatients.Location = New Point(10, 58)
+        dgvPatients.Size = New Size(1036, 610)
         dgvPatients.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
         dgvPatients.AllowUserToAddRows = False
         dgvPatients.AllowUserToDeleteRows = False
@@ -418,6 +436,8 @@ Public Class frmDashboard
         dgvPatients.DefaultCellStyle.WrapMode = DataGridViewTriState.True
         dgvPatients.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
 
+        grpPatientList.Controls.Add(lblPatientSearch)
+        grpPatientList.Controls.Add(txtPatientSearch)
         grpPatientList.Controls.Add(dgvPatients)
 
         pnlPatientsSection.Controls.Add(grpPatientList)
@@ -472,9 +492,21 @@ Public Class frmDashboard
         grpReportView.Size = New Size(996, 678)
         grpReportView.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
 
+        lblReportSearch = New Label()
+        lblReportSearch.Text = "Search:"
+        lblReportSearch.AutoSize = True
+        lblReportSearch.Location = New Point(616, 31)
+        lblReportSearch.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+
+        txtReportSearch = New TextBox()
+        txtReportSearch.Location = New Point(676, 27)
+        txtReportSearch.Size = New Size(310, 23)
+        txtReportSearch.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        AddHandler txtReportSearch.TextChanged, AddressOf TxtReportSearch_TextChanged
+
         dgvReports = New DataGridView()
-        dgvReports.Location = New Point(10, 24)
-        dgvReports.Size = New Size(976, 644)
+        dgvReports.Location = New Point(10, 58)
+        dgvReports.Size = New Size(976, 610)
         dgvReports.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
         dgvReports.AllowUserToAddRows = False
         dgvReports.AllowUserToDeleteRows = False
@@ -485,6 +517,8 @@ Public Class frmDashboard
         dgvReports.DefaultCellStyle.WrapMode = DataGridViewTriState.True
         dgvReports.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
 
+        grpReportView.Controls.Add(lblReportSearch)
+        grpReportView.Controls.Add(txtReportSearch)
         grpReportView.Controls.Add(dgvReports)
 
         pnlReportsSection.Controls.Add(grpReportsList)
@@ -723,18 +757,20 @@ Public Class frmDashboard
             If definition.RequiredTables IsNot Nothing Then
                 For Each tableName As String In definition.RequiredTables
                     If Not TableExists(tableName) Then
-                        dgvReports.DataSource = CreateInfoTable("Unable to load report. Missing table: " & tableName)
+                        currentReportTable = CreateInfoTable("Unable to load report. Missing table: " & tableName)
+                        dgvReports.DataSource = currentReportTable
                         Return
                     End If
                 Next
             End If
 
-            Dim reportTable As DataTable = ExecuteTableQuerySafe(definition.Query, definition.EmptyMessage)
-            dgvReports.DataSource = reportTable
+            currentReportTable = ExecuteTableQuerySafe(definition.Query, definition.EmptyMessage)
+            ApplyReportSearchFilter()
             dgvReports.DefaultCellStyle.WrapMode = DataGridViewTriState.True
             dgvReports.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
         Catch
-            dgvReports.DataSource = CreateInfoTable("Unable to load selected report.")
+            currentReportTable = CreateInfoTable("Unable to load selected report.")
+            dgvReports.DataSource = currentReportTable
         Finally
             If MyConnection IsNot Nothing AndAlso MyConnection.State = ConnectionState.Open Then
                 MyConnection.Close()
@@ -766,6 +802,10 @@ Public Class frmDashboard
             pnlReportsSection.Visible = False
         End If
         pnlPatientsSection.Visible = True
+
+        If txtPatientSearch IsNot Nothing Then
+            txtPatientSearch.Text = ""
+        End If
 
         LoadSectionData(sectionKey, sectionQuery)
     End Sub
@@ -890,7 +930,8 @@ Public Class frmDashboard
                 dt = CreateInfoTable("No " & currentSectionName.ToLowerInvariant() & " found.")
             End If
 
-            dgvPatients.DataSource = dt
+            currentSectionTable = dt
+            ApplyPatientSearchFilter()
             dgvPatients.DefaultCellStyle.WrapMode = DataGridViewTriState.True
             dgvPatients.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
 
@@ -907,7 +948,8 @@ Public Class frmDashboard
                 End If
             End If
         Catch
-            dgvPatients.DataSource = CreateInfoTable("Unable to load " & currentSectionName.ToLowerInvariant() & ".")
+            currentSectionTable = CreateInfoTable("Unable to load " & currentSectionName.ToLowerInvariant() & ".")
+            dgvPatients.DataSource = currentSectionTable
         Finally
             If MyConnection IsNot Nothing AndAlso MyConnection.State = ConnectionState.Open Then
                 MyConnection.Close()
@@ -1505,9 +1547,68 @@ Public Class frmDashboard
 
     End Sub
 
-    Private Sub GroupBox1_Enter(sender As Object, e As EventArgs) Handles GroupBox1.Enter
+    Private Sub GroupBox1_Enter(sender As Object, e As EventArgs)
 
     End Sub
+
+    Private Sub Label5_Click(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub TxtPatientSearch_TextChanged(sender As Object, e As EventArgs)
+        ApplyPatientSearchFilter()
+    End Sub
+
+    Private Sub TxtReportSearch_TextChanged(sender As Object, e As EventArgs)
+        ApplyReportSearchFilter()
+    End Sub
+
+    Private Sub ApplyPatientSearchFilter()
+        If dgvPatients Is Nothing OrElse currentSectionTable Is Nothing Then Return
+
+        Dim searchText As String = String.Empty
+        If txtPatientSearch IsNot Nothing Then
+            searchText = txtPatientSearch.Text
+        End If
+
+        dgvPatients.DataSource = GetFilteredTable(currentSectionTable, searchText)
+    End Sub
+
+    Private Sub ApplyReportSearchFilter()
+        If dgvReports Is Nothing OrElse currentReportTable Is Nothing Then Return
+
+        Dim searchText As String = String.Empty
+        If txtReportSearch IsNot Nothing Then
+            searchText = txtReportSearch.Text
+        End If
+
+        dgvReports.DataSource = GetFilteredTable(currentReportTable, searchText)
+    End Sub
+
+    Private Function GetFilteredTable(source As DataTable, rawSearch As String) As DataTable
+        If source Is Nothing Then Return Nothing
+
+        Dim searchText As String = If(rawSearch, String.Empty).Trim()
+        If searchText = String.Empty Then
+            Return source
+        End If
+
+        Dim escapedSearch As String = searchText.Replace("'", "''").Replace("[", "[[]").Replace("%", "[%]").Replace("*", "[*]")
+        Dim filterParts As New List(Of String)()
+
+        For Each col As DataColumn In source.Columns
+            Dim safeColumnName As String = col.ColumnName.Replace("]", "]]")
+            filterParts.Add("CONVERT([" & safeColumnName & "], 'System.String') LIKE '%" & escapedSearch & "%'")
+        Next
+
+        If filterParts.Count = 0 Then
+            Return source
+        End If
+
+        Dim view As New DataView(source)
+        view.RowFilter = String.Join(" OR ", filterParts)
+        Return view.ToTable()
+    End Function
 End Class
 
 
