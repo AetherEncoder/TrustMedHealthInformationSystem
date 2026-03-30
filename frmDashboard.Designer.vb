@@ -45,9 +45,6 @@ Partial Class frmDashboard
         Me.btnNewLabOrder = New System.Windows.Forms.Button()
         Me.btnNewPrescription = New System.Windows.Forms.Button()
         Me.pnlSummaryCards = New System.Windows.Forms.Panel()
-        Me.pnlBranding = New System.Windows.Forms.Panel()
-        Me.pbTrustMedLogo = New System.Windows.Forms.PictureBox()
-        Me.lblBrandingTitle = New System.Windows.Forms.Label()
         Me.pnlLabOrders = New System.Windows.Forms.Panel()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Panel2 = New System.Windows.Forms.Panel()
@@ -83,14 +80,13 @@ Partial Class frmDashboard
         Me.miAccount = New System.Windows.Forms.ToolStripMenuItem()
         Me.miAccountLogout = New System.Windows.Forms.ToolStripMenuItem()
         Me.miAccountSettings = New System.Windows.Forms.ToolStripMenuItem()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.pnlLoginContainer.SuspendLayout()
         Me.pnlLoginCard.SuspendLayout()
         CType(Me.pbLoginLogo, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlDashboard.SuspendLayout()
         Me.grpQuickActions.SuspendLayout()
         Me.pnlSummaryCards.SuspendLayout()
-        Me.pnlBranding.SuspendLayout()
-        CType(Me.pbTrustMedLogo, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlLabOrders.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
@@ -261,7 +257,7 @@ Partial Class frmDashboard
         '
         'pnlDashboard
         '
-        Me.pnlDashboard.Controls.Add(Me.grpQuickActions)
+        Me.pnlDashboard.Controls.Add(Me.GroupBox1)
         Me.pnlDashboard.Controls.Add(Me.pnlSummaryCards)
         Me.pnlDashboard.Controls.Add(Me.msDashboardMenu)
         Me.pnlDashboard.Dock = System.Windows.Forms.DockStyle.Fill
@@ -280,9 +276,9 @@ Partial Class frmDashboard
         Me.grpQuickActions.Controls.Add(Me.btnNewPrescription)
         Me.grpQuickActions.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.grpQuickActions.ForeColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(19, Byte), Integer), CType(CType(66, Byte), Integer))
-        Me.grpQuickActions.Location = New System.Drawing.Point(12, 239)
+        Me.grpQuickActions.Location = New System.Drawing.Point(11, 15)
         Me.grpQuickActions.Name = "grpQuickActions"
-        Me.grpQuickActions.Size = New System.Drawing.Size(1324, 94)
+        Me.grpQuickActions.Size = New System.Drawing.Size(279, 265)
         Me.grpQuickActions.TabIndex = 5
         Me.grpQuickActions.TabStop = False
         Me.grpQuickActions.Text = "Quick Actions"
@@ -295,9 +291,9 @@ Partial Class frmDashboard
         Me.btnNewPatient.ForeColor = System.Drawing.Color.White
         Me.btnNewPatient.Image = CType(resources.GetObject("btnNewPatient.Image"), System.Drawing.Image)
         Me.btnNewPatient.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnNewPatient.Location = New System.Drawing.Point(14, 36)
+        Me.btnNewPatient.Location = New System.Drawing.Point(14, 22)
         Me.btnNewPatient.Name = "btnNewPatient"
-        Me.btnNewPatient.Padding = New System.Windows.Forms.Padding(80, 0, 0, 0)
+        Me.btnNewPatient.Padding = New System.Windows.Forms.Padding(65, 0, 0, 0)
         Me.btnNewPatient.Size = New System.Drawing.Size(250, 42)
         Me.btnNewPatient.TabIndex = 0
         Me.btnNewPatient.Text = "New Patient"
@@ -311,9 +307,9 @@ Partial Class frmDashboard
         Me.btnNewDiagnosis.ForeColor = System.Drawing.Color.White
         Me.btnNewDiagnosis.Image = CType(resources.GetObject("btnNewDiagnosis.Image"), System.Drawing.Image)
         Me.btnNewDiagnosis.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnNewDiagnosis.Location = New System.Drawing.Point(274, 36)
+        Me.btnNewDiagnosis.Location = New System.Drawing.Point(14, 65)
         Me.btnNewDiagnosis.Name = "btnNewDiagnosis"
-        Me.btnNewDiagnosis.Padding = New System.Windows.Forms.Padding(60, 0, 0, 0)
+        Me.btnNewDiagnosis.Padding = New System.Windows.Forms.Padding(65, 0, 0, 0)
         Me.btnNewDiagnosis.Size = New System.Drawing.Size(250, 42)
         Me.btnNewDiagnosis.TabIndex = 1
         Me.btnNewDiagnosis.Text = "New Diagnosis"
@@ -327,9 +323,9 @@ Partial Class frmDashboard
         Me.btnNewConsultation.ForeColor = System.Drawing.Color.White
         Me.btnNewConsultation.Image = CType(resources.GetObject("btnNewConsultation.Image"), System.Drawing.Image)
         Me.btnNewConsultation.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnNewConsultation.Location = New System.Drawing.Point(534, 36)
+        Me.btnNewConsultation.Location = New System.Drawing.Point(14, 113)
         Me.btnNewConsultation.Name = "btnNewConsultation"
-        Me.btnNewConsultation.Padding = New System.Windows.Forms.Padding(55, 0, 0, 0)
+        Me.btnNewConsultation.Padding = New System.Windows.Forms.Padding(65, 0, 0, 0)
         Me.btnNewConsultation.Size = New System.Drawing.Size(250, 42)
         Me.btnNewConsultation.TabIndex = 2
         Me.btnNewConsultation.Text = "New Consultation"
@@ -343,9 +339,9 @@ Partial Class frmDashboard
         Me.btnNewLabOrder.ForeColor = System.Drawing.Color.White
         Me.btnNewLabOrder.Image = CType(resources.GetObject("btnNewLabOrder.Image"), System.Drawing.Image)
         Me.btnNewLabOrder.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnNewLabOrder.Location = New System.Drawing.Point(794, 36)
+        Me.btnNewLabOrder.Location = New System.Drawing.Point(14, 161)
         Me.btnNewLabOrder.Name = "btnNewLabOrder"
-        Me.btnNewLabOrder.Padding = New System.Windows.Forms.Padding(60, 0, 0, 0)
+        Me.btnNewLabOrder.Padding = New System.Windows.Forms.Padding(65, 0, 0, 0)
         Me.btnNewLabOrder.Size = New System.Drawing.Size(250, 42)
         Me.btnNewLabOrder.TabIndex = 3
         Me.btnNewLabOrder.Text = "New Lab Order"
@@ -359,9 +355,9 @@ Partial Class frmDashboard
         Me.btnNewPrescription.ForeColor = System.Drawing.Color.White
         Me.btnNewPrescription.Image = CType(resources.GetObject("btnNewPrescription.Image"), System.Drawing.Image)
         Me.btnNewPrescription.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnNewPrescription.Location = New System.Drawing.Point(1054, 36)
+        Me.btnNewPrescription.Location = New System.Drawing.Point(14, 209)
         Me.btnNewPrescription.Name = "btnNewPrescription"
-        Me.btnNewPrescription.Padding = New System.Windows.Forms.Padding(60, 0, 0, 0)
+        Me.btnNewPrescription.Padding = New System.Windows.Forms.Padding(65, 0, 0, 0)
         Me.btnNewPrescription.Size = New System.Drawing.Size(250, 42)
         Me.btnNewPrescription.TabIndex = 4
         Me.btnNewPrescription.Text = "New Prescription"
@@ -370,66 +366,35 @@ Partial Class frmDashboard
         '
         'pnlSummaryCards
         '
-        Me.pnlSummaryCards.Controls.Add(Me.pnlBranding)
+        Me.pnlSummaryCards.Controls.Add(Me.grpQuickActions)
         Me.pnlSummaryCards.Controls.Add(Me.pnlLabOrders)
+        Me.pnlSummaryCards.Controls.Add(Me.Panel2)
         Me.pnlSummaryCards.Controls.Add(Me.pnlTotalPatients)
         Me.pnlSummaryCards.Location = New System.Drawing.Point(12, 39)
         Me.pnlSummaryCards.Name = "pnlSummaryCards"
-        Me.pnlSummaryCards.Size = New System.Drawing.Size(1324, 190)
+        Me.pnlSummaryCards.Size = New System.Drawing.Size(1324, 296)
         Me.pnlSummaryCards.TabIndex = 4
-        '
-        'pnlBranding
-        '
-        Me.pnlBranding.BackColor = System.Drawing.Color.White
-        Me.pnlBranding.Controls.Add(Me.pbTrustMedLogo)
-        Me.pnlBranding.Controls.Add(Me.lblBrandingTitle)
-        Me.pnlBranding.Location = New System.Drawing.Point(3, 15)
-        Me.pnlBranding.Name = "pnlBranding"
-        Me.pnlBranding.Size = New System.Drawing.Size(424, 160)
-        Me.pnlBranding.TabIndex = 2
-        '
-        'pbTrustMedLogo
-        '
-        Me.pbTrustMedLogo.BackColor = System.Drawing.Color.Transparent
-        Me.pbTrustMedLogo.Image = CType(resources.GetObject("pbTrustMedLogo.Image"), System.Drawing.Image)
-        Me.pbTrustMedLogo.Location = New System.Drawing.Point(142, 58)
-        Me.pbTrustMedLogo.Name = "pbTrustMedLogo"
-        Me.pbTrustMedLogo.Size = New System.Drawing.Size(140, 90)
-        Me.pbTrustMedLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.pbTrustMedLogo.TabIndex = 1
-        Me.pbTrustMedLogo.TabStop = False
-        '
-        'lblBrandingTitle
-        '
-        Me.lblBrandingTitle.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold)
-        Me.lblBrandingTitle.ForeColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(19, Byte), Integer), CType(CType(66, Byte), Integer))
-        Me.lblBrandingTitle.Location = New System.Drawing.Point(3, 8)
-        Me.lblBrandingTitle.Name = "lblBrandingTitle"
-        Me.lblBrandingTitle.Size = New System.Drawing.Size(418, 44)
-        Me.lblBrandingTitle.TabIndex = 0
-        Me.lblBrandingTitle.Text = "TrustMed Health Information System"
-        Me.lblBrandingTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'pnlLabOrders
         '
         Me.pnlLabOrders.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.pnlLabOrders.BackgroundImage = CType(resources.GetObject("pnlLabOrders.BackgroundImage"), System.Drawing.Image)
+        Me.pnlLabOrders.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.pnlLabOrders.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.pnlLabOrders.Controls.Add(Me.Panel1)
-        Me.pnlLabOrders.Controls.Add(Me.lblLabOrdersValue)
         Me.pnlLabOrders.Controls.Add(Me.lblLabOrdersTitle)
-        Me.pnlLabOrders.Location = New System.Drawing.Point(433, 15)
+        Me.pnlLabOrders.Controls.Add(Me.lblLabOrdersValue)
+        Me.pnlLabOrders.Location = New System.Drawing.Point(296, 15)
         Me.pnlLabOrders.Name = "pnlLabOrders"
-        Me.pnlLabOrders.Size = New System.Drawing.Size(438, 160)
+        Me.pnlLabOrders.Size = New System.Drawing.Size(510, 265)
         Me.pnlLabOrders.TabIndex = 1
         '
         'Panel1
         '
         Me.Panel1.BackColor = System.Drawing.Color.WhiteSmoke
         Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel1.Controls.Add(Me.Panel2)
         Me.Panel1.Controls.Add(Me.Label1)
         Me.Panel1.Controls.Add(Me.Label2)
-        Me.Panel1.Location = New System.Drawing.Point(-1, -1)
+        Me.Panel1.Location = New System.Drawing.Point(282, 31)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(438, 160)
         Me.Panel1.TabIndex = 2
@@ -438,10 +403,11 @@ Partial Class frmDashboard
         '
         Me.Panel2.BackColor = System.Drawing.Color.WhiteSmoke
         Me.Panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel2.Controls.Add(Me.Panel1)
         Me.Panel2.Controls.Add(Me.Label3)
-        Me.Panel2.Controls.Add(Me.Label4)
         Me.Panel2.Controls.Add(Me.Button1)
-        Me.Panel2.Location = New System.Drawing.Point(-1, -1)
+        Me.Panel2.Controls.Add(Me.Label4)
+        Me.Panel2.Location = New System.Drawing.Point(42, 323)
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(438, 160)
         Me.Panel2.TabIndex = 3
@@ -511,9 +477,9 @@ Partial Class frmDashboard
         '
         Me.lblLabOrdersValue.Font = New System.Drawing.Font("Microsoft Sans Serif", 28.0!, System.Drawing.FontStyle.Bold)
         Me.lblLabOrdersValue.ForeColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(19, Byte), Integer), CType(CType(66, Byte), Integer))
-        Me.lblLabOrdersValue.Location = New System.Drawing.Point(3, 62)
+        Me.lblLabOrdersValue.Location = New System.Drawing.Point(-1, 176)
         Me.lblLabOrdersValue.Name = "lblLabOrdersValue"
-        Me.lblLabOrdersValue.Size = New System.Drawing.Size(430, 72)
+        Me.lblLabOrdersValue.Size = New System.Drawing.Size(510, 72)
         Me.lblLabOrdersValue.TabIndex = 1
         Me.lblLabOrdersValue.Text = "0"
         Me.lblLabOrdersValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -522,9 +488,9 @@ Partial Class frmDashboard
         '
         Me.lblLabOrdersTitle.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold)
         Me.lblLabOrdersTitle.ForeColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(19, Byte), Integer), CType(CType(66, Byte), Integer))
-        Me.lblLabOrdersTitle.Location = New System.Drawing.Point(3, 14)
+        Me.lblLabOrdersTitle.Location = New System.Drawing.Point(-1, 37)
         Me.lblLabOrdersTitle.Name = "lblLabOrdersTitle"
-        Me.lblLabOrdersTitle.Size = New System.Drawing.Size(430, 44)
+        Me.lblLabOrdersTitle.Size = New System.Drawing.Size(510, 44)
         Me.lblLabOrdersTitle.TabIndex = 0
         Me.lblLabOrdersTitle.Text = "Total Lab Orders"
         Me.lblLabOrdersTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -532,22 +498,24 @@ Partial Class frmDashboard
         'pnlTotalPatients
         '
         Me.pnlTotalPatients.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.pnlTotalPatients.BackgroundImage = CType(resources.GetObject("pnlTotalPatients.BackgroundImage"), System.Drawing.Image)
+        Me.pnlTotalPatients.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.pnlTotalPatients.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.pnlTotalPatients.Controls.Add(Me.lblTotalPatientsValue)
         Me.pnlTotalPatients.Controls.Add(Me.lblTotalPatientsTitle)
+        Me.pnlTotalPatients.Controls.Add(Me.lblTotalPatientsValue)
         Me.pnlTotalPatients.Controls.Add(Me.Button2)
-        Me.pnlTotalPatients.Location = New System.Drawing.Point(877, 15)
+        Me.pnlTotalPatients.Location = New System.Drawing.Point(812, 15)
         Me.pnlTotalPatients.Name = "pnlTotalPatients"
-        Me.pnlTotalPatients.Size = New System.Drawing.Size(438, 160)
+        Me.pnlTotalPatients.Size = New System.Drawing.Size(510, 265)
         Me.pnlTotalPatients.TabIndex = 0
         '
         'lblTotalPatientsValue
         '
         Me.lblTotalPatientsValue.Font = New System.Drawing.Font("Microsoft Sans Serif", 28.0!, System.Drawing.FontStyle.Bold)
         Me.lblTotalPatientsValue.ForeColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(19, Byte), Integer), CType(CType(66, Byte), Integer))
-        Me.lblTotalPatientsValue.Location = New System.Drawing.Point(3, 62)
+        Me.lblTotalPatientsValue.Location = New System.Drawing.Point(-1, 176)
         Me.lblTotalPatientsValue.Name = "lblTotalPatientsValue"
-        Me.lblTotalPatientsValue.Size = New System.Drawing.Size(430, 72)
+        Me.lblTotalPatientsValue.Size = New System.Drawing.Size(512, 72)
         Me.lblTotalPatientsValue.TabIndex = 1
         Me.lblTotalPatientsValue.Text = "0"
         Me.lblTotalPatientsValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -556,9 +524,9 @@ Partial Class frmDashboard
         '
         Me.lblTotalPatientsTitle.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold)
         Me.lblTotalPatientsTitle.ForeColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(19, Byte), Integer), CType(CType(66, Byte), Integer))
-        Me.lblTotalPatientsTitle.Location = New System.Drawing.Point(3, 14)
+        Me.lblTotalPatientsTitle.Location = New System.Drawing.Point(-1, 37)
         Me.lblTotalPatientsTitle.Name = "lblTotalPatientsTitle"
-        Me.lblTotalPatientsTitle.Size = New System.Drawing.Size(430, 44)
+        Me.lblTotalPatientsTitle.Size = New System.Drawing.Size(512, 44)
         Me.lblTotalPatientsTitle.TabIndex = 0
         Me.lblTotalPatientsTitle.Text = "Total Patients"
         Me.lblTotalPatientsTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -570,7 +538,7 @@ Partial Class frmDashboard
         Me.Button2.ForeColor = System.Drawing.Color.White
         Me.Button2.Image = CType(resources.GetObject("Button2.Image"), System.Drawing.Image)
         Me.Button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Button2.Location = New System.Drawing.Point(84, 64)
+        Me.Button2.Location = New System.Drawing.Point(80, 199)
         Me.Button2.Name = "Button2"
         Me.Button2.Padding = New System.Windows.Forms.Padding(50, 0, 0, 0)
         Me.Button2.Size = New System.Drawing.Size(250, 42)
@@ -715,6 +683,17 @@ Partial Class frmDashboard
         Me.miAccountSettings.Size = New System.Drawing.Size(116, 22)
         Me.miAccountSettings.Text = "Settings"
         '
+        'GroupBox1
+        '
+        Me.GroupBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(19, Byte), Integer), CType(CType(66, Byte), Integer))
+        Me.GroupBox1.Location = New System.Drawing.Point(23, 341)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(1311, 226)
+        Me.GroupBox1.TabIndex = 6
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "Quick Actions"
+        '
         'frmDashboard
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -737,8 +716,6 @@ Partial Class frmDashboard
         Me.pnlDashboard.PerformLayout()
         Me.grpQuickActions.ResumeLayout(False)
         Me.pnlSummaryCards.ResumeLayout(False)
-        Me.pnlBranding.ResumeLayout(False)
-        CType(Me.pbTrustMedLogo, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnlLabOrders.ResumeLayout(False)
         Me.Panel1.ResumeLayout(False)
         Me.Panel2.ResumeLayout(False)
@@ -791,9 +768,6 @@ Partial Class frmDashboard
     Friend WithEvents pnlLabOrders As Panel
     Friend WithEvents lblLabOrdersValue As Label
     Friend WithEvents lblLabOrdersTitle As Label
-    Friend WithEvents pnlBranding As Panel
-    Friend WithEvents lblBrandingTitle As Label
-    Friend WithEvents pbTrustMedLogo As PictureBox
     Friend WithEvents grpQuickActions As GroupBox
     Friend WithEvents btnNewPatient As Button
     Friend WithEvents btnNewDiagnosis As Button
@@ -808,4 +782,5 @@ Partial Class frmDashboard
     Friend WithEvents Label4 As Label
     Friend WithEvents Label1 As Label
     Friend WithEvents Label2 As Label
+    Friend WithEvents GroupBox1 As GroupBox
 End Class

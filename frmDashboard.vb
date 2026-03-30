@@ -73,19 +73,20 @@ Public Class frmDashboard
             Path.GetFullPath(Path.Combine(Application.StartupPath, "..\..\src\TrustMed.png"))
         }
 
+        Dim loadedLogo As Image = Nothing
         For Each logoPath As String In logoCandidates
             If File.Exists(logoPath) Then
-                pbTrustMedLogo.Image = Image.FromFile(logoPath)
+                loadedLogo = Image.FromFile(logoPath)
                 Exit For
             End If
         Next
 
-        If pbTrustMedLogo.Image Is Nothing AndAlso Me.Icon IsNot Nothing Then
-            pbTrustMedLogo.Image = Me.Icon.ToBitmap()
+        If loadedLogo Is Nothing AndAlso Me.Icon IsNot Nothing Then
+            loadedLogo = Me.Icon.ToBitmap()
         End If
 
         If pbLoginLogo IsNot Nothing Then
-            pbLoginLogo.Image = pbTrustMedLogo.Image
+            pbLoginLogo.Image = loadedLogo
         End If
 
         LoadPasswordToggleIcons()
@@ -316,7 +317,7 @@ Public Class frmDashboard
         Return ""
     End Function
 
-    Private Sub pbTrustMedLogo_Click(sender As Object, e As EventArgs) Handles pbTrustMedLogo.Click
+    Private Sub pbTrustMedLogo_Click(sender As Object, e As EventArgs)
 
     End Sub
 
@@ -1370,6 +1371,24 @@ Public Class frmDashboard
     End Sub
 
     Private Sub ShowAccountSettingsDialog()
+        If String.IsNullOrWhiteSpace(currentLoggedInUsername) Then
+            MessageBox.Show("No active account session found.", "Settings", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+        Using settingsForm As New frmSettings(MyConnectionString, currentLoggedInUsername)
+            Dim dialogResultValue As DialogResult = settingsForm.ShowDialog(Me)
+
+            If settingsForm.AccountDeleted Then
+                MessageBox.Show("Account deleted successfully.", "Settings", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                ShowLoginPage()
+                Return
+            End If
+
+            If dialogResultValue = DialogResult.OK OrElse dialogResultValue = DialogResult.Cancel Then
+                currentLoggedInUsername = settingsForm.UpdatedUsername
+            End If
+        End Using
     End Sub
 
     Private Sub ApplyGridWrapping(parent As Control)
@@ -1468,6 +1487,26 @@ Public Class frmDashboard
     Private Sub btnTogglePassword_Click(sender As Object, e As EventArgs) Handles btnTogglePassword.Click
         txtPassword.UseSystemPasswordChar = Not txtPassword.UseSystemPasswordChar
         btnTogglePassword.Image = If(txtPassword.UseSystemPasswordChar, loginEyeIcon, loginEyeSlashIcon)
+    End Sub
+
+    Private Sub Label4_Click(sender As Object, e As EventArgs) Handles Label4.Click
+
+    End Sub
+
+    Private Sub lblLabOrdersValue_Click(sender As Object, e As EventArgs) Handles lblLabOrdersValue.Click
+
+    End Sub
+
+    Private Sub lblBrandingTitle_Click(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub lblTotalPatientsTitle_Click(sender As Object, e As EventArgs) Handles lblTotalPatientsTitle.Click
+
+    End Sub
+
+    Private Sub GroupBox1_Enter(sender As Object, e As EventArgs) Handles GroupBox1.Enter
+
     End Sub
 End Class
 
