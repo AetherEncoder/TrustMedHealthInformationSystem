@@ -1483,7 +1483,6 @@ Public Class frmDashboard
                 pnlPatientsSection.BringToFront()
             End If
         Catch
-            ' Design-time preview only; ignore designer-time exceptions.
         End Try
     End Sub
 

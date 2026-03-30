@@ -62,3 +62,4 @@ G:\Assignment\SecondYearSecondSem\Final\TrustMedHealthInformationSystem\bin\Debu
 G:\Assignment\SecondYearSecondSem\Final\TrustMedHealthInformationSystem\bin\Debug\DiagcareMaintenanceSystem.application
 G:\Assignment\SecondYearSecondSem\Final\TrustMedHealthInformationSystem\obj\Debug\DiagcareMaintenanceSystem.exe.manifest
 G:\Assignment\SecondYearSecondSem\Final\TrustMedHealthInformationSystem\obj\Debug\DiagcareMaintenanceSystem.application
+G:\Assignment\SecondYearSecondSem\Final\TrustMedHealthInformationSystem\obj\Debug\DiagcareMaintenanceSystem.frmHelp.resources
