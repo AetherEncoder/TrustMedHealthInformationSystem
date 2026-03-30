@@ -31,6 +31,7 @@ Partial Class frmDashboard
         Me.btnTogglePassword = New System.Windows.Forms.Button()
         Me.btnLogin = New System.Windows.Forms.Button()
         Me.btnClose = New System.Windows.Forms.Button()
+        Me.btnHelp = New System.Windows.Forms.Button()
         Me.lblUsernameError = New System.Windows.Forms.Label()
         Me.lblPasswordError = New System.Windows.Forms.Label()
         Me.pnlLoginContainer = New System.Windows.Forms.Panel()
@@ -180,6 +181,17 @@ Partial Class frmDashboard
         Me.btnClose.Text = "Close"
         Me.btnClose.UseVisualStyleBackColor = False
         '
+        'btnHelp
+        '
+        Me.btnHelp.BackColor = System.Drawing.Color.White
+        Me.btnHelp.FlatAppearance.BorderSize = 0
+        Me.btnHelp.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnHelp.Location = New System.Drawing.Point(16, 500)
+        Me.btnHelp.Name = "btnHelp"
+        Me.btnHelp.Size = New System.Drawing.Size(32, 32)
+        Me.btnHelp.TabIndex = 8
+        Me.btnHelp.UseVisualStyleBackColor = False
+        '
         'lblUsernameError
         '
         Me.lblUsernameError.AutoSize = True
@@ -228,6 +240,7 @@ Partial Class frmDashboard
         Me.pnlLoginCard.Controls.Add(Me.lblPassword)
         Me.pnlLoginCard.Controls.Add(Me.lblUsername)
         Me.pnlLoginCard.Controls.Add(Me.lblHeader)
+        Me.pnlLoginCard.Controls.Add(Me.btnHelp)
         Me.pnlLoginCard.Location = New System.Drawing.Point(414, 92)
         Me.pnlLoginCard.Name = "pnlLoginCard"
         Me.pnlLoginCard.Size = New System.Drawing.Size(520, 540)
@@ -302,8 +315,8 @@ Partial Class frmDashboard
         Me.btnNewPatient.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.btnNewPatient.Location = New System.Drawing.Point(14, 22)
         Me.btnNewPatient.Name = "btnNewPatient"
-        Me.btnNewPatient.Padding = New System.Windows.Forms.Padding(65, 0, 0, 0)
-        Me.btnNewPatient.Size = New System.Drawing.Size(250, 42)
+        Me.btnNewPatient.Padding = New System.Windows.Forms.Padding(6, 0, 0, 0)
+        Me.btnNewPatient.Size = New System.Drawing.Size(203, 42)
         Me.btnNewPatient.TabIndex = 0
         Me.btnNewPatient.Text = "New Patient"
         Me.btnNewPatient.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
@@ -318,8 +331,8 @@ Partial Class frmDashboard
         Me.btnNewDiagnosis.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.btnNewDiagnosis.Location = New System.Drawing.Point(14, 65)
         Me.btnNewDiagnosis.Name = "btnNewDiagnosis"
-        Me.btnNewDiagnosis.Padding = New System.Windows.Forms.Padding(65, 0, 0, 0)
-        Me.btnNewDiagnosis.Size = New System.Drawing.Size(250, 42)
+        Me.btnNewDiagnosis.Padding = New System.Windows.Forms.Padding(6, 0, 0, 0)
+        Me.btnNewDiagnosis.Size = New System.Drawing.Size(203, 42)
         Me.btnNewDiagnosis.TabIndex = 1
         Me.btnNewDiagnosis.Text = "New Diagnosis"
         Me.btnNewDiagnosis.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
@@ -334,8 +347,8 @@ Partial Class frmDashboard
         Me.btnNewConsultation.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.btnNewConsultation.Location = New System.Drawing.Point(14, 113)
         Me.btnNewConsultation.Name = "btnNewConsultation"
-        Me.btnNewConsultation.Padding = New System.Windows.Forms.Padding(65, 0, 0, 0)
-        Me.btnNewConsultation.Size = New System.Drawing.Size(250, 42)
+        Me.btnNewConsultation.Padding = New System.Windows.Forms.Padding(6, 0, 0, 0)
+        Me.btnNewConsultation.Size = New System.Drawing.Size(203, 42)
         Me.btnNewConsultation.TabIndex = 2
         Me.btnNewConsultation.Text = "New Consultation"
         Me.btnNewConsultation.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
@@ -350,8 +363,8 @@ Partial Class frmDashboard
         Me.btnNewLabOrder.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.btnNewLabOrder.Location = New System.Drawing.Point(14, 161)
         Me.btnNewLabOrder.Name = "btnNewLabOrder"
-        Me.btnNewLabOrder.Padding = New System.Windows.Forms.Padding(65, 0, 0, 0)
-        Me.btnNewLabOrder.Size = New System.Drawing.Size(250, 42)
+        Me.btnNewLabOrder.Padding = New System.Windows.Forms.Padding(6, 0, 0, 0)
+        Me.btnNewLabOrder.Size = New System.Drawing.Size(203, 42)
         Me.btnNewLabOrder.TabIndex = 3
         Me.btnNewLabOrder.Text = "New Lab Order"
         Me.btnNewLabOrder.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
@@ -366,8 +379,8 @@ Partial Class frmDashboard
         Me.btnNewPrescription.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.btnNewPrescription.Location = New System.Drawing.Point(14, 209)
         Me.btnNewPrescription.Name = "btnNewPrescription"
-        Me.btnNewPrescription.Padding = New System.Windows.Forms.Padding(65, 0, 0, 0)
-        Me.btnNewPrescription.Size = New System.Drawing.Size(250, 42)
+        Me.btnNewPrescription.Padding = New System.Windows.Forms.Padding(6, 0, 0, 0)
+        Me.btnNewPrescription.Size = New System.Drawing.Size(203, 42)
         Me.btnNewPrescription.TabIndex = 4
         Me.btnNewPrescription.Text = "New Prescription"
         Me.btnNewPrescription.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
@@ -722,6 +735,7 @@ Partial Class frmDashboard
     Friend WithEvents btnTogglePassword As Button
     Friend WithEvents btnLogin As Button
     Friend WithEvents btnClose As Button
+    Friend WithEvents btnHelp As Button
     Friend WithEvents lblUsernameError As Label
     Friend WithEvents lblPasswordError As Label
     Friend WithEvents pnlLoginContainer As Panel

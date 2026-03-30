@@ -79,6 +79,12 @@ Public Class frmDashboard
             Path.GetFullPath(Path.Combine(Application.StartupPath, "..\..\src\TrustMed.png"))
         }
 
+        Dim helpIconCandidates As String() = {
+            Path.Combine(Application.StartupPath, "src\question-fill.png"),
+            Path.GetFullPath(Path.Combine(Application.StartupPath, "..\src\question-fill.png")),
+            Path.GetFullPath(Path.Combine(Application.StartupPath, "..\..\src\question-fill.png"))
+        }
+
         Dim loadedLogo As Image = Nothing
         For Each logoPath As String In logoCandidates
             If File.Exists(logoPath) Then
@@ -93,6 +99,16 @@ Public Class frmDashboard
 
         If pbLoginLogo IsNot Nothing Then
             pbLoginLogo.Image = loadedLogo
+        End If
+
+        If btnHelp IsNot Nothing Then
+            For Each iconPath As String In helpIconCandidates
+                If File.Exists(iconPath) Then
+                    btnHelp.Image = ResizeImage(Image.FromFile(iconPath), 16, 16)
+                    btnHelp.ImageAlign = ContentAlignment.MiddleCenter
+                    Exit For
+                End If
+            Next
         End If
 
         LoadPasswordToggleIcons()
@@ -371,7 +387,7 @@ Public Class frmDashboard
         btnAddPatient.Location = New Point(18, 44)
         btnAddPatient.Image = CType(resources.GetObject("btnNewPatient.Image"), System.Drawing.Image)
         btnAddPatient.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        btnAddPatient.Padding = New System.Windows.Forms.Padding(30, 0, 0, 0)
+        btnAddPatient.Padding = New System.Windows.Forms.Padding(6, 0, 0, 0)
         btnAddPatient.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
         AddHandler btnAddPatient.Click, AddressOf BtnAddPatient_Click
 
@@ -383,7 +399,7 @@ Public Class frmDashboard
         btnDeletePatient.Location = New Point(18, 164)
         btnDeletePatient.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
         btnDeletePatient.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        btnDeletePatient.Padding = New System.Windows.Forms.Padding(30, 0, 0, 0)
+        btnDeletePatient.Padding = New System.Windows.Forms.Padding(6, 0, 0, 0)
         btnDeletePatient.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
         AddHandler btnDeletePatient.Click, AddressOf BtnDeletePatient_Click
 
@@ -395,7 +411,7 @@ Public Class frmDashboard
         btnUpdatePatient.Location = New Point(18, 104)
         btnUpdatePatient.Image = CType(resources.GetObject("Button2.Image"), System.Drawing.Image)
         btnUpdatePatient.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        btnUpdatePatient.Padding = New System.Windows.Forms.Padding(30, 0, 0, 0)
+        btnUpdatePatient.Padding = New System.Windows.Forms.Padding(6, 0, 0, 0)
         btnUpdatePatient.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
         AddHandler btnUpdatePatient.Click, AddressOf BtnUpdatePatient_Click
 
@@ -414,13 +430,13 @@ Public Class frmDashboard
         lblPatientSearch = New Label()
         lblPatientSearch.Text = "Search:"
         lblPatientSearch.AutoSize = True
-        lblPatientSearch.Location = New Point(674, 31)
-        lblPatientSearch.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        lblPatientSearch.Location = New Point(10, 31)
+        lblPatientSearch.Anchor = AnchorStyles.Top Or AnchorStyles.Left
 
         txtPatientSearch = New TextBox()
-        txtPatientSearch.Location = New Point(736, 27)
-        txtPatientSearch.Size = New Size(310, 23)
-        txtPatientSearch.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        txtPatientSearch.Location = New Point(70, 27)
+        txtPatientSearch.Size = New Size(320, 23)
+        txtPatientSearch.Anchor = AnchorStyles.Top Or AnchorStyles.Left
         AddHandler txtPatientSearch.TextChanged, AddressOf TxtPatientSearch_TextChanged
 
         dgvPatients = New DataGridView()
@@ -495,13 +511,13 @@ Public Class frmDashboard
         lblReportSearch = New Label()
         lblReportSearch.Text = "Search:"
         lblReportSearch.AutoSize = True
-        lblReportSearch.Location = New Point(616, 31)
-        lblReportSearch.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        lblReportSearch.Location = New Point(10, 31)
+        lblReportSearch.Anchor = AnchorStyles.Top Or AnchorStyles.Left
 
         txtReportSearch = New TextBox()
-        txtReportSearch.Location = New Point(676, 27)
-        txtReportSearch.Size = New Size(310, 23)
-        txtReportSearch.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        txtReportSearch.Location = New Point(70, 27)
+        txtReportSearch.Size = New Size(320, 23)
+        txtReportSearch.Anchor = AnchorStyles.Top Or AnchorStyles.Left
         AddHandler txtReportSearch.TextChanged, AddressOf TxtReportSearch_TextChanged
 
         dgvReports = New DataGridView()
@@ -1609,6 +1625,13 @@ Public Class frmDashboard
         view.RowFilter = String.Join(" OR ", filterParts)
         Return view.ToTable()
     End Function
+
+    Private Sub btnHelp_Click(sender As Object, e As EventArgs) Handles btnHelp.Click
+        Using helpForm As New frmHelp(MyConnectionString)
+            helpForm.ShowDialog(Me)
+        End Using
+    End Sub
 End Class
+
 
 

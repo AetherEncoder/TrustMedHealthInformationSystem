@@ -58,3 +58,7 @@ G:\Assignment\SecondYearSecondSem\Final\TrustMedHealthInformationSystem\obj\Debu
 G:\Assignment\SecondYearSecondSem\Final\TrustMedHealthInformationSystem\obj\Debug\DiagcareMaintenanceSystem.frmPhysicianEntry.resources
 G:\Assignment\SecondYearSecondSem\Final\TrustMedHealthInformationSystem\obj\Debug\DiagcareMaintenanceSystem.frmPrescriptionEntry.resources
 G:\Assignment\SecondYearSecondSem\Final\TrustMedHealthInformationSystem\obj\Debug\DiagcareMaintenanceSystem.frmSettings.resources
+G:\Assignment\SecondYearSecondSem\Final\TrustMedHealthInformationSystem\bin\Debug\DiagcareMaintenanceSystem.exe.manifest
+G:\Assignment\SecondYearSecondSem\Final\TrustMedHealthInformationSystem\bin\Debug\DiagcareMaintenanceSystem.application
+G:\Assignment\SecondYearSecondSem\Final\TrustMedHealthInformationSystem\obj\Debug\DiagcareMaintenanceSystem.exe.manifest
+G:\Assignment\SecondYearSecondSem\Final\TrustMedHealthInformationSystem\obj\Debug\DiagcareMaintenanceSystem.application
