@@ -53,7 +53,7 @@ Public Class frmMedicineEntry
         End If
 
         Dim priceValue As Decimal
-        If Not Decimal.TryParse(txtPrice.Text.Trim(), priceValue) OrElse priceValue < 0D Then
+        If Not Decimal.TryParse(txtPrice.Text.Trim().Replace("₱", ""), priceValue) OrElse priceValue < 0D Then
             MessageBox.Show("Price must be a valid non-negative number.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             txtPrice.Focus()
             Return
@@ -118,7 +118,7 @@ Public Class frmMedicineEntry
 
                         txtMedicineID.Text = Convert.ToInt32(reader("MedicineID")).ToString()
                         txtMedicineName.Text = reader("MedicineName").ToString()
-                        txtPrice.Text = Convert.ToDecimal(reader("Price")).ToString("0.##")
+                        txtPrice.Text = "₱" & Convert.ToDecimal(reader("Price")).ToString("0.##")
                         txtMedicineDescription.Text = reader("MedicineDescription").ToString()
                     End Using
                 End Using
@@ -154,7 +154,7 @@ Public Class frmMedicineEntry
         End If
 
         Dim priceValue As Decimal
-        If Not Decimal.TryParse(txtPrice.Text.Trim(), priceValue) OrElse priceValue < 0D Then
+        If Not Decimal.TryParse(txtPrice.Text.Trim().Replace("₱", ""), priceValue) OrElse priceValue < 0D Then
             MessageBox.Show("Price must be a valid non-negative number.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             txtPrice.Focus()
             Return False

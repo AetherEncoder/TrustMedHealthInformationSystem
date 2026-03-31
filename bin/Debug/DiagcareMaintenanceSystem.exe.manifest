@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DiagcareMaintenanceSystem.exe" size="2343872">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DiagcareMaintenanceSystem.exe" size="2358208">
       <assemblyIdentity name="DiagcareMaintenanceSystem" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>wk0/IGFhOL8fMa6+lwQrHTSDi203rlI9lBnjmMoAX1Q=</dsig:DigestValue>
+        <dsig:DigestValue>TXVYTN8E4ypqPYFfPapd25g4czIeCvENCkQgpBGBrNU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -90,6 +90,15 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
       <dsig:DigestValue>eeTzP7Ep/To9ROEK1H2FJIgL0ZCZuICpLftTF8P3/BY=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="src\coins-fill.png" size="2130">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>fxw4ZjXCVbV5Lc04eh38AmXpVEuf+5M5K2H5blpIpHg=</dsig:DigestValue>
     </hash>
   </file>
   <file name="src\delete.png" size="426">
@@ -137,6 +146,15 @@
       <dsig:DigestValue>rI9n/YGtUcDYf0Y5jSwO+KBMPTwG8LQYtiWDW9ihKGA=</dsig:DigestValue>
     </hash>
   </file>
+  <file name="src\medal-military-fill.png" size="1905">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>zHrisMlBNs3t4vUEPhOgBKCZVxih2gzdWMMvM0Umym0=</dsig:DigestValue>
+    </hash>
+  </file>
   <file name="src\pencil-simple-fill.png" size="459">
     <hash>
       <dsig:Transforms>
@@ -164,6 +182,24 @@
       <dsig:DigestValue>hgXB/VCnZ4DQD004eDaIOBcNAMmRPBN4G6kKRl7GVYA=</dsig:DigestValue>
     </hash>
   </file>
+  <file name="src\stethoscope-fill.png" size="2089">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>4Q0Q+Nc9ZqhjovkDXcRrICisAehVbiM4noh6wgzE84A=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="src\syringe-fill.png" size="1493">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>zRq9Uti2B0d10j96ideRlguIy+Kv+qJdTy1G3Tg0hNQ=</dsig:DigestValue>
+    </hash>
+  </file>
   <file name="src\trash-fill.png" size="381">
     <hash>
       <dsig:Transforms>
@@ -171,6 +207,15 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
       <dsig:DigestValue>It/pZ7IiWQktGyvODW9AUsT3vbQi9nVK5iZY5loHJOo=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="src\TrustMedLogo.png" size="9234">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>okHgxJS9IgY9l8LOGZ8nqodgKq78T7EIxPQN6b1mCSQ=</dsig:DigestValue>
     </hash>
   </file>
   <file name="src\update.png" size="477">

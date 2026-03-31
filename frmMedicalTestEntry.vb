@@ -56,7 +56,7 @@ Public Class frmMedicalTestEntry
         End If
 
         Dim costValue As Decimal
-        If Not Decimal.TryParse(txtCost.Text.Trim(), costValue) OrElse costValue < 0D Then
+        If Not Decimal.TryParse(txtCost.Text.Trim().Replace("₱", ""), costValue) OrElse costValue < 0D Then
             MessageBox.Show("Cost must be a valid non-negative number.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             txtCost.Focus()
             Return
@@ -122,7 +122,7 @@ Public Class frmMedicalTestEntry
                         txtTestID.Text = Convert.ToInt32(reader("TestID")).ToString()
                         txtTestName.Text = reader("TestName").ToString()
                         txtTestDescription.Text = reader("TestDescription").ToString()
-                        txtCost.Text = Convert.ToDecimal(reader("Cost")).ToString("0.##")
+                        txtCost.Text = "₱" & Convert.ToDecimal(reader("Cost")).ToString("0.##")
                     End Using
                 End Using
             End Using
@@ -157,7 +157,7 @@ Public Class frmMedicalTestEntry
         End If
 
         Dim costValue As Decimal
-        If Not Decimal.TryParse(txtCost.Text.Trim(), costValue) OrElse costValue < 0D Then
+        If Not Decimal.TryParse(txtCost.Text.Trim().Replace("₱", ""), costValue) OrElse costValue < 0D Then
             MessageBox.Show("Cost must be a valid non-negative number.", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             txtCost.Focus()
             Return False
@@ -214,23 +214,17 @@ Public Class frmMedicalTestEntry
 
                     If usedId < candidate Then
                         Continue While
-                    End If
+                      End If
 
                     If usedId = candidate Then
                         candidate += 1
                         If candidate > maxId Then
-                            Return -1
+                          Return -1
                         End If
-                    ElseIf usedId > candidate Then
-                        Exit While
                     End If
                 End While
             End Using
         End Using
-
-        If candidate > maxId Then
-            Return -1
-        End If
 
         Return candidate
     End Function

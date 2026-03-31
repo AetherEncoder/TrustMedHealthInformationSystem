@@ -101,6 +101,10 @@ Public Class frmDashboard
             pbLoginLogo.Image = loadedLogo
         End If
 
+        'If pbDashboardLogo IsNot Nothing Then
+        '    pbDashboardLogo.Image = loadedLogo
+        'End If
+
         If btnHelp IsNot Nothing Then
             For Each iconPath As String In helpIconCandidates
                 If File.Exists(iconPath) Then
@@ -260,12 +264,56 @@ Public Class frmDashboard
             cmd = New MySqlCommand(userSQLQuery, CType(MyConnection, MySqlConnection))
             lblLabOrdersValue.Text = Convert.ToInt32(cmd.ExecuteScalar()).ToString()
 
+            userSQLQuery = "SELECT COALESCE((SELECT SUM(mt.Cost) FROM lab_order_inclusion loi INNER JOIN medical_test mt ON mt.TestID = loi.TestID), 0) + COALESCE((SELECT SUM(m.Price) FROM prescription_inclusion pi INNER JOIN medicine m ON m.MedicineID = pi.MedicineID), 0) AS TotalRevenue"
+            cmd = New MySqlCommand(userSQLQuery, CType(MyConnection, MySqlConnection))
+            Dim revenueResult As Object = cmd.ExecuteScalar()
+            If revenueResult IsNot Nothing AndAlso Not IsDBNull(revenueResult) Then
+                lblTotalRevenueValue.Text = "₱" & CDec(revenueResult).ToString("F2")
+            Else
+                lblTotalRevenueValue.Text = "₱0.00"
+            End If
+
+            userSQLQuery = "SELECT CONCAT(ph.FirstName, ' ', ph.LastName) AS PhysicianName, (COUNT(c.ConsultationID) + COUNT(pr.PrescriptionID)) AS TotalWorkload " &
+                           "FROM physician ph " &
+                           "LEFT JOIN consultation c ON c.PhysicianID = ph.PhysicianID " &
+                           "LEFT JOIN prescription pr ON pr.PhysicianID = ph.PhysicianID " &
+                           "GROUP BY ph.PhysicianID, ph.FirstName, ph.LastName " &
+                           "ORDER BY TotalWorkload DESC LIMIT 1"
+            cmd = New MySqlCommand(userSQLQuery, CType(MyConnection, MySqlConnection))
+            Using reader As MySqlDataReader = cmd.ExecuteReader()
+                If reader.Read() Then
+                    lblOutstandingPhysicianValue.Text = reader("PhysicianName").ToString()
+                Else
+                    lblOutstandingPhysicianValue.Text = "N/A"
+                End If
+            End Using
+
+            userSQLQuery = "SELECT CONCAT(md.FirstName, ' ', md.LastName) AS MedTechName, COUNT(pf.ExaminationID) AS ExaminationCount " &
+                           "FROM medtech md " &
+                           "LEFT JOIN performance pf ON pf.MedtechID = md.MedtechID " &
+                           "GROUP BY md.MedtechID, md.FirstName, md.LastName " &
+                           "ORDER BY ExaminationCount DESC LIMIT 1"
+            cmd = New MySqlCommand(userSQLQuery, CType(MyConnection, MySqlConnection))
+            Using reader As MySqlDataReader = cmd.ExecuteReader()
+                If reader.Read() Then
+                    lblOutstandingMedTechValue.Text = reader("MedTechName").ToString()
+                Else
+                    lblOutstandingMedTechValue.Text = "N/A"
+                End If
+            End Using
+
         Catch ex As MySqlException
             lblTotalPatientsValue.Text = "0"
             lblLabOrdersValue.Text = "0"
+            lblTotalRevenueValue.Text = "₱0.00"
+            lblOutstandingPhysicianValue.Text = "N/A"
+            lblOutstandingMedTechValue.Text = "N/A"
         Catch ex As Exception
             lblTotalPatientsValue.Text = "0"
             lblLabOrdersValue.Text = "0"
+            lblTotalRevenueValue.Text = "₱0.00"
+            lblOutstandingPhysicianValue.Text = "N/A"
+            lblOutstandingMedTechValue.Text = "N/A"
         Finally
             If MyConnection IsNot Nothing AndAlso MyConnection.State = ConnectionState.Open Then
                 MyConnection.Close()
@@ -1630,7 +1678,73 @@ Public Class frmDashboard
             helpForm.ShowDialog(Me)
         End Using
     End Sub
+
+    Private Sub lblTotalRevenueValue_Click(sender As Object, e As EventArgs) Handles lblTotalRevenueValue.Click
+
+    End Sub
 End Class
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
