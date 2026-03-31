@@ -42,6 +42,10 @@ Partial Class frmDashboard
         Me.lblLoginError = New System.Windows.Forms.Label()
         Me.pnlDashboard = New System.Windows.Forms.Panel()
         Me.pnlSummaryCards = New System.Windows.Forms.Panel()
+        Me.Panel3 = New System.Windows.Forms.Panel()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.lblTotalPatient = New System.Windows.Forms.Label()
+        Me.Button3 = New System.Windows.Forms.Button()
         Me.grpQuickActions = New System.Windows.Forms.GroupBox()
         Me.btnNewPatient = New System.Windows.Forms.Button()
         Me.btnNewDiagnosis = New System.Windows.Forms.Button()
@@ -51,20 +55,16 @@ Partial Class frmDashboard
         Me.pnlLabOrders = New System.Windows.Forms.Panel()
         Me.lblLabOrdersTitle = New System.Windows.Forms.Label()
         Me.lblLabOrdersValue = New System.Windows.Forms.Label()
+        Me.pnlTotalPatients = New System.Windows.Forms.Panel()
+        Me.lblTotalPatientsTitle = New System.Windows.Forms.Label()
+        Me.lblTotalPatientsValue = New System.Windows.Forms.Label()
+        Me.Button2 = New System.Windows.Forms.Button()
         Me.pnlTotalRevenue = New System.Windows.Forms.Panel()
         Me.lblTotalRevenueTitle = New System.Windows.Forms.Label()
         Me.lblTotalRevenueValue = New System.Windows.Forms.Label()
         Me.pnlOutstandingPhysician = New System.Windows.Forms.Panel()
         Me.lblOutstandingPhysicianTitle = New System.Windows.Forms.Label()
         Me.lblOutstandingPhysicianValue = New System.Windows.Forms.Label()
-        Me.pnlTotalPatients = New System.Windows.Forms.Panel()
-        Me.Panel3 = New System.Windows.Forms.Panel()
-        Me.Label5 = New System.Windows.Forms.Label()
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.Button3 = New System.Windows.Forms.Button()
-        Me.lblTotalPatientsTitle = New System.Windows.Forms.Label()
-        Me.lblTotalPatientsValue = New System.Windows.Forms.Label()
-        Me.Button2 = New System.Windows.Forms.Button()
         Me.pnlOutstandingMedTech = New System.Windows.Forms.Panel()
         Me.lblOutstandingMedTechTitle = New System.Windows.Forms.Label()
         Me.lblOutstandingMedTechValue = New System.Windows.Forms.Label()
@@ -101,12 +101,12 @@ Partial Class frmDashboard
         CType(Me.pbLoginLogo, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlDashboard.SuspendLayout()
         Me.pnlSummaryCards.SuspendLayout()
+        Me.Panel3.SuspendLayout()
         Me.grpQuickActions.SuspendLayout()
         Me.pnlLabOrders.SuspendLayout()
+        Me.pnlTotalPatients.SuspendLayout()
         Me.pnlTotalRevenue.SuspendLayout()
         Me.pnlOutstandingPhysician.SuspendLayout()
-        Me.pnlTotalPatients.SuspendLayout()
-        Me.Panel3.SuspendLayout()
         Me.pnlOutstandingMedTech.SuspendLayout()
         Me.msDashboardMenu.SuspendLayout()
         Me.Panel2.SuspendLayout()
@@ -311,6 +311,59 @@ Partial Class frmDashboard
         Me.pnlSummaryCards.Size = New System.Drawing.Size(1324, 687)
         Me.pnlSummaryCards.TabIndex = 4
         '
+        'Panel3
+        '
+        Me.Panel3.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.Panel3.BackgroundImage = CType(resources.GetObject("Panel3.BackgroundImage"), System.Drawing.Image)
+        Me.Panel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.Panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel3.Controls.Add(Me.Label5)
+        Me.Panel3.Controls.Add(Me.lblTotalPatient)
+        Me.Panel3.Controls.Add(Me.Button3)
+        Me.Panel3.Location = New System.Drawing.Point(670, 16)
+        Me.Panel3.Name = "Panel3"
+        Me.Panel3.Size = New System.Drawing.Size(654, 265)
+        Me.Panel3.TabIndex = 7
+        '
+        'Label5
+        '
+        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold)
+        Me.Label5.ForeColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(19, Byte), Integer), CType(CType(66, Byte), Integer))
+        Me.Label5.Location = New System.Drawing.Point(-1, 37)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(654, 44)
+        Me.Label5.TabIndex = 0
+        Me.Label5.Text = "Total Patients"
+        Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblTotalPatient
+        '
+        Me.lblTotalPatient.Font = New System.Drawing.Font("Microsoft Sans Serif", 28.0!, System.Drawing.FontStyle.Bold)
+        Me.lblTotalPatient.ForeColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(19, Byte), Integer), CType(CType(66, Byte), Integer))
+        Me.lblTotalPatient.Location = New System.Drawing.Point(-1, 176)
+        Me.lblTotalPatient.Name = "lblTotalPatient"
+        Me.lblTotalPatient.Size = New System.Drawing.Size(654, 72)
+        Me.lblTotalPatient.TabIndex = 1
+        Me.lblTotalPatient.Text = "0"
+        Me.lblTotalPatient.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Button3
+        '
+        Me.Button3.BackColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(19, Byte), Integer), CType(CType(66, Byte), Integer))
+        Me.Button3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button3.ForeColor = System.Drawing.Color.White
+        Me.Button3.Image = CType(resources.GetObject("Button3.Image"), System.Drawing.Image)
+        Me.Button3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Button3.Location = New System.Drawing.Point(80, 199)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Padding = New System.Windows.Forms.Padding(50, 0, 0, 0)
+        Me.Button3.Size = New System.Drawing.Size(250, 42)
+        Me.Button3.TabIndex = 6
+        Me.Button3.Text = "New Consultation"
+        Me.Button3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+        Me.Button3.UseVisualStyleBackColor = False
+        Me.Button3.Visible = False
+        '
         'grpQuickActions
         '
         Me.grpQuickActions.Controls.Add(Me.btnNewPatient)
@@ -443,6 +496,59 @@ Partial Class frmDashboard
         Me.lblLabOrdersValue.Text = "0"
         Me.lblLabOrdersValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
+        'pnlTotalPatients
+        '
+        Me.pnlTotalPatients.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.pnlTotalPatients.BackgroundImage = CType(resources.GetObject("pnlTotalPatients.BackgroundImage"), System.Drawing.Image)
+        Me.pnlTotalPatients.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.pnlTotalPatients.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pnlTotalPatients.Controls.Add(Me.lblTotalPatientsTitle)
+        Me.pnlTotalPatients.Controls.Add(Me.lblTotalPatientsValue)
+        Me.pnlTotalPatients.Controls.Add(Me.Button2)
+        Me.pnlTotalPatients.Location = New System.Drawing.Point(727, 16)
+        Me.pnlTotalPatients.Name = "pnlTotalPatients"
+        Me.pnlTotalPatients.Size = New System.Drawing.Size(510, 265)
+        Me.pnlTotalPatients.TabIndex = 0
+        '
+        'lblTotalPatientsTitle
+        '
+        Me.lblTotalPatientsTitle.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold)
+        Me.lblTotalPatientsTitle.ForeColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(19, Byte), Integer), CType(CType(66, Byte), Integer))
+        Me.lblTotalPatientsTitle.Location = New System.Drawing.Point(-1, 37)
+        Me.lblTotalPatientsTitle.Name = "lblTotalPatientsTitle"
+        Me.lblTotalPatientsTitle.Size = New System.Drawing.Size(512, 44)
+        Me.lblTotalPatientsTitle.TabIndex = 0
+        Me.lblTotalPatientsTitle.Text = "Total Patients"
+        Me.lblTotalPatientsTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblTotalPatientsValue
+        '
+        Me.lblTotalPatientsValue.Font = New System.Drawing.Font("Microsoft Sans Serif", 28.0!, System.Drawing.FontStyle.Bold)
+        Me.lblTotalPatientsValue.ForeColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(19, Byte), Integer), CType(CType(66, Byte), Integer))
+        Me.lblTotalPatientsValue.Location = New System.Drawing.Point(-1, 176)
+        Me.lblTotalPatientsValue.Name = "lblTotalPatientsValue"
+        Me.lblTotalPatientsValue.Size = New System.Drawing.Size(512, 72)
+        Me.lblTotalPatientsValue.TabIndex = 1
+        Me.lblTotalPatientsValue.Text = "0"
+        Me.lblTotalPatientsValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Button2
+        '
+        Me.Button2.BackColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(19, Byte), Integer), CType(CType(66, Byte), Integer))
+        Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button2.ForeColor = System.Drawing.Color.White
+        Me.Button2.Image = CType(resources.GetObject("Button2.Image"), System.Drawing.Image)
+        Me.Button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Button2.Location = New System.Drawing.Point(80, 199)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Padding = New System.Windows.Forms.Padding(50, 0, 0, 0)
+        Me.Button2.Size = New System.Drawing.Size(250, 42)
+        Me.Button2.TabIndex = 6
+        Me.Button2.Text = "New Consultation"
+        Me.Button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+        Me.Button2.UseVisualStyleBackColor = False
+        Me.Button2.Visible = False
+        '
         'pnlTotalRevenue
         '
         Me.pnlTotalRevenue.BackColor = System.Drawing.Color.WhiteSmoke
@@ -512,112 +618,6 @@ Partial Class frmDashboard
         Me.lblOutstandingPhysicianValue.TabIndex = 1
         Me.lblOutstandingPhysicianValue.Text = "N/A"
         Me.lblOutstandingPhysicianValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'pnlTotalPatients
-        '
-        Me.pnlTotalPatients.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.pnlTotalPatients.BackgroundImage = CType(resources.GetObject("pnlTotalPatients.BackgroundImage"), System.Drawing.Image)
-        Me.pnlTotalPatients.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.pnlTotalPatients.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.pnlTotalPatients.Controls.Add(Me.lblTotalPatientsTitle)
-        Me.pnlTotalPatients.Controls.Add(Me.lblTotalPatientsValue)
-        Me.pnlTotalPatients.Controls.Add(Me.Button2)
-        Me.pnlTotalPatients.Location = New System.Drawing.Point(727, 16)
-        Me.pnlTotalPatients.Name = "pnlTotalPatients"
-        Me.pnlTotalPatients.Size = New System.Drawing.Size(510, 265)
-        Me.pnlTotalPatients.TabIndex = 0
-        '
-        'Panel3
-        '
-        Me.Panel3.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.Panel3.BackgroundImage = CType(resources.GetObject("Panel3.BackgroundImage"), System.Drawing.Image)
-        Me.Panel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.Panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel3.Controls.Add(Me.Label5)
-        Me.Panel3.Controls.Add(Me.Label6)
-        Me.Panel3.Controls.Add(Me.Button3)
-        Me.Panel3.Location = New System.Drawing.Point(670, 16)
-        Me.Panel3.Name = "Panel3"
-        Me.Panel3.Size = New System.Drawing.Size(654, 265)
-        Me.Panel3.TabIndex = 7
-        '
-        'Label5
-        '
-        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold)
-        Me.Label5.ForeColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(19, Byte), Integer), CType(CType(66, Byte), Integer))
-        Me.Label5.Location = New System.Drawing.Point(-1, 37)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(654, 44)
-        Me.Label5.TabIndex = 0
-        Me.Label5.Text = "Total Patients"
-        Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'Label6
-        '
-        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 28.0!, System.Drawing.FontStyle.Bold)
-        Me.Label6.ForeColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(19, Byte), Integer), CType(CType(66, Byte), Integer))
-        Me.Label6.Location = New System.Drawing.Point(-1, 176)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(654, 72)
-        Me.Label6.TabIndex = 1
-        Me.Label6.Text = "0"
-        Me.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'Button3
-        '
-        Me.Button3.BackColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(19, Byte), Integer), CType(CType(66, Byte), Integer))
-        Me.Button3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button3.ForeColor = System.Drawing.Color.White
-        Me.Button3.Image = CType(resources.GetObject("Button3.Image"), System.Drawing.Image)
-        Me.Button3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Button3.Location = New System.Drawing.Point(80, 199)
-        Me.Button3.Name = "Button3"
-        Me.Button3.Padding = New System.Windows.Forms.Padding(50, 0, 0, 0)
-        Me.Button3.Size = New System.Drawing.Size(250, 42)
-        Me.Button3.TabIndex = 6
-        Me.Button3.Text = "New Consultation"
-        Me.Button3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
-        Me.Button3.UseVisualStyleBackColor = False
-        Me.Button3.Visible = False
-        '
-        'lblTotalPatientsTitle
-        '
-        Me.lblTotalPatientsTitle.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold)
-        Me.lblTotalPatientsTitle.ForeColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(19, Byte), Integer), CType(CType(66, Byte), Integer))
-        Me.lblTotalPatientsTitle.Location = New System.Drawing.Point(-1, 37)
-        Me.lblTotalPatientsTitle.Name = "lblTotalPatientsTitle"
-        Me.lblTotalPatientsTitle.Size = New System.Drawing.Size(512, 44)
-        Me.lblTotalPatientsTitle.TabIndex = 0
-        Me.lblTotalPatientsTitle.Text = "Total Patients"
-        Me.lblTotalPatientsTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'lblTotalPatientsValue
-        '
-        Me.lblTotalPatientsValue.Font = New System.Drawing.Font("Microsoft Sans Serif", 28.0!, System.Drawing.FontStyle.Bold)
-        Me.lblTotalPatientsValue.ForeColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(19, Byte), Integer), CType(CType(66, Byte), Integer))
-        Me.lblTotalPatientsValue.Location = New System.Drawing.Point(-1, 176)
-        Me.lblTotalPatientsValue.Name = "lblTotalPatientsValue"
-        Me.lblTotalPatientsValue.Size = New System.Drawing.Size(512, 72)
-        Me.lblTotalPatientsValue.TabIndex = 1
-        Me.lblTotalPatientsValue.Text = "0"
-        Me.lblTotalPatientsValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'Button2
-        '
-        Me.Button2.BackColor = System.Drawing.Color.FromArgb(CType(CType(184, Byte), Integer), CType(CType(19, Byte), Integer), CType(CType(66, Byte), Integer))
-        Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button2.ForeColor = System.Drawing.Color.White
-        Me.Button2.Image = CType(resources.GetObject("Button2.Image"), System.Drawing.Image)
-        Me.Button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Button2.Location = New System.Drawing.Point(80, 199)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Padding = New System.Windows.Forms.Padding(50, 0, 0, 0)
-        Me.Button2.Size = New System.Drawing.Size(250, 42)
-        Me.Button2.TabIndex = 6
-        Me.Button2.Text = "New Consultation"
-        Me.Button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
-        Me.Button2.UseVisualStyleBackColor = False
-        Me.Button2.Visible = False
         '
         'pnlOutstandingMedTech
         '
@@ -895,12 +895,12 @@ Partial Class frmDashboard
         Me.pnlDashboard.ResumeLayout(False)
         Me.pnlDashboard.PerformLayout()
         Me.pnlSummaryCards.ResumeLayout(False)
+        Me.Panel3.ResumeLayout(False)
         Me.grpQuickActions.ResumeLayout(False)
         Me.pnlLabOrders.ResumeLayout(False)
+        Me.pnlTotalPatients.ResumeLayout(False)
         Me.pnlTotalRevenue.ResumeLayout(False)
         Me.pnlOutstandingPhysician.ResumeLayout(False)
-        Me.pnlTotalPatients.ResumeLayout(False)
-        Me.Panel3.ResumeLayout(False)
         Me.pnlOutstandingMedTech.ResumeLayout(False)
         Me.msDashboardMenu.ResumeLayout(False)
         Me.msDashboardMenu.PerformLayout()
@@ -978,6 +978,6 @@ Partial Class frmDashboard
     Friend WithEvents lblOutstandingMedTechTitle As Label
     Friend WithEvents Panel3 As Panel
     Friend WithEvents Label5 As Label
-    Friend WithEvents Label6 As Label
+    Friend WithEvents lblTotalPatient As Label
     Friend WithEvents Button3 As Button
 End Class

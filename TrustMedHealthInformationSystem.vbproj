@@ -256,7 +256,6 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
-    <None Include="TrustMedHealthInformationSystem_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="src\add.png" />
