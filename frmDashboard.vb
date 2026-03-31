@@ -957,10 +957,14 @@ Public Class frmDashboard
                 sectionQuery = "SELECT pr.PrescriptionID, " &
                                "CONCAT(ph.FirstName, ' ', ph.LastName) AS Physician, " &
                                "CONCAT(pa.FirstName, ' ', pa.LastName) AS Patient, " &
-                               "pr.Instruction, pr.PrescriptionDate " &
+                               "pr.Instruction, pr.PrescriptionDate, " &
+                               "COALESCE(GROUP_CONCAT(m.MedicineName ORDER BY m.MedicineName SEPARATOR ', '), 'No medicines added') AS Medicines " &
                                "FROM prescription pr " &
                                "INNER JOIN physician ph ON ph.PhysicianID = pr.PhysicianID " &
                                "INNER JOIN patient pa ON pa.PatientID = pr.PatientID " &
+                               "LEFT JOIN prescription_inclusion pi ON pi.PrescriptionID = pr.PrescriptionID " &
+                               "LEFT JOIN medicine m ON m.MedicineID = pi.MedicineID " &
+                               "GROUP BY pr.PrescriptionID, ph.FirstName, ph.LastName, pa.FirstName, pa.LastName, pr.Instruction, pr.PrescriptionDate " &
                                "ORDER BY pr.PrescriptionID DESC"
             Case "physicians"
                 sectionTitle = "Physicians"
@@ -1683,6 +1687,70 @@ Public Class frmDashboard
 
     End Sub
 End Class
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

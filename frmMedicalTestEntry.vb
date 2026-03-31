@@ -214,12 +214,12 @@ Public Class frmMedicalTestEntry
 
                     If usedId < candidate Then
                         Continue While
-                      End If
+                    End If
 
                     If usedId = candidate Then
                         candidate += 1
                         If candidate > maxId Then
-                          Return -1
+                            Return -1
                         End If
                     End If
                 End While
